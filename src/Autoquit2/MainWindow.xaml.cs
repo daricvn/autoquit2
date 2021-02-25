@@ -24,5 +24,12 @@ namespace Autoquit2
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var webView = new WebView();
+            webView.Show();
+            this.Hide();
+        }
     }
 }

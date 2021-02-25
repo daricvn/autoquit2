@@ -1,4 +1,5 @@
 ﻿using Autoquit.Foundation.Models;
+using Autoquit.Foundation.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,6 +33,11 @@ namespace Autoquit.Foundation.Interfaces
         int MaxLength { get; }
 
         /// <summary>
+        /// Prefer priority of the function display in a list of returned functions.
+        /// </summary>
+        int PreferPriority { get; } 
+
+        /// <summary>
         /// List of autoquit controls.
         /// </summary>
         IEnumerable<AutoquitControl> Controls { get; }
@@ -41,7 +47,7 @@ namespace Autoquit.Foundation.Interfaces
         /// </summary>
         /// <param name="keyValues">Contains key/value pair of each control.</param>
         /// <returns></returns>
-        bool Execute(Dictionary<string, object> keyValues);
+        bool Execute(AutoquitMessageKeyPair keyValues);
 
     }
 }
