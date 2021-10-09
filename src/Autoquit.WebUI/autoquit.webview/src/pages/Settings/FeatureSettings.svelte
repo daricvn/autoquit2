@@ -9,23 +9,54 @@ var advancedMode = false
 var playStopShortcut = {}
 var recordStopShortcut = {}
 
+function refineDisplayKeyCode(keyCode){
+    if (keyCode.startsWith("Key"))
+        return keyCode.substring(3);
+    if (keyCode.startsWith("Digit"))
+        return keyCode.substring(5);
+    if (keyCode == 'Backquote')
+        return '`';
+    if (keyCode == 'Minus')
+        return '-';
+    if (keyCode == 'Equal')
+        return '=';
+    if (keyCode == 'Backslash')
+        return '\\';
+    if (keyCode == 'Quote')
+        return '\'';
+    if (keyCode == 'Semicolon')
+        return ';';
+    if (keyCode == 'Slash')
+        return '/';
+    if (keyCode == 'Period')
+        return '.';
+    if (keyCode == 'Comma')
+        return ',';
+    if (keyCode == 'BracketLeft')
+        return '[';
+    if (keyCode == 'BracketRight')
+        return ']';
+    return keyCode;
+}
+
 function handleKeyBind(event){
     event.preventDefault()
+    console.log(event)
     let obj = {}
     obj.key = event.code
-    if (event.code.indexOf("Key") >= 0)
-    obj.key= event.key.toUpperCase()
-        obj.alt = event.altKey
-        obj.ctrl = event.ctrlKey
-        obj.shift = event.shiftKey
-        obj.text = ''
-    if (obj.ctrl)
+    obj.alt = event.altKey
+    obj.ctrl = event.ctrlKey
+    obj.shift = event.shiftKey
+    obj.text = ''
+    if (obj.key == "Escape" && !obj.ctrl && !obj.alt)
+        return obj;
+    if (!obj.key.startsWith("Control") && obj.ctrl)
         obj.text += "[CTRL]";
-    if (obj.alt)
+    if (!obj.key.startsWith("Alt") && obj.alt)
         obj.text += (obj.text ? '+':'') + "[ALT]";
-    if (obj.shift)
+    if (!obj.key.startsWith("Shift") && obj.shift)
         obj.text += (obj.text ? '+':'') + "[SHIFT]";
-    obj.text += (obj.text ? '+':'') + obj.key;
+    obj.text += (obj.text ? '+':'') + refineDisplayKeyCode(obj.key);
     return obj
 }
 
@@ -49,7 +80,7 @@ $: recordStopShortcutText = recordStopShortcut.text ? recordStopShortcut.text : 
     </Col>
     <Col class="text-right">
         <TextField class={getTextFieldClass($theme)} outlined dense placeholder={$translate("Not set")} style="max-width: 350px;" 
-            on:keypress={(e)=> playStopShortcut = { playStopShortcut, ...handleKeyBind(e) }} bind:value={playStopShortcutText}>
+            on:keydown={(e)=> playStopShortcut = { playStopShortcut, ...handleKeyBind(e) }} bind:value={playStopShortcutText}>
           <div slot="append">
             <Icon path={mdiKeyboard} />
           </div>
@@ -62,7 +93,7 @@ $: recordStopShortcutText = recordStopShortcut.text ? recordStopShortcut.text : 
     </Col>
     <Col class="text-right">
         <TextField class={getTextFieldClass($theme)} outlined dense placeholder={$translate("Not set")} style="max-width: 350px" 
-            on:keypress={(e)=> recordStopShortcut = { recordStopShortcut, ...handleKeyBind(e) }} bind:value={recordStopShortcutText}>
+            on:keydown={(e)=> recordStopShortcut = { recordStopShortcut, ...handleKeyBind(e) }} bind:value={recordStopShortcutText}>
           <div slot="append">
             <Icon path={mdiKeyboard} />
           </div>

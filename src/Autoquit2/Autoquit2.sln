@@ -7,9 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputBridge", "..\InputBrid
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autoquit.Foundation", "..\Autoquit.Foundation\Autoquit.Foundation.csproj", "{BD41ABD2-1109-44B2-A250-8C6E66BAF0A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autoquit2.Core", "..\Autoquit2.Core\Autoquit2.Core.csproj", "{5842DAEF-D443-4E88-9610-8C4B2A0F948B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autoquit2.Core", "..\Autoquit2.Core\Autoquit2.Core.csproj", "{5842DAEF-D443-4E88-9610-8C4B2A0F948B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autoquit.Standard", "..\Autoquit.Standard\Autoquit.Standard.csproj", "{47AC74CC-1891-4BCD-A792-D00261D3FD96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autoquit.Standard", "..\Autoquit.Standard\Autoquit.Standard.csproj", "{47AC74CC-1891-4BCD-A792-D00261D3FD96}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4780E152-BF64-4613-B948-E03F590C6DE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autoquit.Standard.Tests", "Autoquit.Standard.Tests\Autoquit.Standard.Tests.csproj", "{410D6173-8C11-432F-B77F-6F9266FD8DB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,9 +127,36 @@ Global
 		{47AC74CC-1891-4BCD-A792-D00261D3FD96}.Release|x64.Build.0 = Release|Any CPU
 		{47AC74CC-1891-4BCD-A792-D00261D3FD96}.Release|x86.ActiveCfg = Release|Any CPU
 		{47AC74CC-1891-4BCD-A792-D00261D3FD96}.Release|x86.Build.0 = Release|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.Debug|x64.Build.0 = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.Debug|x86.Build.0 = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.DebugLinux|Any CPU.ActiveCfg = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.DebugLinux|Any CPU.Build.0 = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.DebugLinux|x64.ActiveCfg = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.DebugLinux|x64.Build.0 = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.DebugLinux|x86.ActiveCfg = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.DebugLinux|x86.Build.0 = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.DebugWindows|Any CPU.ActiveCfg = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.DebugWindows|Any CPU.Build.0 = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.DebugWindows|x64.ActiveCfg = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.DebugWindows|x64.Build.0 = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.DebugWindows|x86.ActiveCfg = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.DebugWindows|x86.Build.0 = Debug|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.Release|x64.ActiveCfg = Release|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.Release|x64.Build.0 = Release|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.Release|x86.ActiveCfg = Release|Any CPU
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{410D6173-8C11-432F-B77F-6F9266FD8DB5} = {4780E152-BF64-4613-B948-E03F590C6DE8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD548642-880F-476D-87EA-33908F8C431B}

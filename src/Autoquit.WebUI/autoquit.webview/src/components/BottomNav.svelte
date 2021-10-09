@@ -37,7 +37,7 @@ const navTo = (url)=>{
                             <Icon path={mdiCog} />                            
                         </Button>
                     </Col>
-                    <Col>
+                    <Col class="pt-2">
                         <Button class={`${isPlaying ? 'red':'green'} ${textColor}`} size="large" rounded depressed on:click={togglePlayStop} style="min-width: 150px">
                                     {#if isPlaying}
                                         <div class="transitionIcon stop-icon-animation" in:scale={{ duration: 200, delay: 100, easing: backInOut, start: 0.5 }} out:scale={{ duration: 200, easing: bounceInOut }}>

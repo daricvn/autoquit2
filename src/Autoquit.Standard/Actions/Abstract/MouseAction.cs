@@ -21,7 +21,7 @@ namespace Autoquit.Standard.Actions.Abstract
         public IEnumerable<AutoquitControl> Controls { get; } = new AutoquitControl[]
         {
             new AutoquitControl(0, MOUSE_COORD, AutoquitControlType.MouseCapture),
-            new AutoquitControl(1, MOUSE_MODE, AutoquitControlType.Checkbox),
+            new AutoquitControl(1, MOUSE_MODE, "mouse_interact_mode", AutoquitControlType.Checkbox)
         };
 
         public abstract int PreferPriority { get; }

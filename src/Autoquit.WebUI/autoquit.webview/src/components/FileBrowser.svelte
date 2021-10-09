@@ -1,9 +1,11 @@
 <script>
-import { mdiClose } from "@mdi/js";
-import { Button, Col, Dialog, Icon, Row } from "svelte-materialify";
-import { backInOut, bounceInOut, elasticInOut, quintInOut } from "svelte/easing";
-import { fly, slide } from "svelte/transition";
-import { theme } from "../store";
+import { mdiArrowLeft, mdiClose, mdiMenuDown } from "@mdi/js";
+import { Button, Col, Dialog, Icon, Row, TextField } from "svelte-materialify";
+import { cubicInOut } from "svelte/easing";
+import { text } from "svelte/internal";
+import { scale } from "svelte/transition";
+import translate from "../i18n/language";
+import { getTextFieldClass, theme } from "../store";
 var currentTheme;
 theme.subscribe(t=> currentTheme = t)
 export let active = false
@@ -16,7 +18,7 @@ $: actualTitle = (title ? (title + " - "): "") + (mode == 'open' ? 'Open File' :
 
 </script>
 
-<Dialog class="dialog" persistent bind:active={active} transition={(node)=>fly( node, { duration: 400, y: -90, easing: backInOut })} width="700px">
+<Dialog class="dialog" persistent bind:active={active} transition={(node)=>scale( node, { duration: 200, start: 0.9, opacity: 0, easing: cubicInOut })} width="860px">
     <div class={"dialog-bar " + currentTheme.color}>
         <Row noGutters class="align-center">
             <Col class="pl-4 no-select">
@@ -29,7 +31,26 @@ $: actualTitle = (title ? (title + " - "): "") + (mode == 'open' ? 'Open File' :
             </Col>
         </Row>
     </div>
-    <div style="height: 400px" />
+    <div class="mt-2 pl-1 pr-2" style="height: 500px">
+        <Row noGutters>
+            <Col class="col-auto pr-1">
+                <Button fab text size="small">
+                    <Icon path={mdiArrowLeft} />
+                </Button>
+            </Col>
+            <Col>
+                <TextField class={getTextFieldClass($theme)} outlined dense>
+                    <div slot="append">
+                      <Icon path={mdiMenuDown} />
+                    </div>
+                </TextField>
+            </Col>
+            <Col class="col-4 pl-1">
+                <TextField class={getTextFieldClass($theme)} outlined dense placeholder={$translate("Search for file...")}>
+                </TextField>
+            </Col>
+        </Row>
+    </div>
 </Dialog>
 
 <style>

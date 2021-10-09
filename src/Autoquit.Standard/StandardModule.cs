@@ -1,6 +1,9 @@
 ﻿using Autoquit.Foundation.Interfaces;
+using Autoquit.Foundation.Utilities;
+using Autoquit.Standard.Actions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Autoquit.Standard
 {
@@ -16,11 +19,18 @@ namespace Autoquit.Standard
 
         public string Version { get; }
 
-        public string Author => throw new NotImplementedException();
+        public string Author => "Autoquit";
+
+        private Type[] _typeToLoad = new Type[]
+        {
+            typeof(MouseLeftClick)
+        };
 
         public bool Load(out IEnumerable<IAutoquitFunction> functionList)
         {
-            throw new NotImplementedException();
+            functionList = _typeToLoad.Select(x => ExpressionCompiler.Instance.CreateByType(x)).ToList();
+
+            return functionList.Any();
         }
     }
 }

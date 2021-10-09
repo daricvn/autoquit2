@@ -15,14 +15,20 @@ namespace Autoquit.Foundation.Interfaces
         /// Return a number, consider to add min, max to the control, otherwise, there's no limit for the slider.
         /// </summary>
         Slider = 2,
+        /// <summary>
+        /// Return a string format, allow user to modify it
+        /// </summary>
         TextBox = 3,
+        /// <summary>
+        /// Return an int, allow user to modify it
+        /// </summary>
         Numeric = 4,
         /// <summary>
         /// Return value from the client should be in format: X:Y, where X is horizontal coordindate of the mouse, Y is the vertical coordinate of the mouse
         /// </summary>
         MouseCapture = 5,
         /// <summary>
-        /// Return a int value that you can parse to KeyCode.
+        /// Return an int value that you can parse to KeyCode.
         /// </summary>
         KeyboardCapture = 6,
         /// <summary>
