@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Autoquit2.Core.Models.Struct
+﻿namespace Autoquit2.Core.Models.Struct
 {
     internal struct FileFolder
     {

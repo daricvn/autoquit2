@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autoquit2.Core.Modules;
+using System;
 
 namespace Autoquit2.Core
 {
@@ -10,7 +11,7 @@ namespace Autoquit2.Core
             Console.Read();
         }
 
-        private static void RunApp()
+        private static void RunApp(IModuleManager moduleManager)
         {
 
         }

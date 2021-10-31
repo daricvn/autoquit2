@@ -6,6 +6,7 @@
     import { fly } from "svelte/transition";
     import translate from "../../i18n/language";
     import contacts from './contacts'
+    import credits from './credits'
     import { getTextFieldClass, theme } from '../../store'
     let version = "2.0.0"
     let flavour = "Windows"
@@ -67,6 +68,18 @@
                                     {/each}
                                 </Col>
                             </Row>
+                        </Col>
+                    </Row>
+                    <Row class="mt-3 align-center" noGutters>
+                        <Col class="col-auto pr-3 text-body-2">
+                            Credits: 
+                        </Col>
+                        <Col>
+                            {#each credits as credit}
+                            <span>
+                                {credit}
+                            </span>;&nbsp;
+                            {/each}
                         </Col>
                     </Row>
                     <p class={getTextFieldClass($theme)}><b>{$translate("Useful links")}:</b></p>

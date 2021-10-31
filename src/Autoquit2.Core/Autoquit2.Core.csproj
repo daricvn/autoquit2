@@ -3,6 +3,16 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Configurations>Debug;Release;Debug-Win64;Release-Win64</Configurations>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Win64|x64'">
+    <DefineConstants>TRACE;WINDOWS_OS</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Win64|x64'">
+    <DefineConstants>TRACE;WINDOWS_OS</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\" />
+    <ProjectReference Include="..\Autoquit.Foundation\Autoquit.Foundation.csproj" />
+    <ProjectReference Include="..\Autoquit2\Autoquit.DynamicModule\Autoquit.DynamicModules.csproj" />
   </ItemGroup>
-
 </Project>

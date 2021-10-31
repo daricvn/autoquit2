@@ -1,11 +1,12 @@
-﻿using Autoquit.Foundation.Interfaces;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 
-namespace Autoquit.Foundation.Utilities
+namespace Autoquit.DynamicModules
 {
-    public class ExpressionCompiler : IDisposable
+    public class ExpressionCompiler
     {
         delegate T ObjectActivator<T>(params object[] args);
         private static ExpressionCompiler _singletonInstance;
@@ -61,33 +62,27 @@ namespace Autoquit.Foundation.Utilities
             return compiled;
         }
 
-        public T Create<T>(Type[] types, params object[] parameters) where T : IAutoquitFunction
+        public T Create<T>(Type[] types, params object[] parameters)
         {
             var ctor = typeof(T).GetConstructor(types);
             var activator = GetActivator<T>(ctor);
             return activator(parameters);
         }
 
-        public T Create<T>() where T : IAutoquitFunction
+        public T Create<T>()
         {
             return Create<T>(Type.EmptyTypes);
         }
 
-        public IAutoquitFunction CreateByType(Type type, Type[] typeOfParams, params object[] parameters)
+        public object CreateByType(Type type, Type[] typeOfParams, params object[] parameters)
         {
-            if (!type.IsAssignableFrom(typeof(IAutoquitFunction)))
-                return null;
-            var makeGeneric = this.GetType().GetMethod("Create", new Type[] { typeof(Type[]), typeof(object[]) }).MakeGenericMethod(type);
-            return (IAutoquitFunction)makeGeneric.Invoke(this, new object[] { typeOfParams, parameters });
+            var makeGeneric = ExpressionCompiler.Instance.GetType().GetMethod("Create", new Type[] { typeof(Type[]), typeof(object[]) }).MakeGenericMethod(type);
+            return makeGeneric.Invoke(ExpressionCompiler.Instance, new object[] { typeOfParams, parameters });
         }
 
-        public IAutoquitFunction CreateByType(Type type)
+        public object CreateByType(Type type)
         {
             return CreateByType(type, Type.EmptyTypes);
-        }
-
-        public void Dispose()
-        {
         }
     }
 }

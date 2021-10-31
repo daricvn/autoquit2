@@ -4,6 +4,7 @@ using Autoquit.Standard.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Autoquit.Standard
 {
@@ -28,7 +29,7 @@ namespace Autoquit.Standard
 
         public bool Load(out IEnumerable<IAutoquitFunction> functionList)
         {
-            functionList = _typeToLoad.Select(x => ExpressionCompiler.Instance.CreateByType(x)).ToList();
+            functionList = _typeToLoad.Select(x => FunctionCompiler.Instance.CreateByType(x)).ToList();
 
             return functionList.Any();
         }
