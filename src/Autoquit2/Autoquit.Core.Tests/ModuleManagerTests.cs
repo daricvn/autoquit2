@@ -25,6 +25,7 @@ namespace Autoquit.Core.Tests
             // Assert
             Assert.IsNotEmpty(moduleList);
             Assert.IsNotEmpty(loadedModule);
+            CollectionAssert.AllItemsAreNotNull(loadedModule);
         }
     }
 }

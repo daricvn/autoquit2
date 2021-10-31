@@ -17,12 +17,17 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Autoquit.Standard\Autoquit.Standard.csproj" />
     <ProjectReference Include="..\..\Autoquit2.Core\Autoquit2.Core.csproj" />
+    <ProjectReference Include="..\Autoquit.TestBase\Autoquit.TestBase.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="modules.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Moq\" />
   </ItemGroup>
 
 </Project>

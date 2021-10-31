@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Autoquit.Foundation.Interfaces
+﻿namespace Autoquit.Foundation.Interfaces
 {
     public enum AutoquitControlType
     {

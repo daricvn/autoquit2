@@ -1,8 +1,8 @@
 ﻿using Autoquit.DynamicModules;
-using Autoquit.DynamicModules.Implement;
+using Autoquit.DynamicModules.Generic;
+using Autoquit.DynamicModules.Generic.Implement;
 using Autoquit.Foundation.Interfaces;
 using Autoquit2.Core.Const;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -62,7 +62,7 @@ namespace Autoquit2.Core.Modules.Implement
                 yield break;
             foreach (var type in module.GetExportedTypes())
             {
-                if (!(ExpressionCompiler.Instance.CreateByType(type) is IAutoquitModule actualModule))
+                if (!(module.CreateInstance(type) is IAutoquitModule actualModule))
                     continue;
                 if (!actualModule.Load(out var functionList))
                     continue;

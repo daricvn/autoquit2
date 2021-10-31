@@ -2,7 +2,7 @@
 
 namespace Autoquit.DynamicModules
 {
-    public interface IDynamicModule<T> : IDisposable
+    public interface IDynamicModule: IDisposable
     {
         /// <summary>
         /// Returns true if the module is valid

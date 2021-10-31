@@ -1,6 +1,5 @@
-﻿using Autoquit.DynamicModules;
+﻿using Autoquit.DynamicModules.Generic;
 using Autoquit.Foundation.Interfaces;
-using System;
 using System.Collections.Generic;
 
 namespace Autoquit2.Core.Modules

@@ -1,4 +1,5 @@
-﻿using Autoquit.Foundation.Interfaces;
+﻿using Autoquit.DynamicModules;
+using Autoquit.Foundation.Interfaces;
 using Autoquit.Foundation.Utilities;
 using Autoquit.Standard.Actions;
 using System;
@@ -10,7 +11,7 @@ namespace Autoquit.Standard
 {
     public class StandardModule : IAutoquitModule
     {
-        public string LocalizationLocation { set; get; }
+        public string LocalizationLocation { set; get; } = "localization";
 
         public string Name { get; } = "Autoquit Standard Module";
 
@@ -29,7 +30,7 @@ namespace Autoquit.Standard
 
         public bool Load(out IEnumerable<IAutoquitFunction> functionList)
         {
-            functionList = _typeToLoad.Select(x => FunctionCompiler.Instance.CreateByType(x)).ToList();
+            functionList = _typeToLoad.Select(x => ExpressionCompiler.Instance.CreateByType(x) as IAutoquitFunction).ToList();
 
             return functionList.Any();
         }

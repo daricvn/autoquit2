@@ -1,8 +1,6 @@
 ﻿using Autoquit.Foundation.Models;
 using Autoquit.Foundation.Utilities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Autoquit.Foundation.Interfaces
 {
