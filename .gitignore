@@ -4,4 +4,4 @@ obj
 node_modules
 .vs
 .vs/
-cef.runtime/*
+cef.runtime/*/*
