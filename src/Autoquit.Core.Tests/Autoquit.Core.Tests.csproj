@@ -15,9 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Autoquit.Standard\Autoquit.Standard.csproj" />
-    <ProjectReference Include="..\..\Autoquit2.Core\Autoquit2.Core.csproj" />
+    <ProjectReference Include="..\Autoquit.Standard\Autoquit.Standard.csproj" />
     <ProjectReference Include="..\Autoquit.TestBase\Autoquit.TestBase.csproj" />
+    <ProjectReference Include="..\Autoquit2.Core\Autoquit2.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

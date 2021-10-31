@@ -13,13 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autoquit.Standard", "..\Aut
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4780E152-BF64-4613-B948-E03F590C6DE8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autoquit.Standard.Tests", "Autoquit.Standard.Tests\Autoquit.Standard.Tests.csproj", "{410D6173-8C11-432F-B77F-6F9266FD8DB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autoquit.Standard.Tests", "..\Autoquit.Standard.Tests\Autoquit.Standard.Tests.csproj", "{410D6173-8C11-432F-B77F-6F9266FD8DB5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autoquit.DynamicModules", "Autoquit.DynamicModule\Autoquit.DynamicModules.csproj", "{D56280C9-C8B8-4061-9085-01B0AF4103D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autoquit.DynamicModules", "..\Autoquit.DynamicModule\Autoquit.DynamicModules.csproj", "{D56280C9-C8B8-4061-9085-01B0AF4103D0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autoquit.Core.Tests", "Autoquit.Core.Tests\Autoquit.Core.Tests.csproj", "{A26AFA8C-56C7-425B-B598-7CB4C89654C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autoquit.Core.Tests", "..\Autoquit.Core.Tests\Autoquit.Core.Tests.csproj", "{A26AFA8C-56C7-425B-B598-7CB4C89654C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autoquit.TestBase", "Autoquit.TestBase\Autoquit.TestBase.csproj", "{29806CAA-AADF-4518-A9D4-0FF47F7C78F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autoquit.TestBase", "..\Autoquit.TestBase\Autoquit.TestBase.csproj", "{29806CAA-AADF-4518-A9D4-0FF47F7C78F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

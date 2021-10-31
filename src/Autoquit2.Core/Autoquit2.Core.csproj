@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Autoquit.DynamicModule\Autoquit.DynamicModules.csproj" />
     <ProjectReference Include="..\Autoquit.Foundation\Autoquit.Foundation.csproj" />
-    <ProjectReference Include="..\Autoquit2\Autoquit.DynamicModule\Autoquit.DynamicModules.csproj" />
   </ItemGroup>
 </Project>
