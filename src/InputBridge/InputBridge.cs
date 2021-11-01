@@ -24,7 +24,7 @@ namespace InputBridge
         [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
         internal static extern int SetCursorPosition(int x, int y);
         [DllImport("user32.dll", EntryPoint = "GetCursorPos")]
-        internal static extern bool GetCursorPosisition(out Point2d lpPoint);
+        internal static extern bool GetCursorPosition(out Point2d lpPoint);
         [DllImport("user32.dll", EntryPoint = "SendInput", SetLastError = true)]
         internal static extern uint SendInput(uint nInputs, WindowInput[] pInputs, int cbSize);
         [DllImport("user32.dll", EntryPoint = "GetMessageExtraInfo")]

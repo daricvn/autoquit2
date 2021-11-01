@@ -10,5 +10,10 @@ namespace InputBridge.Models
     {
         public int X;
         public int Y;
+        public Point2d(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
     }
 }

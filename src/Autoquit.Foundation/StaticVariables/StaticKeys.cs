@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Autoquit.Foundation.StaticVariables
+﻿namespace Autoquit.Foundation.StaticVariables
 {
     public static class StaticKeys
     {
