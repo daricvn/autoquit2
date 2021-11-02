@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autoquit.Core.Tests", "..\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autoquit.TestBase", "..\Autoquit.TestBase\Autoquit.TestBase.csproj", "{29806CAA-AADF-4518-A9D4-0FF47F7C78F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputBridge.Automation", "..\InputBridge.Automation\InputBridge.Automation.csproj", "{5E05B63B-1BBE-4FFF-821B-56C241A48485}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputBridge.Automation", "..\InputBridge.Automation\InputBridge.Automation.csproj", "{5E05B63B-1BBE-4FFF-821B-56C241A48485}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autoquit.Packaging", "..\Autoquit.Packaging\Autoquit.Packaging.csproj", "{5A3B9C34-C090-4C23-9CCD-59CC09911656}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -312,6 +314,36 @@ Global
 		{5E05B63B-1BBE-4FFF-821B-56C241A48485}.Release-Win64|x64.Build.0 = Release|Any CPU
 		{5E05B63B-1BBE-4FFF-821B-56C241A48485}.Release-Win64|x86.ActiveCfg = Release|Any CPU
 		{5E05B63B-1BBE-4FFF-821B-56C241A48485}.Release-Win64|x86.Build.0 = Release|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Debug|x64.Build.0 = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Debug|x86.Build.0 = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.DebugLinux|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.DebugLinux|Any CPU.Build.0 = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.DebugLinux|x64.ActiveCfg = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.DebugLinux|x64.Build.0 = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.DebugLinux|x86.ActiveCfg = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.DebugLinux|x86.Build.0 = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Debug-Win64|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Debug-Win64|Any CPU.Build.0 = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Debug-Win64|x64.ActiveCfg = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Debug-Win64|x64.Build.0 = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Debug-Win64|x86.ActiveCfg = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Debug-Win64|x86.Build.0 = Debug|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Release|x64.ActiveCfg = Release|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Release|x64.Build.0 = Release|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Release|x86.ActiveCfg = Release|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Release|x86.Build.0 = Release|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Release-Win64|Any CPU.ActiveCfg = Release|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Release-Win64|Any CPU.Build.0 = Release|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Release-Win64|x64.ActiveCfg = Release|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Release-Win64|x64.Build.0 = Release|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Release-Win64|x86.ActiveCfg = Release|Any CPU
+		{5A3B9C34-C090-4C23-9CCD-59CC09911656}.Release-Win64|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
