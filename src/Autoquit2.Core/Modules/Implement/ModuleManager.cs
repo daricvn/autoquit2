@@ -3,6 +3,7 @@ using Autoquit.DynamicModules.Generic;
 using Autoquit.DynamicModules.Generic.Implement;
 using Autoquit.Foundation.Interfaces;
 using Autoquit2.Core.Const;
+using Autoquit2.Core.Security;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -56,6 +57,9 @@ namespace Autoquit2.Core.Modules.Implement
                 yield return new DynamicModule<IAutoquitModule>(Path.ChangeExtension(Path.Combine(_folder, item), "dll"));
         }
 
+        private string CombineUniqueNamespace(IDynamicModule<IAutoquitModule> module, IAutoquitFunction function)
+            => string.Join('-', module.AssemblyName, function.GetType().Namespace, function.GetType().Name, function.Name);
+
         public IEnumerable<IAutoquitFunction> LoadModule(IDynamicModule<IAutoquitModule> module)
         {
             if (module == null)
@@ -68,7 +72,11 @@ namespace Autoquit2.Core.Modules.Implement
                     continue;
                 foreach (var function in functionList)
                     if (function != null)
+                    {
+                        function.Id = Hashmath.Instance.md5(CombineUniqueNamespace(module, function));
+                        function.AssemblyName = module.AssemblyName;
                         yield return function;
+                    }
             }
         }
 

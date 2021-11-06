@@ -28,6 +28,11 @@ namespace Autoquit.Foundation.Models
         public int Max { get; set; }
 
         /// <summary>
+        /// Selectable item. Suitable for ListItem
+        /// </summary>
+        public string[] Items { get; set; }
+
+        /// <summary>
         /// Control type
         /// </summary>
         public AutoquitControlType Type { get; private set; }
@@ -58,6 +63,16 @@ namespace Autoquit.Foundation.Models
         public AutoquitControl(string name, string desc, AutoquitControlType type, int min, int max) : this(int.MinValue, name, desc, type, min, max)
         {
 
+        }
+
+        public AutoquitControl(int index, string name, AutoquitControlType type, params string[] items) : this(index, name, type)
+        {
+            Items = items;
+        }
+
+        public AutoquitControl(int index, string name, string desc, AutoquitControlType type, params string[] items) : this(index, name, desc, type)
+        {
+            Items = items;
         }
     }
 }

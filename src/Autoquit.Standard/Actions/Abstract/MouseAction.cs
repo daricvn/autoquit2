@@ -7,7 +7,7 @@ namespace Autoquit.Standard.Actions.Abstract
 {
     public abstract class MouseAction : IAutoquitFunction
     {
-        protected const string MOUSE_COORD = "mouse coordinate";
+        protected const string MOUSE_COORD = "mouse-coordinate";
         protected const string MOUSE_MODE = "interactive";
         public string Id { get; set; }
         public string AssemblyName { get; set; }
@@ -21,7 +21,7 @@ namespace Autoquit.Standard.Actions.Abstract
         public IEnumerable<AutoquitControl> Controls { get; } = new AutoquitControl[]
         {
             new AutoquitControl(0, MOUSE_COORD, AutoquitControlType.MouseCapture),
-            new AutoquitControl(1, MOUSE_MODE, "mouse_interact_mode", AutoquitControlType.Checkbox)
+            new AutoquitControl(1, MOUSE_MODE, "mouse-interact-mode", AutoquitControlType.Checkbox)
         };
 
         public abstract int PreferPriority { get; }

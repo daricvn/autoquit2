@@ -6,6 +6,16 @@ namespace Autoquit.Image.Library
 {
     public class TemplateMatching
     {
+        private static TemplateMatching _instance;
+        public static TemplateMatching Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new TemplateMatching();
+                return _instance;
+            }
+        }
 
         public IEnumerable<MatchingResult<Rect>> Match(byte[] image, byte[] templateImage, TemplateMatchingOptions options)
         {
@@ -22,16 +32,16 @@ namespace Autoquit.Image.Library
                 template = template.CvtColor(ColorConversionCodes.RGB2GRAY);
                 targetImage = targetImage.CvtColor(ColorConversionCodes.RGBA2GRAY);
             }
-            var result = targetImage.MatchTemplate(template, TemplateMatchModes.CCoeffNormed);
+            var result = targetImage.MatchTemplate(template, TemplateMatchModes.SqDiffNormed);
             result = result.Threshold(options.Threshold, 1, ThresholdTypes.Tozero);
             var dimensionWR = targetImage.Size().Width / originTargetImage.Width;
             var dimensionHR = targetImage.Size().Height / originTargetImage.Height;
             while (true)
             {
-                result.MinMaxLoc(out _, out var maxVal, out _, out Point topLeft);
-                if (maxVal >= options.Threshold)
+                result.MinMaxLoc(out var minVal, out _, out Point topLeft, out _);
+                if (minVal <= 1 - options.Threshold)
                 {
-                    yield return new MatchingResult<Rect>(new Rect(topLeft.X * dimensionWR, topLeft.Y * dimensionHR, originTemplateSize.Width, originTemplateSize.Height), maxVal);
+                    yield return new MatchingResult<Rect>(new Rect(topLeft.X * dimensionWR, topLeft.Y * dimensionHR, originTemplateSize.Width, originTemplateSize.Height), 1 - minVal);
                     // Fill found loc
                     Cv2.FloodFill(result, topLeft, new Scalar(0), out _, new Scalar(0.1), new Scalar(1));
                 }

@@ -50,6 +50,10 @@
         /// <summary>
         /// Retrieve the locator of the control. Return the handle of the target control.
         /// </summary>
-        ControlLocator = 12
+        ControlLocator = 12,
+        /// <summary>
+        /// Retrieve the locator of the control. Return the handle of the target control.
+        /// </summary>
+        ListItem = 13
     }
 }
