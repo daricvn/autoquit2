@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Linq;
 
 namespace Autoquit.Standard.Tests
 {
@@ -15,6 +16,7 @@ namespace Autoquit.Standard.Tests
             // Assert
             Assert.IsTrue(result);
             Assert.IsNotEmpty(list);
+            CollectionAssert.AllItemsAreNotNull(list, "Loaded module must not contains null item");
         }
     }
 }

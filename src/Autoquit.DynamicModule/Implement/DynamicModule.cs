@@ -25,6 +25,15 @@ namespace Autoquit.DynamicModules.Implement
             _implementedTypes = LoadImplementTypes(dll);
         }
 
+        public DynamicModule(string path, byte[] assembly)
+        {
+            Assembly dll = Assembly.Load(assembly);
+            FileName = Path.GetFileNameWithoutExtension(path);
+            FilePath = path;
+            AssemblyName = dll.GetName().Name;
+            _implementedTypes = LoadImplementTypes(dll);
+        }
+
         protected virtual Type[] LoadImplementTypes(Assembly loadedAssembly)
             => loadedAssembly.GetTypes();
 

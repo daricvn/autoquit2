@@ -9,7 +9,18 @@ namespace Autoquit.Packaging
     {
         private const string MAIN_PATH = "module";
         private const string REF_PATH = "dependencies";
-        private const string MAP_FILE = "file.map";
+        private const string MAP_FILE = "map.xml";
+
+        private static AlibFactory _instance;
+        public static AlibFactory Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new AlibFactory();
+                return _instance;
+            }
+        }
 
         public AlibFile Create(string filePath, string mainModule, params string[] dependencies)
         {

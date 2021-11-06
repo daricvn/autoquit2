@@ -26,6 +26,7 @@ namespace Autoquit.Core.Tests
             Assert.IsNotEmpty(moduleList);
             Assert.IsNotEmpty(loadedModule);
             CollectionAssert.AllItemsAreNotNull(loadedModule);
+            Assert.IsTrue(loadedModule.All(x => !string.IsNullOrEmpty(x.Id)), "All module Id must be generated");
         }
     }
 }
