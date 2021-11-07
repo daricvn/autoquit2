@@ -20,6 +20,7 @@ namespace Autoquit.Packaging.LZMA
         }
         public IReadOnlyDictionary<string, byte[]> LoadArchive(Stream fs, string password = "")
         {
+            SevenZipExtractor.SetLibraryPath("7z.dll");
             using (var extractor = new SevenZipExtractor(fs, password))
             {
                 var res = new Dictionary<string, byte[]>();
@@ -39,6 +40,7 @@ namespace Autoquit.Packaging.LZMA
         {
             if (contents == null || contents.Count == 0)
                 return false;
+            SevenZipCompressor.SetLibraryPath("7z.dll");
             SevenZipCompressor compressor = new SevenZipCompressor();
             compressor.ArchiveFormat = OutArchiveFormat.SevenZip;
             compressor.CompressionLevel = CompressionLevel.High;

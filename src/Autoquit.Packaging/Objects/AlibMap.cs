@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace Autoquit.Packaging.Objects
 {
     [XmlRoot("AlibMap")]
-    class AlibMap
+    [XmlInclude(typeof(AlibMapItem))]
+    public class AlibMap
     {
-        public IList<AlibMapItem> Map { get; set; } = new List<AlibMapItem>();
+        [XmlArray("MapList")]
+        [XmlArrayItem("MapItem")]
+        public AlibMapItem[] Map { get; set; }
     }
 }

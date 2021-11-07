@@ -1,9 +1,12 @@
 ﻿using Autoquit.Packaging.LZMA;
+using Autoquit.Packaging.Objects;
+using Autoquit.Packaging.Zip;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Autoquit.Packaging
 {
@@ -50,15 +53,16 @@ namespace Autoquit.Packaging
         {
             if (File.Exists(FilePath))
                 File.Delete(FilePath);
+            using (var hash = new sha256())
+                Id = CreateHash();
             using (var fs = new FileStream(FilePath, FileMode.Create, FileAccess.Write))
             {
                 var contents = _inlineContents.ToDictionary(x => x.Key, v => new MemoryStream(v.Value) as Stream);
-                AlibCompressor.Instance.Compress(contents, fs, Id);
-                fs.Seek(0, SeekOrigin.Begin);
-                var id = Encoding.UTF8.GetBytes(Id).AsSpan();
+                var id = Ziplib.Instance.Zip(Encoding.UTF8.GetBytes(Id)).AsSpan();
                 var idSize = BitConverter.GetBytes(id.Length);
                 fs.Write(idSize, 0, 4);
                 fs.Write(id);
+                AlibCompressor.Instance.Compress(contents, fs, Id);
             }
         }
 
@@ -68,19 +72,52 @@ namespace Autoquit.Packaging
                 throw new FileNotFoundException("File cannot be found: " + FilePath);
             var content = File.ReadAllBytes(FilePath).AsSpan();
             var size = BitConverter.ToInt32(content.Slice(0, 4));
-            var id = Encoding.UTF8.GetString(content.Slice(4, size));
+            var id = Encoding.UTF8.GetString(Ziplib.Instance.UnZip(content.Slice(4, size).ToArray()));
             try
             {
                 using (var ms = new MemoryStream(content.Slice(4 + size).ToArray()))
                 {
                     _inlineContents = AlibCompressor.Instance.LoadArchive(ms, id).ToDictionary(x => x.Key, v => v.Value);
                 }
-                Id = id;
+                var checksumHash = CreateHash();
+                if (id == checksumHash)
+                    Id = id;
+                else throw new FormatException("Wrong file format");
             }
             catch (Exception)
             {
                 _inlineContents = new Dictionary<string, byte[]>();
                 throw new FileLoadException("Wrong file format");
+            }
+        }
+
+        private string CreateHash()
+        {
+            using (var hash = new sha256())
+            {
+                var srcString = new StringBuilder();
+                foreach (var pair in _inlineContents.OrderBy(x => x.Key))
+                {
+                    srcString.Append(pair.Key).Append(':').Append(pair.Value.Length).Append(':');
+                }
+                return hash.Compute(srcString.ToString());
+            }
+        }
+
+        public IReadOnlyDictionary<string, string> LoadMap()
+        {
+            if (!_inlineContents.TryGetValue("map.xml", out var content) || content == null || content.Length == 0)
+                return null;
+            using (var ms = new MemoryStream(content))
+            {
+                var serializer = new XmlSerializer(typeof(AlibMap));
+                var result = serializer.Deserialize(ms) as AlibMap;
+                if (result == null)
+                    return null;
+                var res = new Dictionary<string, string>();
+                foreach (var item in result.Map)
+                    res.Add(item.Path, item.AssemblyName);
+                return res;
             }
         }
 

@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace Autoquit.Packaging.Objects
 {
-    class AlibMapItem
+    [XmlType("MapItem")]
+    public class AlibMapItem
     {
         [XmlAttribute]
-        public string Path { get; private set; }
+        public string Path { get; set; }
         [XmlElement(IsNullable = false)]
-        public string AssemblyName { get; private set; }
+        public string AssemblyName { get; set; }
 
         [XmlIgnore]
         public byte[] Data { get; }
+
+        public AlibMapItem()
+        {
+
+        }
 
         public AlibMapItem(string path)
         {

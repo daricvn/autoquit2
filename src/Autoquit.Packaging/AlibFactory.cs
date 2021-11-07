@@ -1,5 +1,6 @@
 ﻿using Autoquit.Packaging.Objects;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -29,12 +30,14 @@ namespace Autoquit.Packaging
             if (!File.Exists(mainModule))
                 return null;
             var map = new AlibMap();
-            map.Map.Add(new AlibMapItem(mainModule).MapToNewPath(MAIN_PATH));
+            var list = new List<AlibMapItem>();
+            list.Add(new AlibMapItem(mainModule).MapToNewPath(MAIN_PATH));
             foreach (var dp in dependencies)
                 if (File.Exists(dp))
                 {
-                    map.Map.Add(new AlibMapItem(dp).MapToNewPath(REF_PATH));
+                    list.Add(new AlibMapItem(dp).MapToNewPath(REF_PATH));
                 }
+            map.Map = list.ToArray();
             var alibFile = new AlibFile(filePath);
             foreach (var item in map.Map)
                 alibFile.Set(item.Path, item.Data);

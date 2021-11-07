@@ -40,11 +40,15 @@ namespace Autoquit.Packaging.Builder
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.dllBrowser = new System.Windows.Forms.OpenFileDialog();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.lstAlibContent = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnAlibBrowse = new System.Windows.Forms.Button();
             this.txtAlibPath = new System.Windows.Forms.TextBox();
+            this.dllBrowser = new System.Windows.Forms.OpenFileDialog();
             this.alibBrowser = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
+            this.lstMap = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -124,6 +128,7 @@ namespace Autoquit.Packaging.Builder
             this.btnPackage.TabIndex = 7;
             this.btnPackage.Text = "Build Package";
             this.btnPackage.UseVisualStyleBackColor = true;
+            this.btnPackage.Click += new System.EventHandler(this.btnPackage_Click);
             // 
             // tabControl1
             // 
@@ -155,6 +160,9 @@ namespace Autoquit.Packaging.Builder
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.lstMap);
+            this.tabPage2.Controls.Add(this.btnSave);
+            this.tabPage2.Controls.Add(this.lstAlibContent);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.btnAlibBrowse);
             this.tabPage2.Controls.Add(this.txtAlibPath);
@@ -166,9 +174,26 @@ namespace Autoquit.Packaging.Builder
             this.tabPage2.Text = "Extract";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // dllBrowser
+            // btnSave
             // 
-            this.dllBrowser.Filter = "DLL files|*.dll";
+            this.btnSave.Location = new System.Drawing.Point(230, 264);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(146, 37);
+            this.btnSave.TabIndex = 7;
+            this.btnSave.Text = "Save to Folder";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // lstAlibContent
+            // 
+            this.lstAlibContent.FormattingEnabled = true;
+            this.lstAlibContent.HorizontalScrollbar = true;
+            this.lstAlibContent.ItemHeight = 15;
+            this.lstAlibContent.Location = new System.Drawing.Point(14, 41);
+            this.lstAlibContent.Name = "lstAlibContent";
+            this.lstAlibContent.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.lstAlibContent.Size = new System.Drawing.Size(295, 214);
+            this.lstAlibContent.TabIndex = 6;
             // 
             // label3
             // 
@@ -196,9 +221,24 @@ namespace Autoquit.Packaging.Builder
             this.txtAlibPath.Size = new System.Drawing.Size(410, 23);
             this.txtAlibPath.TabIndex = 4;
             // 
+            // dllBrowser
+            // 
+            this.dllBrowser.Filter = "DLL files|*.dll";
+            // 
             // alibBrowser
             // 
             this.alibBrowser.Filter = "Autoquit Module files|*.alib";
+            // 
+            // lstMap
+            // 
+            this.lstMap.FormattingEnabled = true;
+            this.lstMap.HorizontalScrollbar = true;
+            this.lstMap.ItemHeight = 15;
+            this.lstMap.Location = new System.Drawing.Point(315, 41);
+            this.lstMap.Name = "lstMap";
+            this.lstMap.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.lstMap.Size = new System.Drawing.Size(284, 214);
+            this.lstMap.TabIndex = 8;
             // 
             // MainForm
             // 
@@ -239,6 +279,10 @@ namespace Autoquit.Packaging.Builder
         private System.Windows.Forms.Button btnAlibBrowse;
         private System.Windows.Forms.TextBox txtAlibPath;
         private System.Windows.Forms.OpenFileDialog alibBrowser;
+        private System.Windows.Forms.ListBox lstAlibContent;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowser;
+        private System.Windows.Forms.ListBox lstMap;
     }
 }
 
