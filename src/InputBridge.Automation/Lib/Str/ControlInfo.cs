@@ -33,7 +33,7 @@ namespace InputBridge.Automation.Lib.Str
 
         public static ControlInfo FromHandle(IntPtr targetHandle)
         {
-
+            return Null;
         }
     }
 }

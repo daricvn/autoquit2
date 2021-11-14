@@ -20,16 +20,28 @@ namespace InputBridge.Automation
             return p;
         }
 
+        public static PointF Offset(this PointF p, int offsetX = 0, int offsetY = 0)
+        {
+            if (offsetX == 0 && offsetY == 0)
+                return p;
+            return new PointF(p.X + offsetX, p.Y + offsetY);
+        }
+
         public static PointF DragMouseHere(this PointF p, int offsetX = 0, int offsetY = 0)
         {
             if (offsetX == 0 && offsetY == 0)
                 return SetMouseHere(p);
-            
+            InputBridge.SendMouse(Models.MouseEventType.LEFT_DOWN);
+            Thread.Sleep(5);
+            InputBridge.MoveMouse(Models.Point2d.FromPointF(p.Offset(offsetX, offsetY)), true);
+            Thread.Sleep(5);
+            InputBridge.SendMouse(Models.MouseEventType.LEFT_UP);
+            return p;
         }
 
         public static PointF SetMouseHere(this PointF p, int offsetX = 0, int offsetY = 0)
         {
-            InputBridge.SetCursorPosition(new Models.Point2d(Convert.ToInt32(p.X) + offsetX, Convert.ToInt32(p.Y) + offsetY));
+            InputBridge.SetCursorPosition(Models.Point2d.FromPointF(p.Offset(offsetX, offsetY)));
             return new PointF(p.X + offsetX, p.Y + offsetY);
         }
 

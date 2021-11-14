@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace InputBridge.Models
 {
@@ -15,5 +14,8 @@ namespace InputBridge.Models
             X = x;
             Y = y;
         }
+
+        public static Point2d FromPointF(PointF p)
+            => new Point2d(Convert.ToInt32(p.X), Convert.ToInt32(p.Y));
     }
 }

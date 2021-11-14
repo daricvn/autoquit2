@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace Autoquit.Packaging
@@ -49,6 +50,9 @@ namespace Autoquit.Packaging
             }
             return alibFile;
         }
+
+        public IEnumerable<string> GetMainFiles(AlibFile alib) => alib.Files.Where(x => x.StartsWith(MAIN_PATH));
+        public IEnumerable<string> GetReferencedFiles(AlibFile alib) => alib.Files.Where(x => x.StartsWith(REF_PATH));
 
         public void Dispose()
         {
