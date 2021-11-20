@@ -1,4 +1,5 @@
 ﻿using Autoquit2.Core.Modules;
+using Chromely.Core;
 using System;
 
 namespace Autoquit2.Core
@@ -13,7 +14,6 @@ namespace Autoquit2.Core
 
         private static void RunApp(IModuleManager moduleManager)
         {
-
         }
     }
 }
