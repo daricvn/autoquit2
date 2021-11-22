@@ -4,26 +4,27 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Configurations>Debug;Release;DebugWinx64;DebugLinux</Configurations>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;DebugWindows;DebugLinux</Configurations>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugWinx64|x64'">
-    <DefineConstants>TRACE</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugWindows|x64'">
+    <DefineConstants>TRACE;x64</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugWindows|x86'">
+    <DefineConstants>TRACE;x86</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.664.37" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.674-prerelease" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="runtime\" />
   </ItemGroup>
   
-  <ItemGroup Condition="'$(Platform)' == 'x64'">
-    <None Include="$(ProjectDir)\..\..\webview2.runtime\x64\**" Link="runtime\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(Platform)' == 'x86'">
-    <None Include="$(ProjectDir)\..\..\webview2.runtime\x86\**" Link="runtime\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  <ItemGroup Condition="'$(Platform)' == 'DebugWindows'">
+    <None Include="$(ProjectDir)\..\..\cef.runtime\windows\**" Link="bin\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

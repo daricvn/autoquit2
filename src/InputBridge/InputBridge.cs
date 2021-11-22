@@ -3,6 +3,7 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using InputBridge.Utilities;
+using System.Text;
 
 #if WINDOWS_OS
 using InputBridge.Models.Platforms.Windows;
@@ -15,21 +16,19 @@ namespace InputBridge
     {
 #if WINDOWS_OS
         [DllImport("user32.dll", EntryPoint = "PostMessage")]
-        private static extern bool PostMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
+        internal static extern bool PostMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
         [DllImport("user32.dll", EntryPoint = "SendMessage")]
-        private static extern int SendMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
-        [DllImport("user32.dll", EntryPoint = "GetWindowRect")]
-        private static extern bool GetWindowRect(IntPtr hwnd, ref Rectangle2d rectangle);
-        [DllImport("user32.dll", EntryPoint = "GetClientRect")]
-        private static extern bool GetClientRect(IntPtr hWnd, out Rectangle2d lpRect);
+        internal static extern int SendMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
+        [DllImport("user32.dll", EntryPoint = "SendMessage")]
+        internal static extern int SendMessage(IntPtr hWnd, uint Msg, int wParam, StringBuilder lParam);
         [DllImport("user32.dll", EntryPoint = "SetCursorPos")]
-        private static extern int SetCursorPosition(int x, int y);
+        internal static extern int SetCursorPosition(int x, int y);
         [DllImport("user32.dll", EntryPoint = "GetCursorPos")]
-        private static extern bool GetCursorPosisition(out Point2d lpPoint);
+        internal static extern bool GetCursorPosition(out Point2d lpPoint);
         [DllImport("user32.dll", EntryPoint = "SendInput", SetLastError = true)]
-        private static extern uint SendInput(uint nInputs, WindowInput[] pInputs, int cbSize);
+        internal static extern uint SendInput(uint nInputs, WindowInput[] pInputs, int cbSize);
         [DllImport("user32.dll", EntryPoint = "GetMessageExtraInfo")]
-        private static extern IntPtr GetMessageExtraInfo();
+        internal static extern IntPtr GetMessageExtraInfo();
 #endif
         public static void SetCursorPosition(Point2d location)
             => SetCursorPosition(location.X, location.Y);

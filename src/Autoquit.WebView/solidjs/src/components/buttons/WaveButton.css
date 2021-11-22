@@ -1,0 +1,16 @@
+.wave-button {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 5px 16px 6px 16px;
+}
+
+.ripple-start {
+    transform: scale(0.2);
+    opacity: 0.6;
+    transition: all 0.3s linear; 
+}
+.ripple-end {
+    transform: scale(1);
+    opacity: 0;
+}

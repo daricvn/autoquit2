@@ -1,7 +1,4 @@
 ﻿using Autoquit.Foundation.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Autoquit.Foundation.Models
 {
@@ -17,6 +14,25 @@ namespace Autoquit.Foundation.Models
         public string Name { get; private set; }
 
         /// <summary>
+        /// The description that will be displayed to the user.
+        /// </summary>
+        public string Description { get; private set; }
+
+        /// <summary>
+        /// Min value of the control, applied for Range and Slider
+        /// </summary>
+        public int Min { get; set; }
+        /// <summary>
+        /// Max value of the control, applied for Range and Slider.
+        /// </summary>
+        public int Max { get; set; }
+
+        /// <summary>
+        /// Selectable item. Suitable for ListItem
+        /// </summary>
+        public string[] Items { get; set; }
+
+        /// <summary>
         /// Control type
         /// </summary>
         public AutoquitControlType Type { get; private set; }
@@ -28,9 +44,35 @@ namespace Autoquit.Foundation.Models
             Type = type;
         }
 
-        public AutoquitControl(string name, AutoquitControlType type):this(int.MinValue, name, type)
+        public AutoquitControl(int index, string name, string desc, AutoquitControlType type) : this(index, name, type)
+        {
+            Description = desc;
+        }
+
+        public AutoquitControl(int index, string name, string desc, AutoquitControlType type, int min, int max) : this(index, name, desc, type)
+        {
+            Min = min;
+            Max = max;
+        }
+
+        public AutoquitControl(string name, string desc, AutoquitControlType type) : this(int.MinValue, name, desc, type)
         {
 
+        }
+
+        public AutoquitControl(string name, string desc, AutoquitControlType type, int min, int max) : this(int.MinValue, name, desc, type, min, max)
+        {
+
+        }
+
+        public AutoquitControl(int index, string name, AutoquitControlType type, params string[] items) : this(index, name, type)
+        {
+            Items = items;
+        }
+
+        public AutoquitControl(int index, string name, string desc, AutoquitControlType type, params string[] items) : this(index, name, desc, type)
+        {
+            Items = items;
         }
     }
 }

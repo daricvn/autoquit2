@@ -40,7 +40,7 @@ namespace InputBridge.Utilities
                     return KeyboardEventType.KEY_UP;
             }
 #endif
-            return KeyboardEventType.NONE;
+            return KeyboardEventType.PRESS;
         }
 
 #if WINDOWS_OS

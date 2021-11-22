@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace InputBridge.Models
 {
@@ -13,5 +11,13 @@ namespace InputBridge.Models
 
         public int Width => Math.Abs(Right - Left);
         public int Height => Math.Abs(Bottom - Top);
+
+        public Rectangle2d(int left, int top, int right, int bottom)
+        {
+            Left = left;
+            Top = top;
+            Right = right;
+            Bottom = bottom;
+        }
     }
 }

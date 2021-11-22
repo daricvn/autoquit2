@@ -1,0 +1,8 @@
+﻿{
+  "image-click": "Look-up Image",
+  "image-capture": "Snip Image",
+  "interactive": "Mouse Interaction Mode",
+  "mouse-interaction-mode": "Manipulate Mode: Turn this on to send actual mouse event on the top window.",
+  "mouse-action": "Mouse Action",
+  "mouse-action-type": "Target Position"
+}

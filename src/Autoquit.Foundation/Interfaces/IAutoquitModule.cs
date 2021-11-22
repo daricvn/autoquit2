@@ -6,6 +6,11 @@ namespace Autoquit.Foundation.Interfaces
 {
     public interface IAutoquitModule
     {
+        string Name { get; }
+        string Description { get; }
+        string Icon { get; }
+        string Version { get; }
+        string Author { get; }
         /// <summary>
         /// Set custom localization location. By default, All module will use the same localization file as Autoquit.
         /// </summary>
