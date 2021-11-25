@@ -5,6 +5,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Configurations>Debug;Release;Debug-Win64;Release-Win64</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
+    <ApplicationIcon />
+    <StartupObject />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Win64|x64'">
@@ -24,4 +26,10 @@
     <ProjectReference Include="..\Autoquit.DynamicModule\Autoquit.DynamicModules.csproj" />
     <ProjectReference Include="..\Autoquit.Foundation\Autoquit.Foundation.csproj" />
   </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="..\Autoquit.WebView\solidjs\dist\**">
+			<Visible>false</Visible>
+		</EmbeddedResource>
+		<EmbeddedResource Include="..\..\res\fav.ico" />
+	</ItemGroup>
 </Project>
