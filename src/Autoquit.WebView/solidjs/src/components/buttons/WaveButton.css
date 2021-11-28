@@ -1,8 +1,7 @@
 .wave-button {
     position: relative;
-    display: block;
+    display: inline-block;
     overflow: hidden;
-    padding: 5px 16px 6px 16px;
 }
 
 .ripple-start {

@@ -1,8 +1,8 @@
 export const themePreset = {
     bg_dark: 'bg-gray-800',
     bg_light: 'bg-gray-50',
-    txt_dark: 'text-white',
-    txt_light: 'text-black'
+    txt_dark: 'white',
+    txt_light: 'black'
 }
 
 export const accentPreset = [
@@ -59,7 +59,7 @@ export const accentPreset = [
         name: 'crimson',
         css: {
             light: 'red-700',
-            dark: 'red-500'
+            dark: 'red-300'
         }
     }
 ]

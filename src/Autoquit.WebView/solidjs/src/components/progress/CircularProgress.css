@@ -1,0 +1,37 @@
+  
+  .circular-progress{
+    animation: rotate 2s linear infinite;
+    position: relative;
+    display: inline-block;
+    /* height: $width;
+    width: $width; */
+  }
+  
+  .circular-progress  > .path {
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0;
+    animation: dash 1.5s ease-in-out infinite;
+    stroke-linecap: round;
+    /* stroke:#B6463A; */
+  }
+  
+  @keyframes rotate{
+   100%{
+    transform: rotate(360deg);
+   }
+  }
+
+  @keyframes dash{
+   0%{
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0;
+   }
+   50%{
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -35;
+   }
+   100%{
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -124;
+   }
+  }

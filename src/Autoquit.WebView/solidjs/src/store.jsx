@@ -5,8 +5,11 @@ import { accentPreset, themePreset } from "./theme";
 const initStore = {
     theme: '',
     accent: 'primary',
+    process: '',
     getBackground: (state)=> state?.theme == 'dark' ? themePreset.bg_dark: themePreset.bg_light,
+    getBackgroundInvert: (state)=> state?.theme == 'dark' ? themePreset.bg_light: themePreset.bg_dark,
     getTextColour: (state)=> state?.theme == 'dark' ? themePreset.txt_dark : themePreset.txt_light,
+    getTextColourInvert: (state)=> state?.theme == 'dark' ? themePreset.txt_light : themePreset.txt_dark,
     getAccent: (state)=> {
         let t = 'light'
         if (state.theme)

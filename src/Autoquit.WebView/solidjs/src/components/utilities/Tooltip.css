@@ -1,0 +1,17 @@
+div.tooltip {
+    position: absolute;
+}
+
+.tooltip-enter-active {
+    transition: all 0.4s cubic-bezier(.17, .67, .48, 1.16);
+    transition-delay: 300ms;
+}
+
+.tooltip-exit-active {
+    transition: all 0.4s cubic-bezier(.17, .67, .48, 1.16);
+}
+
+.tooltip-enter,
+.tooltip-exit-to {
+    opacity: 0;
+}

@@ -5,7 +5,9 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      rotate: [ 'group-hover' ],
+    },
   },
   plugins: [],
 }
