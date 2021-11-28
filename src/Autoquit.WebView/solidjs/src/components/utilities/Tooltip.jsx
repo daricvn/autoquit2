@@ -10,7 +10,7 @@ export default function Tooltip(props){
     let reference;
 
     createEffect(()=>{
-        if (!reference)
+        if (!reference || !state.size?.width)
             return
         let offset = +(props.offset ?? 4)
         let rect = reference.getBoundingClientRect()
@@ -29,7 +29,8 @@ export default function Tooltip(props){
     })
 
     const handleMouseHover = ()=>{
-        setHover(true)
+        if (!props.disabled)
+            setHover(true)  
     }
 
     const handleMouseOut = ()=>{
@@ -51,16 +52,16 @@ export default function Tooltip(props){
         }
     })
 
-    return <div className="inline-block"  onMouseOver={handleMouseHover} onMouseLeave={handleMouseOut}>
+    return <div className={`inline-block ${props.className ?? ""}`}>
         <Transition name="tooltip">
             {
                 getHover() &&
-                <div className={`tooltip font-thin text-sm inline-block px-4 py-1 rounded-lg transform ${state.getBackgroundInvert(state)} bg-opacity-80 text-${state.getTextColourInvert(state)} ${transition()}`} style={getStyle()}>
+                <div className={`tooltip font-thin text-sm inline-block px-3 py-1 rounded-lg transform ${state.getBackgroundInvert(state)} bg-opacity-80 text-${state.getTextColourInvert(state)} ${transition()}`} style={getStyle()}>
                     { props.value }
                 </div>
             }
         </Transition>
-        <div ref={reference}>
+        <div ref={reference} onMouseOver={handleMouseHover} onMouseLeave={handleMouseOut}>
             { props.children }
         </div>
     </div>

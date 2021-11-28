@@ -115,7 +115,7 @@ export default function EditableDropdown(props){
                     }
                 </For>
             </div> 
-            <div class="fixed w-full h-full z-10 left-0 select-none" onClick={()=> setOpen(false)} />
+            <div class={`fixed w-full h-full z-10 left-0 select-none ${!props.full ? "":"top-0 left-0"}`} onClick={()=> setOpen(false)} />
             </>
         }
     </div>

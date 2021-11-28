@@ -7,59 +7,45 @@ export const themePreset = {
 
 export const accentPreset = [
     {
-        name: 'primary',
+        name: 'ocean',
         css: {
             light: 'blue-500',
-            dark: 'sky-600'
+            dark: 'blue-500'
         }
     },
     {
-        name: 'secondary',
+        name: 'romance',
         css: {
-            light: 'rose-500',
-            dark: 'rose-400'
+            light: 'pink-400',
+            dark: 'pink-500'
         }
     },
     {
         name: 'emerald',
         css: {
-            light: 'emerald-400',
-            dark: 'emerald-600'
+            light: 'green-600',
+            dark: 'green-600'
         }
     },
     {
         name: 'gold',
         css: {
-            light: 'amber-500',
+            light: 'yellow-500',
             dark: 'yellow-600'
-        }
-    },
-    {
-        name: 'lime',
-        css: {
-            light: 'lime-500',
-            dark: 'lime-600'
         }
     },
     {
         name: 'mysterious',
         css: {
-            light: 'violet-500',
-            dark: 'purple-500'
-        }
-    },
-    {
-        name: 'love',
-        css: {
-            light: 'pink-300',
-            dark: 'pink-500'
+            light: 'purple-500',
+            dark: 'purple-600'
         }
     },
     {
         name: 'crimson',
         css: {
             light: 'red-700',
-            dark: 'red-300'
+            dark: 'red-400'
         }
     }
 ]

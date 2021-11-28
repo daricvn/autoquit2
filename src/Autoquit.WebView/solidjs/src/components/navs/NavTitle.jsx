@@ -5,7 +5,8 @@ export default function NavTitle(props){
     const [ state, setState ] = useGlobalState()
     return <div className="flex space-x-3">
         <div>
-            <WaveButton className={`rounded-full w-12 h-12 text-${state.getTextColour(state)}`} color={state.getTextColour(state)}>
+            <WaveButton className={`rounded-full w-12 h-12 text-${state.getTextColour(state)}`} color={state.getTextColour(state)}
+                onClick={props.onClick}>
                 <i className="fas fa-arrow-left text-xl"></i>
             </WaveButton>
         </div>

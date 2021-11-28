@@ -4,8 +4,10 @@ import { accentPreset, themePreset } from "./theme";
 
 const initStore = {
     theme: '',
-    accent: 'primary',
+    accent: 'ocean',
     process: '',
+    size: {},
+    block: false,
     getBackground: (state)=> state?.theme == 'dark' ? themePreset.bg_dark: themePreset.bg_light,
     getBackgroundInvert: (state)=> state?.theme == 'dark' ? themePreset.bg_light: themePreset.bg_dark,
     getTextColour: (state)=> state?.theme == 'dark' ? themePreset.txt_dark : themePreset.txt_light,
@@ -17,7 +19,7 @@ const initStore = {
         for(let i=0; i< accentPreset.length; i++)
             if (accentPreset[i].name == state.accent)
                 return accentPreset[i].css[t]
-        return accentPreset[0].css['light']
+        return accentPreset[0].css[t]
     }
 }
 

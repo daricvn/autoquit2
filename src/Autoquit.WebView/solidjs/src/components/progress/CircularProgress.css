@@ -1,6 +1,6 @@
   
   .circular-progress{
-    animation: rotate 2s linear infinite;
+    animation: rotate 500ms linear infinite;
     position: relative;
     display: inline-block;
     /* height: $width;
@@ -8,11 +8,9 @@
   }
   
   .circular-progress  > .path {
-    stroke-dasharray: 1,200;
-    stroke-dashoffset: 0;
-    animation: dash 1.5s ease-in-out infinite;
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -30;
     stroke-linecap: round;
-    /* stroke:#B6463A; */
   }
   
   @keyframes rotate{
