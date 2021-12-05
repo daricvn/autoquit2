@@ -40,3 +40,18 @@
 .fade-exit-to {
     opacity: 0;
 }
+
+.route-fade-enter-active {
+    transition: all 0.4s cubic-bezier(.17, .67, .48, 1.16);
+}
+
+.route-fade-exit-active {
+    transition: all 0.4s cubic-bezier(.17, .67, .48, 1.16);
+    position: absolute;
+}
+
+.route-fade-enter,
+.route-fade-exit-to {
+    opacity: 0;
+    transform: translateX(50px)
+}

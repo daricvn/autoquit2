@@ -1,10 +1,14 @@
+import { Router } from "solid-app-router";
+import { routes } from "./routes/config";
 import { StateProvider } from "./store";
 import Main from "./views/Main";
 
 function App() {
   return (
     <StateProvider>
-        <Main></Main>
+        <Router routes={routes}>
+          <Main></Main>
+        </Router>
     </StateProvider>
   );
 }

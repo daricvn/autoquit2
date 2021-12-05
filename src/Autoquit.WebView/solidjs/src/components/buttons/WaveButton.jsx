@@ -34,8 +34,6 @@ export default function WaveButton(props){
             targetButton.addEventListener('mousedown', onMouseDown)
         }
     })
-
-    
     
     const onMouseDown = (e)=>{
         var list = getRipples()

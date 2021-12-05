@@ -30,7 +30,7 @@ namespace Autoquit2.Core
                             RelativePathToIconFile = "fav.ico",
                             StartCentered = true,
                             DisableMinMaximizeControls = true,
-                            Size = new WindowSize(1080,600)
+                            Size = new WindowSize(1080,800)
                         },
                         UrlSchemes = new List<UrlScheme>()
                         {

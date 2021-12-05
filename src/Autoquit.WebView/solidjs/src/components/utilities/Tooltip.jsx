@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal, onMount } from 'solid-js';
+import { createEffect, createMemo, createSignal, onCleanup, onMount } from 'solid-js';
 import { Transition } from 'solid-transition-group';
 import { useGlobalState } from '../../store';
 import './Tooltip.css'
@@ -12,6 +12,10 @@ export default function Tooltip(props){
 
     onMount(()=>{
         setMounted(true)
+    })
+
+    onCleanup(()=>{
+        setMounted(false)
     })
 
     createEffect(()=>{
@@ -61,7 +65,7 @@ export default function Tooltip(props){
         <Transition name="tooltip">
             {
                 getHover() &&
-                <div className={`tooltip font-thin text-sm inline-block px-3 py-1 rounded-lg transform ${state.getBackgroundInvert(state)} bg-opacity-80 text-${state.getTextColourInvert(state)} ${transition()}`} style={getStyle()}>
+                <div className={`select-none pointer-events-none tooltip font-thin text-sm inline-block px-3 py-1 rounded-lg transform ${state.getBackgroundInvert(state)} bg-opacity-80 text-${state.getTextColourInvert(state)} ${transition()}`} style={getStyle()}>
                     { props.value }
                 </div>
             }

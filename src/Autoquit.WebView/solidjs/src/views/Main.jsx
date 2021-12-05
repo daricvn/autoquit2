@@ -1,28 +1,27 @@
+import { useNavigate } from "solid-app-router"
 import { onMount } from "solid-js"
-import SubContent from "../components/SubContent"
+import MainRoutes from "../routes/config"
 import { useGlobalState } from "../store"
-import About from "./About"
-import AppPortal from "./AppPortal"
 import MainHeader from "./MainHeader"
 
 const accentList = ['info', 'danger', 'warning', 'green', 'orange']
 
 export default function Main(){
     const [ state, setState ] = useGlobalState()
-
+    const navigate = useNavigate()
     onMount(()=>{
         setState('size', ()=> ({ width: window.innerWidth, height: window.innerHeight }))
         window.onresize = ()=>{
             setState('size', ()=> ({ width: window.innerWidth, height: window.innerHeight }))
         }
+        navigate('/')
     })
 
-    return <div class={state.getBackground(state)} style="min-width: 100vw; min-height: 100vh">
+    return <div class={`${state.getBackground(state)} flex flex-wrap flex-col`} style="width: 100vw; height: 100vh">
         <MainHeader />
-        <SubContent className="container mx-auto" title="About">
-            <About />
-        </SubContent>
-        <AppPortal />
+        <div className="flex-grow relative">
+            <MainRoutes />
+        </div>
         {
             state.block &&
             <div className="fixed w-screen h-screen bg-black opacity-30 top-0 left-0 select-none" style="z-index: 10000"></div>

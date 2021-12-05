@@ -21,6 +21,10 @@ module.exports = {
                 'bg-red-400',
                 'border-red-700',
                 'border-red-400',
+                'bg-gray-700',
+                'border-gray-700',
+                'bg-gray-800',
+                'border-gray-800',
               ]
   },
   darkMode: false, // or 'media' or 'class'
