@@ -47,5 +47,12 @@ export const accentPreset = [
             light: 'red-700',
             dark: 'red-400'
         }
+    },
+    {
+        name: 'silver',
+        css: {
+            light: 'gray-500',
+            dark: 'gray-400'
+        }
     }
 ]

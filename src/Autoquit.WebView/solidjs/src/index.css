@@ -1,3 +1,9 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+.grid-2-cols {
+    display: grid;
+    grid-template-areas: "a a";
+    grid-auto-columns: min-content;
+}

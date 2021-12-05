@@ -1,5 +1,6 @@
 import { useGlobalState } from "../../store";
 import WaveButton from "../buttons/WaveButton";
+import Text from "../forms/Text";
 
 export default function NavTitle(props){
     const [ state, setState ] = useGlobalState()
@@ -10,8 +11,8 @@ export default function NavTitle(props){
                 <i className="fas fa-arrow-left text-xl"></i>
             </WaveButton>
         </div>
-        <div className={`flex-auto align-text-bottom relative pt-2 text-lg font-bold text-${state.getTextColour(state)}`}>
+        <Text className="flex-auto align-text-bottom relative pt-2 text-xl font-bold select-none">
             {props.children}
-        </div>
+        </Text>
     </div>
 }
