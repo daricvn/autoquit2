@@ -30,7 +30,7 @@ export default function BottomNav(){
             </div>
             <div className="text-right pr-1">
                 <Tooltip value={translate("Settings")} position="left">
-                    <WaveButton className={`rounded-full text-white w-8 h-8 group`}
+                    <WaveButton className={`rounded-full text-white w-8 h-8 group outline-none`}
                         onClick={()=> testUpdate()}>
                         <i className="fas fa-cog transition-all duration-500 transform group-hover:rotate-180"></i>
                     </WaveButton>

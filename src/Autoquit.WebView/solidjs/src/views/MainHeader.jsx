@@ -17,8 +17,8 @@ export default function MainHeader(){
         <div className="grid grid-cols-5">
             <div className="col-span-3">
                 <EditableDropdown className="pt-1"
-                    newItemText={`${translate("Create New")()}...`}
-                    placeholder={translate("Select File")()}
+                    newItemText={`${translate("Create New")}...`}
+                    placeholder={translate("Select File")}
                 ></EditableDropdown>
             </div>
             <div class="pl-2 pt-2">
@@ -26,7 +26,7 @@ export default function MainHeader(){
                     <i className="fa fa-save mr-2"></i>
                     {translate("Save")}
                 </WaveButton>
-                <Tooltip value={translate("Delete File")()} position="right">
+                <Tooltip value={translate("Delete File")} position="right">
                     <WaveButton className={`transition-colors px-3 py-1 text-white bg-red-500 border border-red-500 rounded-lg mr-2 hover:shadow-inner hover:bg-red-600`} onClick={updateState}>
                         <i className="fa fa-trash-alt"></i>
                     </WaveButton>

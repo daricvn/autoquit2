@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal } from 'solid-js';
+import { createEffect, createMemo, createSignal, onMount } from 'solid-js';
 import { Transition } from 'solid-transition-group';
 import { useGlobalState } from '../../store';
 import './Tooltip.css'
@@ -7,16 +7,21 @@ export default function Tooltip(props){
     const [ state, setState ] = useGlobalState()
     const [ getHover, setHover ] = createSignal(false)
     const [ getStyle, setStyle ] = createSignal("")
+    const [ getMounted, setMounted ] = createSignal(false)
     let reference;
 
+    onMount(()=>{
+        setMounted(true)
+    })
+
     createEffect(()=>{
-        if (!reference || !state.size?.width)
+        if (!reference || !state.size?.width || !getMounted())
             return
         let offset = +(props.offset ?? 4)
         let rect = reference.getBoundingClientRect()
-        console.log(reference.offsetLeft)
         let x = Math.round(reference.offsetLeft + (rect.width/2))
         let y = Math.round(reference.offsetTop + (rect.height/2))
+        var firstY = y;
         if (props.position == "top")
             y -= Math.round(rect.height/2 + offset)
         else if (props.position == "left")
