@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Configurations>Debug;Release;Debug-Win64;Release-Win64</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
@@ -33,7 +33,4 @@
 		</EmbeddedResource>
 		<EmbeddedResource Include="..\..\res\fav.ico" />
 	</ItemGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="if &quot;$(Configuration)|$(Platform)&quot;==&quot;Debug-Win64|x64&quot; call &quot;$(SolutionDir)install-cef.bat&quot; &quot;$(SolutionDir)..\..\cef.runtime\windows\*&quot; &quot;$(ProjectDir)$(OutDir)__install_cef&quot; &quot;$(Configuration)&quot;&#xD;&#xA;if &quot;$(Configuration)|$(Platform)&quot;==&quot;Release-Win64|x64&quot; call &quot;$(SolutionDir)install-cef.bat&quot; &quot;$(SolutionDir)..\..\cef.runtime\windows\*&quot; &quot;$(ProjectDir)$(OutDir)__install_cef&quot; &quot;$(Configuration)&quot;" />
-	</Target>
 </Project>

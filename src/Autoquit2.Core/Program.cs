@@ -10,21 +10,19 @@ using System.Reflection;
 
 namespace Autoquit2.Core
 {
+    [Obfuscation(Exclude = true, ApplyToMembers = true)]
     class Program
     {
-        private const string CEF_INSTALLER = "__install_cef";
         static void Main(string[] args)
         {
-            RunApp(ModuleManager.Instance);
+
         }
+
+        private static IModuleManager GetModuleManager()
+            => ModuleManager.Instance;
 
         private static void RunApp(IModuleManager moduleManager)
         {
-            using (var cefInstaller = new CefInstaller(CEF_INSTALLER))
-            {
-                if (cefInstaller.ShouldInstall)
-                    cefInstaller.Install();
-            }
             AppBuilder.Create()
                 .UseApp<Modules.ChromelyApp>()
                 .UseConfig<DefaultConfiguration>(new DefaultConfiguration()

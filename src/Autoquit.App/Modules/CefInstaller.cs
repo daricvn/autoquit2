@@ -1,8 +1,8 @@
 ﻿using Autoquit.Packaging.LZMA;
 using System;
-namespace Autoquit2.Core.Modules.Implement
+namespace Autoquit.Modules
 {
-    class CefInstaller : IAutoInstaller
+    class CefInstaller 
     {
         private string _cefFolder;
         public bool ShouldInstall

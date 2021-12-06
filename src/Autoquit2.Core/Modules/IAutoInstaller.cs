@@ -2,7 +2,7 @@
 
 namespace Autoquit2.Core.Modules
 {
-    interface IAutoInstaller : IDisposable
+    public interface IAutoInstaller : IDisposable
     {
         bool ShouldInstall { get; }
         bool Install();

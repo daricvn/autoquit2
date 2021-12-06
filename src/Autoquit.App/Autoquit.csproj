@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <Configurations>Debug;Release;Debug-Win64;Release-Win64</Configurations>
+    <Platforms>AnyCPU;x64</Platforms>
+    <ApplicationIcon>..\..\res\fav.ico</ApplicationIcon>
+    <StartupObject />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Win64|x64'">
+    <DefineConstants>TRACE;WINDOWS_OS</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\res\fav.ico" Link="fav.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Autoquit2.Core\Autoquit2.Core.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if &quot;$(Configuration)|$(Platform)&quot;==&quot;Debug-Win64|x64&quot; call &quot;$(SolutionDir)install-cef.bat&quot; &quot;$(SolutionDir)..\..\cef.runtime\windows\*&quot; &quot;$(ProjectDir)$(OutDir)__install_cef&quot; &quot;$(Configuration)&quot;&#xD;&#xA;if &quot;$(Configuration)|$(Platform)&quot;==&quot;Release-Win64|x64&quot; call &quot;$(SolutionDir)install-cef.bat&quot; &quot;$(SolutionDir)..\..\cef.runtime\windows\*&quot; &quot;$(ProjectDir)$(OutDir)__install_cef&quot; &quot;$(Configuration)&quot;&#xD;&#xA;" />
+  </Target>
+
+</Project>
