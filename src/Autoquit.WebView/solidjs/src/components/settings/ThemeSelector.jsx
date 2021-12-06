@@ -11,7 +11,7 @@ export default function ThemeSelector(){
     }
 
     return <div className="flex space-x-3">
-        <Tooltip className="pt-3" value={translate("Light")} offset="16"><ColourItem color="white" selected={ state.theme != "dark" } onClick={()=> setTheme("light")} /></Tooltip>
-        <Tooltip className="pt-3" value={translate("Dark")} offset="16"><ColourItem color="gray-700" selected={ state.theme == "dark" } onClick={()=> setTheme("dark")} /></Tooltip>
+        <Tooltip className="pt-3" value={translate("Light")}><ColourItem color="white" selected={ state.theme != "dark" } onClick={()=> setTheme("light")} /></Tooltip>
+        <Tooltip className="pt-3" value={translate("Dark")}><ColourItem color="gray-700" selected={ state.theme == "dark" } onClick={()=> setTheme("dark")} /></Tooltip>
     </div>
 }

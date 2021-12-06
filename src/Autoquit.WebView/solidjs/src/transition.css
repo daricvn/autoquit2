@@ -1,11 +1,9 @@
 .slide-left-enter-active {
     transition: all 0.4s cubic-bezier(.17, .67, .48, 1.16);
-    position: absolute;
 }
 
 .slide-left-exit-active {
     transition: all 0.4s cubic-bezier(.17, .67, .48, 1.16);
-    position: absolute;
 }
 
 .slide-left-enter,

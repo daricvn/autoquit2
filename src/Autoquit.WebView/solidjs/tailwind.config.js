@@ -43,6 +43,10 @@ module.exports = {
                 'bg-gray-400',
                 'border-gray-400',
                 'text-gray-400',
+                'pl-3',
+                'pr-3',
+                'pl-10',
+                'pr-10',
               ]
   },
   darkMode: false, // or 'media' or 'class'
@@ -54,5 +58,5 @@ module.exports = {
       rotate: [ 'group-hover', 'hover' ],
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 }

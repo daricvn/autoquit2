@@ -11,7 +11,7 @@ export default function Tooltip(props){
     let reference;
 
     onMount(()=>{
-        setMounted(true)
+        setTimeout(()=> setMounted(true), 600);
     })
 
     onCleanup(()=>{

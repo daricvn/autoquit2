@@ -16,7 +16,7 @@ export default function AccentSelector(){
         <For each={accentPreset}>
             {
                 (item)=> 
-                <Tooltip className="pt-3" value={translate(capitalize(item.name))} offset="16"><ColourItem color={item.css.light} selected={ state.accent == item.name } onClick={()=> setAccent(item.name)} /></Tooltip>
+                <Tooltip className="pt-3" value={translate(capitalize(item.name))}><ColourItem color={item.css.light} selected={ state.accent == item.name } onClick={()=> setAccent(item.name)} /></Tooltip>
             }
         </For>
     </div>

@@ -3,7 +3,7 @@ import KeyBind from "../components/settings/KeyBind";
 import translate from "../libs/i18n";
 import { useGlobalState } from "../store";
 
-export default function BindingSettings(){
+export default function BindingSettings(props){
     const [state, setState] = useGlobalState()
 
     return <div className="grid-2-cols pl-6" style="gap: 6px">

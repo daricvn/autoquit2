@@ -6,12 +6,11 @@ using System.Text;
 
 namespace Autoquit2.Core.Modules
 {
-    class myChromelyApp:ChromelyBasicApp
+    class ChromelyApp:ChromelyBasicApp
     {
-        public override void ConfigureServices(ServiceCollection services)
+        public override void ConfigureServiceResolvers(IServiceCollection services)
         {
-            base.ConfigureServices(services);
-
+            base.ConfigureServiceResolvers(services);
         }
     }
 }

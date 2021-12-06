@@ -7,3 +7,8 @@
     grid-template-areas: "a a";
     grid-auto-columns: min-content;
 }
+
+.checkbox-accent {
+    --chkbg: var(--a);
+    --chkfg: var(--ac);
+}
