@@ -12,6 +12,20 @@
     opacity: 0;
 }
 
+.slide-down-enter-active {
+    transition: all 0.4s cubic-bezier(.17, .67, .48, 1.16);
+}
+
+.slide-down-exit-active {
+    transition: all 0.4s cubic-bezier(.17, .67, .48, 1.16);
+}
+
+.slide-down-enter,
+.slide-down-exit-to {
+    transform: translateY(-50px);
+    opacity: 0;
+}
+
 .appear-enter-active {
     transition: all 0.4s cubic-bezier(.17, .67, .48, 1.16);
 }

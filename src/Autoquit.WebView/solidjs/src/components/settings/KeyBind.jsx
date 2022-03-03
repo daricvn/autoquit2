@@ -66,7 +66,7 @@ export default function KeyBind(props){
             props.onChange(obj)
     }
 
-    return <TextBox className="max-w-sm w-72" iconAfter={<i className="far fa-keyboard" />}
+    return <TextBox className="max-w-sm w-72" append={<i className="far fa-keyboard" />}
             onKeyDown={handleKeyBind}
             value={getValue()}
             readOnly={props.readOnly}

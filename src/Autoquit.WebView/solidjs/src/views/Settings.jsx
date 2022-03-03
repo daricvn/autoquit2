@@ -6,12 +6,10 @@ import AccentSelector from "../components/settings/AccentSelector";
 import ThemeSelector from "../components/settings/ThemeSelector";
 import SubContent from "../components/SubContent";
 import translate from "../libs/i18n";
-import { useGlobalState } from "../store";
 import BindingSettings from "./BindingSettings";
 import FeatureSettings from "./FeatureSettings";
 
 export default function Settings(){
-    const [state, setState] = useGlobalState()
     const [ getDirty, setDirty ] = createSignal(false)
 
 

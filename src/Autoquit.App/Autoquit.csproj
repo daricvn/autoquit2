@@ -7,6 +7,12 @@
     <Platforms>AnyCPU;x64</Platforms>
     <ApplicationIcon>..\..\res\fav.ico</ApplicationIcon>
     <StartupObject />
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <Version>2.0.0</Version>
+    <PackageProjectUrl>https://github.com/daricvn/autoquit2</PackageProjectUrl>
+    <Authors>Darick Nguyen</Authors>
+    <RepositoryUrl>https://github.com/daricvn/autoquit2</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Win64|x64'">

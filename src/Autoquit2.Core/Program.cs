@@ -41,7 +41,7 @@ namespace Autoquit2.Core
                     },
                     UrlSchemes = new List<UrlScheme>()
                     {
-                            new UrlScheme("app", "app", "autoquit2", string.Empty, UrlSchemeType.AssemblyResource, assemblyOptions: new AssemblyOptions(Assembly.GetExecutingAssembly(),"Autoquit2.Core", ""))
+                        new UrlScheme("app", "app", "autoquit2", string.Empty, UrlSchemeType.AssemblyResource, assemblyOptions: new AssemblyOptions(Assembly.GetExecutingAssembly(),"Autoquit2.Core", ""))
                     }
                 })
                 .Build()

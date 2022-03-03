@@ -62,7 +62,6 @@ export default function EditableDropdown(props){
     const getFilteredItem = createMemo(()=>{
         if (!props.items)
             return []
-        console.log("Filetered")
         let res = props.items.map((item, i) => ({ content: value ? item[value] : item, data: key ? item[key]: item, index: i }))
         if (!dropdownInput?.value || !getOpen())
             return res
