@@ -24,7 +24,7 @@ export default function BottomNav(){
                         <Transition name="slide-left">
                             {
                                 state.process &&
-                                <span>{state.process}</span>
+                                <span>{translate(state.process)}</span>
                             }
                         </Transition>
                     </div>

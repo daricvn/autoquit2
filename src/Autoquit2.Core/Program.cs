@@ -1,4 +1,5 @@
-﻿using Autoquit2.Core.Modules;
+﻿using Autoquit2.Core.Const;
+using Autoquit2.Core.Modules;
 using Autoquit2.Core.Modules.Implement;
 using Chromely.Core;
 using Chromely.Core.Configuration;
@@ -13,12 +14,14 @@ namespace Autoquit2.Core
     [Obfuscation(Exclude = true, ApplyToMembers = true)]
     class Program
     {
+        internal static Version Version => Assembly.GetExecutingAssembly().GetName().Version; 
+
         static void Main(string[] args)
         {
 
         }
 
-        private static IModuleManager GetModuleManager()
+        internal static IModuleManager GetModuleManager()
             => ModuleManager.Instance;
 
         private static void RunApp(IModuleManager moduleManager)
@@ -37,11 +40,12 @@ namespace Autoquit2.Core
                         RelativePathToIconFile = "fav.ico",
                         StartCentered = true,
                         DisableMinMaximizeControls = true,
-                        Size = new WindowSize(1080, 800)
+                        Size = new WindowSize(1080, 680)
                     },
                     UrlSchemes = new List<UrlScheme>()
                     {
-                        new UrlScheme("app", "app", "autoquit2", string.Empty, UrlSchemeType.AssemblyResource, assemblyOptions: new AssemblyOptions(Assembly.GetExecutingAssembly(),"Autoquit2.Core", ""))
+                        new UrlScheme("app", "app", "autoquit2", string.Empty, UrlSchemeType.AssemblyResource, assemblyOptions: new AssemblyOptions(Assembly.GetExecutingAssembly(),"Autoquit2.Core", "")),
+                        new UrlScheme("http", AppConst.APP_HOST, UrlSchemeType.LocalRquest)
                     }
                 })
                 .Build()

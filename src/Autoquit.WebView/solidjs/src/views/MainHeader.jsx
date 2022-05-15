@@ -1,7 +1,7 @@
 import { useNavigate } from "solid-app-router";
 import { createSignal } from "solid-js";
 import WaveButton from "../components/buttons/WaveButton";
-import EditableDropdown from "../components/dropdown/EditableDropdown";
+import ProcessesDropdownList from "../components/dropdown/ProcessesDropdownList";
 import Header from "../components/navs/Header";
 import Tooltip from "../components/utilities/Tooltip";
 import translate from "../libs/i18n";
@@ -12,24 +12,18 @@ export default function MainHeader(){
     const navigate = useNavigate()
 
 
-    const updateState = ()=>{
-    }
-
     return <Header>
-        <div className="grid grid-cols-5">
+        <div className={`grid grid-cols-5 ${state.blockHeader ? 'pointer-events-none':''}`}>
             <div className="col-span-3">
-                <EditableDropdown className="pt-1"
-                    newItemText={`${translate("Create New")}...`}
-                    placeholder={translate("Select File")}
-                ></EditableDropdown>
+                <ProcessesDropdownList />
             </div>
             <div class="pl-2 pt-2">
-                <WaveButton className={`transition-colors outline-none px-3 py-1 text-white bg-green-500 border border-green-500 hover:bg-green-600 hover:shadow-inner rounded-lg mr-2`} onClick={updateState}>
+                <WaveButton className={`transition-colors outline-none px-3 py-1 text-white bg-green-500 border border-green-500 hover:bg-green-600 hover:shadow-inner rounded-lg mr-2`}>
                     <i className="fa fa-save mr-2"></i>
                     {translate("Save")}
                 </WaveButton>
                 <Tooltip value={translate("Delete File")} position="right">
-                    <WaveButton className={`transition-colors outline-none px-3 py-1 text-white bg-red-500 border border-red-500 rounded-lg mr-2 hover:shadow-inner hover:bg-red-600`} onClick={updateState}>
+                    <WaveButton className={`transition-colors outline-none px-3 py-1 text-white bg-red-500 border border-red-500 rounded-lg mr-2 hover:shadow-inner hover:bg-red-600`}>
                         <i className="fa fa-trash-alt"></i>
                     </WaveButton>
                 </Tooltip>

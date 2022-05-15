@@ -17,9 +17,9 @@ export default function Main(){
         navigate('/')
     })
 
-    return <div class={`${state.getBackground(state)} flex flex-wrap flex-col`} style="width: 100vw; height: 100vh">
+    return <div class={`${state.getBackground(state)} flex flex-col`} style="height: 100vh">
         <MainHeader />
-        <div className="flex-grow relative">
+        <div className="flex-grow relative overflow-y-auto overflow-x-hidden pb-4">
             <MainRoutes />
         </div>
         {

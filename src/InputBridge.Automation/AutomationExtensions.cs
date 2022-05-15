@@ -10,7 +10,7 @@ namespace InputBridge.Automation
     /// </summary>
     public static class AutomationExtensions
     {
-        public static PointF Delay(this PointF p, int ms)
+        public static T Delay<T>(this T p, int ms)
         {
             var stopWatch = Stopwatch.StartNew();
             while (stopWatch.ElapsedMilliseconds < ms)
