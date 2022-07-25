@@ -16,7 +16,7 @@ export default function QuestionDialog(props){
     }
 
     return <Dialog className="px-6 py-4 w-96" show={props.show} transition="slide-down">
-        <div className={`block pb-6 text-${state.getTextColour(state)}`}>
+        <div className={`block pb-6 text-${state().getTextColour(state)}`}>
             {props.value}
         </div>
         <div className="block pb-2 justify-end flex space-x-2">

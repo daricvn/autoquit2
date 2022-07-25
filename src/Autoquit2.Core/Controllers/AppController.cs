@@ -2,7 +2,9 @@
 using Autoquit2.Core.Models.Struct;
 using Chromely.Core.Configuration;
 using Chromely.Core.Network;
+using InputBridge;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 
 namespace Autoquit2.Core.Controllers
@@ -33,7 +35,20 @@ namespace Autoquit2.Core.Controllers
         [RequestAction(RouteKey = "/app/processes")]
         public IChromelyResponse GetAllProcesses(IChromelyRequest req)
         {
-            return Ok(req, ProcessInfo.GetAll(false, false, _appConfig.GetValue<string>("defaultAppIcon")));
+            return Ok(req, ProcessInfo.GetAll(false, false));
+        }
+        [RequestAction(RouteKey = "/app/top")]
+        public IChromelyResponse BringToTop(IChromelyRequest req)
+        {
+            if (req.PostData != null && int.TryParse(req.PostData.ToString(), out int res))
+            {
+                var process = ProcessInfo.Get(res);
+                if (process == ProcessInfo.Empty || process.MainHandle == IntPtr.Zero)
+                    return NotFound(req);
+                NativeAPI.Instance.BringToTop((IntPtr)process.MainHandle);
+                return Ok(req);
+            }
+            return BadRequest(req);
         }
     }
 }

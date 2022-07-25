@@ -9,14 +9,14 @@ export default function FeatureSettings(props){
     const [state, setState] = useGlobalState()
 
     const updateSettings = (key, val)=>{
-        setState('temporaryState', { ...state.temporaryState, [key]: val });
+        setState('temporaryState', { ...state().temporaryState, [key]: val });
         if (props.onChange)
             props.onChange()
     }
 
     const getVal = (key)=>{
-        if (state.temporaryState && state.temporaryState[key] != null)
-            return state.temporaryState[key]
+        if (state().temporaryState && state().temporaryState[key] != null)
+            return state().temporaryState[key]
         return state[key]
     }
 

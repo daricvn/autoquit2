@@ -30,12 +30,26 @@
     <ProjectReference Include="..\Autoquit.DynamicModule\Autoquit.DynamicModules.csproj" />
     <ProjectReference Include="..\Autoquit.Foundation\Autoquit.Foundation.csproj" />
     <ProjectReference Include="..\Autoquit.Packaging\Autoquit.Packaging.csproj" />
+    <ProjectReference Include="..\Autoquit.Standard\Autoquit.Standard.csproj" />
   </ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="..\Autoquit.WebView\solidjs\dist\**">
 			<Visible>false</Visible>
 		</EmbeddedResource>
 		<EmbeddedResource Include="..\..\res\fav.ico" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Resources\env.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>env.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\env.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>env.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
 	  <None Update="appsettings.json">

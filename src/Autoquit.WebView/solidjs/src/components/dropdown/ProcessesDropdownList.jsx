@@ -15,7 +15,7 @@ export default function ProcessesDropdownList(props){
         fetchProcesses()
     })
 
-    const timeThreshold = createMemo(()=> state.scanThrottle ? 20 : 2);
+    const timeThreshold = createMemo(()=> state().scanThrottle ? 20 : 2);
 
     const fetchProcesses = ()=>{
         const currentTime = new Date().getTime() / 1000

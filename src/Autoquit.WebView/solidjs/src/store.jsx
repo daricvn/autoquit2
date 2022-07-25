@@ -1,4 +1,4 @@
-import { createContext, useContext } from "solid-js";
+import { createContext, createSignal, useContext } from "solid-js";
 import { createStore } from 'solid-js/store'
 import { accentPreset, themePreset } from "./theme";
 
@@ -14,28 +14,28 @@ const initStore = {
     scanAll: false,
     temporaryState: {},
     getTheme: (state)=>{
-        let theme = state?.theme;
-        if (state?.temporaryState && state.temporaryState.theme)
-            theme = state.temporaryState.theme
+        let theme = state()?.theme;
+        if (state()?.temporaryState && state().temporaryState.theme)
+            theme = state().temporaryState.theme
         return theme;
     },
     getBackground: (state)=> {
-        return state?.getTheme(state) == 'dark' ? themePreset.bg_dark: themePreset.bg_light
+        return state()?.getTheme(state) == 'dark' ? themePreset.bg_dark: themePreset.bg_light
     },
     getHoverBackground: (state)=> {
-        return state?.getTheme(state) == 'dark' ? themePreset.bg_dark_hover: themePreset.bg_light_hover
+        return state()?.getTheme(state) == 'dark' ? themePreset.bg_dark_hover: themePreset.bg_light_hover
     },
-    getBackgroundInvert: (state)=> state?.getTheme(state) == 'dark' ? themePreset.bg_light: themePreset.bg_dark,
+    getBackgroundInvert: (state)=> state()?.getTheme(state) == 'dark' ? themePreset.bg_light: themePreset.bg_dark,
     getTextColour: (state)=> {
-        return state?.getTheme(state) == 'dark' ? themePreset.txt_dark : themePreset.txt_light
+        return state()?.getTheme(state) == 'dark' ? themePreset.txt_dark : themePreset.txt_light
     },
-    getTextColourInvert: (state)=> state?.getTheme(state) == 'dark' ? themePreset.txt_light : themePreset.txt_dark,
+    getTextColourInvert: (state)=> state()?.getTheme(state) == 'dark' ? themePreset.txt_light : themePreset.txt_dark,
     getAccent: (state, type)=> {
         let t = type ?? 'light'
-        let theme = state.getTheme(state)
-        let accent = state.accent
-        if (state.temporaryState && state.temporaryState.accent)
-            accent = state.temporaryState.accent
+        let theme = state().getTheme(state)
+        let accent = state().accent
+        if (state().temporaryState && state().temporaryState.accent)
+            accent = state().temporaryState.accent
         if (theme && !type)
             t = theme
         for(let i=0; i< accentPreset.length; i++)
@@ -51,10 +51,13 @@ const StateContext = createContext([
 ])
 
 export const StateProvider = (props)=>{
-    const [ store, setStore ] = createStore(initStore)
+    const [ store, setStore ] = createSignal(initStore)
+    const setState = (key, val)=>{
+        setStore({ ...store(), [key]: val })
+    }
     var exportStore = [
         store, 
-        setStore
+        setState
     ]
     return <StateContext.Provider value={exportStore}>
         {props.children}

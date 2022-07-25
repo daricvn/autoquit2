@@ -1,4 +1,5 @@
-import { createMemo, createSignal, createEffect, For } from "solid-js"
+import { list } from "postcss"
+import { createMemo, createSignal, createEffect, For, Show } from "solid-js"
 import createDebounce from "../../libs/createDebounce"
 import { useGlobalState } from "../../store"
 import Content from "../forms/Content"
@@ -15,6 +16,7 @@ export default function EditableDropdown(props){
     const value = props.displayMember
     const iconVal = props.iconMember
     let dropdownInput
+    let listElement
 
     createEffect(()=>{
         if (props){
@@ -22,6 +24,22 @@ export default function EditableDropdown(props){
                 props.onOpening(this)
             else if (!getOpen() && props.onClosing)
                 props.onClosing(this)
+        }
+    })
+
+    createEffect(()=>{
+        getOpen();
+        if (!listElement || !dropdownInput || !getOpen())
+            return;
+        // Just for tracking
+        if (props.items) {}
+        if (props.position == "top") {
+            const top = listElement.offsetHeight + 6;
+            listElement.style.top = "-" + top + "px"
+        }
+        else {
+            listElement.style.top = dropdownInput.parentElement.offsetHeight + "px"            
+            listElement.style.bottom = ""
         }
     })
 
@@ -51,7 +69,7 @@ export default function EditableDropdown(props){
         if (!props.value)
             return ""
         if (data == props.value)
-            return `border-${state.getAccent(state)}`
+            return `border-${state().getAccent(state)}`
         return "";
     }
 
@@ -107,7 +125,7 @@ export default function EditableDropdown(props){
                     <polyline points="18 15 12 9 6 15"></polyline>
                 </svg>
                 </label>
-        return <CircularProgress color={state.getAccent(state, 'base')} size={6} className="mx-2" />
+        return <CircularProgress color={state().getAccent(state, 'base')} size={6} className="mx-2" />
     })
 
     return <div class={`relative ${props.className}`}>
@@ -119,14 +137,15 @@ export default function EditableDropdown(props){
         <input ref={dropdownInput} value={getDisplayValue()} placeholder={props.placeholder} onKeyDown={handleValueChange} name="select" id="select" class="px-2 appearance-none outline-none text-gray-800 flex-auto"
             onFocus={()=> setOpen(true)}
             checked />
-
-        <button class="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-gray-600" hidden={!props.value}
-            onClick={()=> onItemSelected("", -1, true)}>
-          <svg class="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
+        {
+            !props.hideClearButton && <button class="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-gray-600" hidden={!props.value}
+                onClick={()=> onItemSelected("", -1, true)}>
+                <svg class="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        }
         {
             props.appendContent
         }
@@ -135,35 +154,34 @@ export default function EditableDropdown(props){
         }
       </div>
       {
-            getOpen() && 
-            <>
-            <div class={`${state.getBackground(state)} absolute rounded shadow bg-white overflow-x-hidden overflow-y-auto flex flex-col w-full mt-1 border border-gray-200 z-50`} style="max-height: 520px">
-                {
-                    props.newItemText && 
-                    <Content class="cursor-pointer group">
-                        <a class={`block p-2 border-transparent border-l-4 group-hover:border-${state.getAccent(state)} group-hover:bg-gray-100`}
-                            onClick={onCreateNew}>
-                            
-                            <i class="fa fa-plus mr-2" />
-                            {props.newItemText}
-                        </a>
-                    </Content>
-                }
-                <For each={getFilteredItem()}>
+            <Show when={getOpen()} >
+                <div class={`fixed w-full h-full z-10 left-0 select-none ${!props.full ? "":"top-0 left-0"}`} onClick={()=> setOpen(false)} />
+                <div class={`${state().getBackground(state)} absolute rounded shadow bg-white overflow-x-hidden overflow-y-auto flex flex-col w-full mt-1 border border-gray-200 z-50`} style="max-height: 520px" ref={listElement}>
                     {
-                        (item)=>
-                        <Content className="cursor-pointer group">
-                            <a class={`flex p-2 border-transparent border-l-4 group-hover:border-${state.getAccent(state)} group-hover:${state.getHoverBackground(state)} overflow-hidden ${getItemClassSelected(item.value)}`}
-                                onClick={()=> onItemSelected(item, item.index)}>
-                                { item.icon && <img className="flex-none pr-1" src={item.icon} height={`${ICON_SIZE}px`} /> }
-                                <span className="flex-auto overflow-hidden">{ item.text }</span>
+                        props.newItemText && 
+                        <Content class="cursor-pointer group">
+                            <a class={`block p-2 border-transparent border-l-4 group-hover:border-${state().getAccent(state)} group-hover:bg-gray-100`}
+                                onClick={onCreateNew}>
+                                
+                                <i class="fa fa-plus mr-2" />
+                                {props.newItemText}
                             </a>
                         </Content>
                     }
-                </For>
-            </div> 
-            <div class={`fixed w-full h-full z-10 left-0 select-none ${!props.full ? "":"top-0 left-0"}`} onClick={()=> setOpen(false)} />
-            </>
+                    <For each={getFilteredItem()}>
+                        {
+                            (item)=>
+                            <Content className="cursor-pointer group">
+                                <a class={`flex p-2 border-transparent border-l-4 group-hover:border-${state().getAccent(state)} group-hover:${state().getHoverBackground(state)} overflow-hidden ${getItemClassSelected(item.value)}`}
+                                    onClick={()=> onItemSelected(item, item.index)}>
+                                    { item.icon && <img className="flex-none pr-1" src={item.icon} height={`${ICON_SIZE}px`} /> }
+                                    <span className="flex-auto overflow-hidden">{ item.text }</span>
+                                </a>
+                            </Content>
+                        }
+                    </For>
+                </div> 
+            </Show>
         }
     </div>
 }

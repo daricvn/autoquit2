@@ -28,6 +28,7 @@ namespace Autoquit2.Core
         {
             AppBuilder.Create()
                 .UseApp<Modules.ChromelyApp>()
+                .UseWindow<Modules.HookWindow>()
                 .UseConfig<DefaultConfiguration>(new DefaultConfiguration()
                 {
                     CefDownloadOptions = new CefDownloadOptions(false, true),
@@ -40,12 +41,21 @@ namespace Autoquit2.Core
                         RelativePathToIconFile = "fav.ico",
                         StartCentered = true,
                         DisableMinMaximizeControls = true,
-                        Size = new WindowSize(1080, 680)
+                        Size = new WindowSize(1080, 700)
                     },
                     UrlSchemes = new List<UrlScheme>()
                     {
-                        new UrlScheme("app", "app", "autoquit2", string.Empty, UrlSchemeType.AssemblyResource, assemblyOptions: new AssemblyOptions(Assembly.GetExecutingAssembly(),"Autoquit2.Core", "")),
+                        new UrlScheme("app", "app", "autoquit2", string.Empty, UrlSchemeType.AssemblyResource, assemblyOptions: new AssemblyOptions(Assembly.GetExecutingAssembly(), "Autoquit2.Core", "")),
                         new UrlScheme("http", AppConst.APP_HOST, UrlSchemeType.LocalRquest)
+                    },
+                    CommandLineArgs = new Dictionary<string, string>()
+                    {
+                        ["js-flags"] = "--expose_gc"
+                    },
+                    CommandLineOptions = new List<string>()
+                    {
+                        "disable-extensions",
+                        "disable-speech-api"
                     }
                 })
                 .Build()

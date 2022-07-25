@@ -1,8 +1,7 @@
-import { Router } from "solid-app-router";
 import { createMemo, createSignal } from "solid-js";
 import QuestionDialog from "./components/forms/QuestionDialog";
+import { ScriptContextProvider } from "./context/ScriptContext";
 import translate from "./libs/i18n";
-import { routes } from "./routes/config";
 import { StateProvider } from "./store";
 import Main from "./views/Main";
 
@@ -43,12 +42,12 @@ function App() {
 
   return (
     <StateProvider>
-        <Router routes={routes}>
-          <Main></Main>
-        </Router>
+      <ScriptContextProvider>
+        <Main></Main>
         <QuestionDialog show={getShowQuestion()} value={getQuestion().text} ok={translate(getDialogButton().ok)} cancel={translate(getDialogButton().cancel)}
           onAccept={getQuestion().accept}
           onReject={getQuestion().reject} />
+      </ScriptContextProvider>
     </StateProvider>
   );
 }

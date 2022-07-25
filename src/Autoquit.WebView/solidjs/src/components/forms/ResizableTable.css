@@ -1,0 +1,14 @@
+.resizable-table > thead > tr > th {
+    position: relative;
+}
+
+.resizable-table th > .resizer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    cursor: col-resize;
+    user-select: none;
+    height: 100%;
+    padding-right: 1px;
+}

@@ -1,22 +1,18 @@
-import { useNavigate } from "solid-app-router";
 import NavTitle from "./navs/NavTitle";
 
-export default function SubContent(props){
-    const navigate = useNavigate()
-
+export default function SubContent({ onNavigateBack, className, title, children }){
     const goBack = ()=>{
-        if (props.onNavigateBack && props.onNavigateBack() === false)
+        if (onNavigateBack && onNavigateBack() === false)
             return;
-        navigate('/')
     }
 
-    return <div className={props.className}>
+    return <div className={className}>
         <NavTitle onClick={goBack}>
-            {props.title}
+            {title}
         </NavTitle>
         <hr className="mt-1 mb-1" />
         <div className="block pt-4">
-            { props.children }
+            { children }
         </div>
     </div>
 }

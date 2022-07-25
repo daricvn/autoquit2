@@ -36,6 +36,8 @@ export default function WaveButton(props){
     })
     
     const onMouseDown = (e)=>{
+        if (!targetButton || targetButton.disabled)
+            return
         var list = getRipples()
         let rect = targetButton.getBoundingClientRect()
         let x= e.clientX - rect.left 
@@ -53,7 +55,7 @@ export default function WaveButton(props){
             setRipples(list)
     }
 
-    return <button { ...others } className={localProps.className + " wave-button"} ref={targetButton}>
+    return <button { ...others } className={localProps.className + " wave-button"} ref={targetButton} disabled={props.disabled}>
         {props.children}
         <For each={getRipples()}>
             {

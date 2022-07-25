@@ -8,15 +8,15 @@ export default function ThemeSelector(props){
     const [ state, setState ] = useGlobalState()
 
     const setTheme = (theme)=>{
-        setState("temporaryState", { ...state.temporaryState, theme: theme })
+        setState("temporaryState", { ...state().temporaryState, theme: theme })
         if (props.onChange)
             props.onChange()
     }
 
     const getTheme = createMemo(()=>{
-        if (state.temporaryState && state.temporaryState.theme)
-            return state.temporaryState.theme;
-        return state.theme
+        if (state().temporaryState && state().temporaryState.theme)
+            return state().temporaryState.theme;
+        return state().theme
     })
 
     return <div className="flex space-x-3">

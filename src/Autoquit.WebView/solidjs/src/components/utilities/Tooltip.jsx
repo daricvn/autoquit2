@@ -19,7 +19,8 @@ export default function Tooltip(props){
     })
 
     createEffect(()=>{
-        if (!reference || !state.size?.width || !getMounted())
+        getHover()
+        if (!reference)
             return
         let offset = +(props.offset ?? 4)
         let rect = reference.getBoundingClientRect()
@@ -65,7 +66,7 @@ export default function Tooltip(props){
         <Transition name="tooltip">
             {
                 getHover() &&
-                <div className={`select-none pointer-events-none tooltip font-thin text-sm inline-block px-3 py-1 rounded-lg transform ${state.getBackgroundInvert(state)} bg-opacity-80 text-${state.getTextColourInvert(state)} ${transition()}`} style={getStyle()}>
+                <div className={`absolute select-none pointer-events-none tooltip font-thin text-sm inline-block px-3 py-1 rounded-lg transform ${state().getBackgroundInvert(state)} bg-opacity-80 text-${state().getTextColourInvert(state)} ${transition()}`} style={getStyle()}>
                     { props.value }
                 </div>
             }
