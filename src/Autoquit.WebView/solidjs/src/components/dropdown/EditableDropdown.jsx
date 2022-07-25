@@ -109,9 +109,9 @@ export default function EditableDropdown(props){
             icon: iconVal ? item[iconVal]: null, 
             index: i 
         }))
-        if (!getCurrentInput() || !getOpen() || props.noFilter != false)
+        if (!getCurrentInput() || !getOpen() || props.noFilter == true)
             return res
-        return res.filter(item=> item.text.toLowerCase().indexOf(dropdownInput?.value.toLowerCase()) >= 0);
+        return res.filter(item=> item.text.toLowerCase().indexOf(getCurrentInput().toLowerCase()) >= 0);
     })
 
     const updateCurrentInput = ()=>{
@@ -134,7 +134,13 @@ export default function EditableDropdown(props){
             props.value && props.value.icon &&
             <img className="flex-none pl-1" src={props.value.icon} height={`${ICON_SIZE}px`} /> 
         }
-        <input ref={dropdownInput} value={getDisplayValue()} placeholder={props.placeholder} onKeyDown={handleValueChange} name="select" id="select" class="px-2 appearance-none outline-none text-gray-800 flex-auto"
+        <Show when={getOpen()}>
+            <div class={`fixed w-full h-full z-10 left-0 select-none top-0 left-0`} onClick={()=> setOpen(false)} />
+        </Show>
+        <input ref={dropdownInput} value={getDisplayValue()} placeholder={props.placeholder} 
+            onKeyDown={handleValueChange} 
+            onKeyUp={handleValueChange}
+            name="select" id="select" class={`px-2 appearance-none outline-none text-gray-800 flex-auto ${!getOpen() ? "" : "z-20"}`}
             onFocus={()=> setOpen(true)}
             checked />
         {
@@ -155,7 +161,6 @@ export default function EditableDropdown(props){
       </div>
       {
             <Show when={getOpen()} >
-                <div class={`fixed w-full h-full z-10 left-0 select-none ${!props.full ? "":"top-0 left-0"}`} onClick={()=> setOpen(false)} />
                 <div class={`${state().getBackground(state)} absolute rounded shadow bg-white overflow-x-hidden overflow-y-auto flex flex-col w-full mt-1 border border-gray-200 z-50`} style="max-height: 520px" ref={listElement}>
                     {
                         props.newItemText && 

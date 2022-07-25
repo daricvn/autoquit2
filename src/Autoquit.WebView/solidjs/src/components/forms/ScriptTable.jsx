@@ -42,7 +42,19 @@ export const ScriptTable = ()=>{
             if (!getSelected()[keys[i]])
                 return false;
         return true;
-    })    
+    })
+
+    const anySelected = createMemo(()=> {
+        let arr = getSelected()
+        let keys = Object.keys(arr)
+        if (keys.length == 0)
+            return false;
+        for ( let i = 0; i < keys.length; i++)
+            if (arr[keys[i]]) {
+                return true;
+            }
+        return false
+    })
 
     const headers = createMemo(()=>{
         return [
@@ -71,11 +83,13 @@ export const ScriptTable = ()=>{
             </ResizableTable>
         </div>
         <div className="pb-1">
+            <div className="block">
+                <ScriptTableNav showDelete={anySelected} />
+            </div>
             <div className="grid grid-cols-3">
-                <div>
-                    <ScriptTableNav />                    
+                <div>             
                 </div>
-                <div className="col-span-2">
+                <div className="col-span-2 block">
                     <ScriptFileBrowser />
                 </div>
             </div>

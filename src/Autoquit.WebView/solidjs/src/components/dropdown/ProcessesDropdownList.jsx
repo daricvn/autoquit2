@@ -10,6 +10,7 @@ export default function ProcessesDropdownList(props){
     const [ getLoadingProc, setLoadingProc ] = createSignal(false)
     const [ getTarget, setTarget ] = createSignal()
     const [ getLastFetch, setLastFetch ] = createSignal(0)
+    const [ shouldFilter, setShouldFilter ] = createSignal(true)
 
     onMount(()=>{
         fetchProcesses()
@@ -37,6 +38,13 @@ export default function ProcessesDropdownList(props){
     }
 
     const onTargetChanged = (item, i)=>{
+        if (i < 0){
+            setTarget(null)
+            setState('target', "")
+            setShouldFilter(true)
+            return;
+        }
+        setShouldFilter(false)
         setTarget(item)
         setState('target', item.value)
     }
@@ -52,5 +60,6 @@ export default function ProcessesDropdownList(props){
                     value={getTarget()}
                     onChange={onTargetChanged}
                     placeholder={translate("Select Process")}
+                    noFilter={!shouldFilter()}
                 ></EditableDropdown>
 }

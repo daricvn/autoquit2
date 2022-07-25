@@ -46,7 +46,7 @@ export default function Settings({ show, onClose }){
 
 
     return <Dialog className="h-full" transition="slide-left" fullScreen={true} show={show()}>
-            <SubContent className="px-8 md:px-24 lg:px-52 pt-20 w-full h-full relative" title={translate("Settings")}
+            <SubContent className="px-8 md:px-24 lg:px-52 pt-12 w-full h-full relative" title={translate("Settings")}
             onNavigateBack={close}>
             <div className={`flex flex-wrap flex-col`}>
                 <div className="px-8 md:px-12 lg:px-16">

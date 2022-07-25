@@ -1,8 +1,11 @@
 const createDebounce = () => {
     let timeoutId;
-    const clear = () => clearTimeout(timeoutId);
+    const clear = () => {
+      clearTimeout(timeoutId);
+      timeoutId = undefined
+    }
     const trigger = (func, wait) => {
-      if (timeoutId !== undefined) {
+      if (!!timeoutId) {
         clear();
       }
       timeoutId = setTimeout(func, wait);
