@@ -78,7 +78,8 @@ namespace InputBridge
             CB_SETHORIZONTALEXTENT = 0x015E,
             CB_GETDROPPEDWIDTH = 0x015F,
             CB_SETDROPPEDWIDTH = 0x0160,
-            CB_INITSTORAGE = 0x0161
+            CB_INITSTORAGE = 0x0161,
+            SW_RESTORE = 9
         }
 
         [DllImport("user32.dll", EntryPoint = "GetWindowRect")]
@@ -133,7 +134,10 @@ namespace InputBridge
         internal static extern bool BringWindowToTop(IntPtr hWnd);
         [DllImport("user32.dll", EntryPoint = "SetForegroundWindow")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool SetForegroundWindow(IntPtr hWnd);
+        internal static extern bool SetForegroundWindow(IntPtr hWnd); 
+
+        [DllImport("user32.dll", EntryPoint = "IsIconic")]
+        internal static extern bool IsIconic(IntPtr handle);
 
 
         public static string GetWindowTitle(IntPtr target)

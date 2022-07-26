@@ -10,7 +10,7 @@ import './ScriptTable.css'
 
 var itemsTest = []
 for (let ti = 0; ti < 20; ti++)
-    itemsTest.push( { Name: ti, Desc: "Desc " + ti } );
+    itemsTest.push( { Name: ti, Desc: "Desc " + ti, Enabled: true } );
 
 export const ScriptTable = ()=>{
     const [ getSelected, setSelected ] = createSignal({})
@@ -62,6 +62,7 @@ export const ScriptTable = ()=>{
         return [
             <input type="checkbox" className="select-none" checked={isCheckedAll()} onChange={handleCheckedAll}></input>,
             translate("Type"),
+            translate("Enabled"),
             translate("Action"),
         ]
     })
@@ -73,7 +74,8 @@ export const ScriptTable = ()=>{
                     { (item, i)=> 
                     <tr>
                         <td className="text-center"><input type="checkbox" className="select-none" checked={!!getSelected()[i()]} onChange={(e)=> handleCheckedChange(i())} ></input></td>
-                        <td>{item.Name}</td>
+                        <td className="overflow-hidden text-ellipsis">{item.Name}</td>
+                        <td className="text-center"><input type="checkbox" className="select-none" checked={item.Enabled}></input></td>
                         <td className="text-right">
                             <FlatCircleButton size={8} color={state().getTextColour(state)}>
                                 <i class="fa-solid fa-pen-to-square text-green-500"></i>

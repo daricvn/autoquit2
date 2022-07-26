@@ -18,6 +18,8 @@ namespace InputBridge
         public void BringToTop(IntPtr target)
         {
 #if WINDOWS_OS
+            if (Win32API.IsIconic(target))
+                Win32API.ShowWindow(target, (int)Win32API.ListMessage.SW_RESTORE);
             Win32API.SetForegroundWindow(target);
 #endif
         }
