@@ -8,7 +8,9 @@ import ScriptTableNav from "../navs/ScriptTableNav"
 import { ResizableTable } from "./ResizableTable"
 import './ScriptTable.css'
 
-const itemsTest = [ { Name: 1, Desc: 2 }, { Name: 3, Desc: 4 } ]
+var itemsTest = []
+for (let ti = 0; ti < 20; ti++)
+    itemsTest.push( { Name: ti, Desc: "Desc " + ti } );
 
 export const ScriptTable = ()=>{
     const [ getSelected, setSelected ] = createSignal({})
@@ -64,8 +66,8 @@ export const ScriptTable = ()=>{
         ]
     })
 
-    return <div className={`flex flex-col h-full ${state().getBackground(state)} text-${state().getTextColour(state)}`}>
-        <div className="flex-auto w-full overflow-y-auto">
+    return <div className={`flex flex-col h-full ${state().getBackground(state)} text-${state().getTextColour(state)}`} style="max-height: 88vh">
+        <div className="flex-auto w-full overflow-y-auto script-table-container">
             <ResizableTable columns={headers()} className={`border padding-table w-full`} columnSize={scriptTable.columnSize} onColumnSizeChanged={handleColumnSizeChanged}>
                 <For each={itemsTest}>
                     { (item, i)=> 

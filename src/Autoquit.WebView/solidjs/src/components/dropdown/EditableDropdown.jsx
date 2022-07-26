@@ -10,6 +10,7 @@ const ICON_SIZE = 56;
 export default function EditableDropdown(props){
     const [ getOpen, setOpen ] = createSignal(false)
     const [ getCurrentInput, setCurrentInput ] = createSignal()
+    const [ getHoverIndex, setHoverIndex ] = createSignal(-1)
     const debounce = createDebounce()
     const [ state, getState ] = useGlobalState()
     const key = props.dataMember
@@ -58,7 +59,7 @@ export default function EditableDropdown(props){
     }
 
     const toggleOpen = ()=>{
-        if (!props.items)
+        if (!props.items || props.disabled)
             return setOpen(false)
         if (getOpen() && props.isLoading)
             return null;
@@ -118,6 +119,12 @@ export default function EditableDropdown(props){
         setCurrentInput(dropdownInput?.value)
     }
 
+    const appendItemComponent = (item, i)=>{
+        if (props.appendItem)
+            return props.appendItem(item, i)
+        return ""
+    }
+
     const buildDropDownIndicator = createMemo(()=>{
         if (!props.isLoading)
             return <label for="show_more" class={`cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-gray-600 ${getOpenIndicatorClass()}`} onClick={()=> toggleOpen() }>
@@ -128,13 +135,19 @@ export default function EditableDropdown(props){
         return <CircularProgress color={state().getAccent(state, 'base')} size={6} className="mx-2" />
     })
 
+    const expandList = createMemo(()=> {
+        if (typeof(props.disabled) === 'function')
+            return !props.disabled() && getOpen();
+        return !props.disabled && getOpen();
+    })
+
     return <div class={`relative ${props.className}`}>
       <div class="h-10 bg-white flex border border-gray-200 rounded items-center z-20">
         {
             props.value && props.value.icon &&
             <img className="flex-none pl-1" src={props.value.icon} height={`${ICON_SIZE}px`} /> 
         }
-        <Show when={getOpen()}>
+        <Show when={expandList()}>
             <div class={`fixed w-full h-full z-10 left-0 select-none top-0 left-0`} onClick={()=> setOpen(false)} />
         </Show>
         <input ref={dropdownInput} value={getDisplayValue()} placeholder={props.placeholder} 
@@ -142,9 +155,10 @@ export default function EditableDropdown(props){
             onKeyUp={handleValueChange}
             name="select" id="select" class={`px-2 appearance-none outline-none text-gray-800 flex-auto ${!getOpen() ? "" : "z-20"}`}
             onFocus={()=> setOpen(true)}
+            disabled={props.disabled}
             checked />
         {
-            !props.hideClearButton && <button class="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-gray-600" hidden={!props.value}
+            !props.hideClearButton && <button class="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-gray-600" hidden={!props.value || props.disabled}
                 onClick={()=> onItemSelected("", -1, true)}>
                 <svg class="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -160,7 +174,7 @@ export default function EditableDropdown(props){
         }
       </div>
       {
-            <Show when={getOpen()} >
+            <Show when={expandList()}>
                 <div class={`${state().getBackground(state)} absolute rounded shadow bg-white overflow-x-hidden overflow-y-auto flex flex-col w-full mt-1 border border-gray-200 z-50`} style="max-height: 520px" ref={listElement}>
                     {
                         props.newItemText && 
@@ -175,13 +189,19 @@ export default function EditableDropdown(props){
                     }
                     <For each={getFilteredItem()}>
                         {
-                            (item)=>
-                            <Content className="cursor-pointer group">
-                                <a class={`flex p-2 border-transparent border-l-4 group-hover:border-${state().getAccent(state)} group-hover:${state().getHoverBackground(state)} overflow-hidden ${getItemClassSelected(item.value)}`}
+                            (item, i)=>
+                            <Content className={`cursor-pointer border-transparent border-l-4 flex hover:border-${state().getAccent(state)} hover:${state().getHoverBackground(state)}`}
+                                onMouseOver={()=> setHoverIndex(i())} onMouseLeave={()=> setHoverIndex(-1)}>
+                                <a class={`flex-auto p-2 flex text-ellipsis select-none overflow-hidden ${getItemClassSelected(item.value)}`}
                                     onClick={()=> onItemSelected(item, item.index)}>
                                     { item.icon && <img className="flex-none pr-1" src={item.icon} height={`${ICON_SIZE}px`} /> }
                                     <span className="flex-auto overflow-hidden">{ item.text }</span>
                                 </a>
+                                <Show when={props.appendItem && getHoverIndex() == i()}>
+                                    <div className="pr-1 pt-2">
+                                        { appendItemComponent(item, i()) }
+                                    </div>
+                                </Show>
                             </Content>
                         }
                     </For>

@@ -52,8 +52,8 @@
         /// </summary>
         ControlLocator = 12,
         /// <summary>
-        /// Retrieve the locator of the control. Return the handle of the target control.
+        /// Return the list of selectable action
         /// </summary>
-        ListItem = 13
+        ActionList = 13
     }
 }
