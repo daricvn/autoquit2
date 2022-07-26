@@ -19,7 +19,8 @@ export default function BottomNav(){
         setShowSetting(false);
     }
 
-    return <div className={`w-screen h-9 fixed bottom-0 left-0 block bg-${state().getAccent(state)}`}>
+    return <>
+        <div className={`w-screen h-9 fixed bottom-0 left-0 block bg-${state().getAccent(state)}`}>
         <div className="grid grid-cols-3 gap-1 pt-1">
             <div class="col-span-2">
                 <CircularProgressWithText className="pl-2" size="8" width="2" color="white" hidden={!state().process}>
@@ -42,6 +43,7 @@ export default function BottomNav(){
                 </Tooltip>
             </div>
         </div>
-        <Settings show={showSetting} onClose={handleCloseSettings} />
     </div>
+    <Settings show={showSetting} onClose={handleCloseSettings} />
+    </>
 }
