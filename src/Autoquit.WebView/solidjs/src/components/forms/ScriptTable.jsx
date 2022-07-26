@@ -14,8 +14,10 @@ for (let ti = 0; ti < 20; ti++)
 
 export const ScriptTable = ()=>{
     const [ getSelected, setSelected ] = createSignal({})
+    const [ getItems, setItems ] = createSignal(itemsTest)
     const [ state, setState ] = useGlobalState()
     const [ scriptTable, setScriptTable ] = useScriptContext()
+    let tableContainer
 
     const handleColumnSizeChanged = (col, index, width)=>{
         setScriptTable('columnSize', { ...scriptTable.columnSize, [index]: width })
@@ -28,17 +30,24 @@ export const ScriptTable = ()=>{
             setSelected({ ...getSelected(), [index]: true})
     }
 
+    const handleAddItem = ()=>{
+        let items = getItems()
+        items.push({ Name: 'new item', Desc: '', Enabled: true })
+        setItems([ ...items ])
+        tableContainer.scrollTo(0, tableContainer.scrollHeight)
+    }
+
     const handleCheckedAll = ()=>{
         let newObj = {}
         const checkedState = !isCheckedAll();
-        for ( let i = 0; i < itemsTest.length; i++)
+        for ( let i = 0; i < getItems().length; i++)
             newObj[i] = checkedState;
         setSelected(newObj)
     }
     
     const isCheckedAll = createMemo(()=> {
         let keys = Object.keys(getSelected())
-        if (keys.length != itemsTest.length)
+        if (keys.length != getItems().length)
             return false;
         for ( let i = 0; i < keys.length; i++)
             if (!getSelected()[keys[i]])
@@ -58,6 +67,26 @@ export const ScriptTable = ()=>{
         return false
     })
 
+    const handleDeleteRequest = ()=>{
+        let selected = getSelected()
+        let items = getItems()
+        let keys = Object.keys(selected).sort((a,b) => (a - b))
+        if (keys.length == 0)
+            return false;
+        window.showPrompt(translate("Are you sure want to delete selected item(s)?"), 2)
+            .then(()=>{
+                for ( let i = keys.length - 1; i >= 0; i--)
+                    if (selected[keys[i]]) {
+                        items.splice(keys[i], 1)
+                    }
+                setSelected({})
+                if (items.length == 0)
+                    setItems([])
+                else
+                    setItems([ ...items ]);
+            })
+    }
+
     const headers = createMemo(()=>{
         return [
             <input type="checkbox" className="select-none" checked={isCheckedAll()} onChange={handleCheckedAll}></input>,
@@ -68,9 +97,9 @@ export const ScriptTable = ()=>{
     })
 
     return <div className={`flex flex-col h-full ${state().getBackground(state)} text-${state().getTextColour(state)}`} style="max-height: 88vh">
-        <div className="flex-auto w-full overflow-y-auto script-table-container">
-            <ResizableTable columns={headers()} className={`border padding-table w-full`} columnSize={scriptTable.columnSize} onColumnSizeChanged={handleColumnSizeChanged}>
-                <For each={itemsTest}>
+        <div className="flex-auto w-full overflow-y-auto script-table-container" ref={tableContainer}>
+            <ResizableTable columns={headers()} className={`script-table border padding-table w-full`} columnSize={scriptTable.columnSize} onColumnSizeChanged={handleColumnSizeChanged}>
+                <For each={getItems()}>
                     { (item, i)=> 
                     <tr>
                         <td className="text-center"><input type="checkbox" className="select-none" checked={!!getSelected()[i()]} onChange={(e)=> handleCheckedChange(i())} ></input></td>
@@ -88,7 +117,7 @@ export const ScriptTable = ()=>{
         </div>
         <div className="pb-1">
             <div className="block">
-                <ScriptTableNav showDelete={anySelected} />
+                <ScriptTableNav showDelete={anySelected} onDeleteRequest={handleDeleteRequest} onAddRequest={handleAddItem} />
             </div>
             <div className="grid grid-cols-3">
                 <div>             

@@ -5,6 +5,17 @@ table.border th, table.border td {
     border: 1px solid rgba(164,164,164, 0.2);
 }
 
+table.script-table {
+    position: relative;
+}
+
+table.script-table > thead > tr > th {
+    position: sticky;
+    top: -1px;
+    z-index: 2;
+    box-shadow: 0px 1px 0px rgba(164,164,164, 0.2);
+}
+
 table.padding-table th, table.padding-table td
 {
     padding: 4px 6px 4px 6px;

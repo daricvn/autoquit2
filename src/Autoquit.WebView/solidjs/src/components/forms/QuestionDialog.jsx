@@ -15,11 +15,11 @@ export default function QuestionDialog(props){
             props.onAccept()
     }
 
-    return <Dialog className="px-6 py-4 w-96" show={props.show} transition="slide-down">
+    return <Dialog className={`px-6 py-4 w-96 ${props.className}`} show={props.show} transition="slide-down" style={props.style}>
         <div className={`block pb-6 text-${state().getTextColour(state)}`}>
             {props.value}
         </div>
-        <div className="block pb-2 justify-end flex space-x-2">
+        <div className="block pb-2 justify-end flex space-x-2 select-none">
             <div>
                 <WaveButton className={`transition-colors outline-none px-3 py-1 text-white bg-green-500 rounded-lg mr-2 hover:shadow-inner hover:bg-green-600`} onClick={handleOk}>
                     {props.ok}
