@@ -15,7 +15,7 @@ export default function Dialog(props){
         <Transition name={props.transition ?? "fade"} appear>
             <Show when={props.show}>
                 <div className={`w-full fixed top-0 z-50 ${fullScreenClass()}`}>
-                    <div className={`relative mx-auto ${state().getBackground(state)} rounded drop-shadow-lg z-50 ${props.className ?? ""}`} style={props.style}>
+                    <div className={`relative mx-auto ${state.getBackground(state)} rounded drop-shadow-lg z-50 ${props.className ?? ""}`} style={props.style}>
                         { props.children }
                     </div>
                 </div>

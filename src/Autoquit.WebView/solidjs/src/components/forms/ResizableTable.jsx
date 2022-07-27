@@ -18,7 +18,7 @@ export const ResizableTable= ({ columns, columnSize, className, style, onColumnS
     const headers = createMemo(()=>{
         if (!columns) return ""
         return <For each={columns}>
-            { (col, i) => <th className={`select-none ${state().getBackground(state)}`} style={ columnSize && columnSize[i()] ? "width: "+ columnSize[i()] + "px": ""}>
+            { (col, i) => <th className={`select-none ${state.getBackground(state)}`} style={ columnSize && columnSize[i()] ? "width: "+ columnSize[i()] + "px": ""}>
                     {col}
                     {
                         <Show when={i() < columns.length - 1}>

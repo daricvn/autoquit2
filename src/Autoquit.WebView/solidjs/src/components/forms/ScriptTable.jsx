@@ -96,7 +96,7 @@ export const ScriptTable = ()=>{
         ]
     })
 
-    return <div className={`flex flex-col h-full ${state().getBackground(state)} text-${state().getTextColour(state)}`} style="max-height: 88vh">
+    return <div className={`flex flex-col h-full ${state.getBackground(state)} text-${state.getTextColour(state)}`} style="max-height: 88vh">
         <div className="flex-auto w-full overflow-y-auto script-table-container" ref={tableContainer}>
             <ResizableTable columns={headers()} className={`script-table border padding-table w-full`} columnSize={scriptTable.columnSize} onColumnSizeChanged={handleColumnSizeChanged}>
                 <For each={getItems()}>
@@ -106,7 +106,7 @@ export const ScriptTable = ()=>{
                         <td className="overflow-hidden text-ellipsis">{item.Name}</td>
                         <td className="text-center"><input type="checkbox" className="select-none" checked={item.Enabled}></input></td>
                         <td className="text-right">
-                            <FlatCircleButton size={8} color={state().getTextColour(state)}>
+                            <FlatCircleButton size={8} color={state.getTextColour(state)}>
                                 <i class="fa-solid fa-pen-to-square text-green-500"></i>
                             </FlatCircleButton>
                         </td>

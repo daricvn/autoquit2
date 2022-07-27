@@ -54,6 +54,11 @@
         /// <summary>
         /// Return the list of selectable action
         /// </summary>
-        ActionList = 13
+        ActionList = 13,
+        /// <summary>
+        /// Return a list of mouse coordinate, each coordinate should follow X:Y:T pattern, and is separated by a semicolon (;).
+        /// Where X is horizontal, Y is vertical and T is the miliseconds gap between previous coordinate.
+        /// </summary>
+        MousePattern = 14
     }
 }

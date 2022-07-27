@@ -41,8 +41,9 @@ namespace InputBridge.Automation
 
         public static PointF SetMouseHere(this PointF p, int offsetX = 0, int offsetY = 0)
         {
-            InputBridge.SetCursorPosition(Models.Point2d.FromPointF(p.Offset(offsetX, offsetY)));
-            return new PointF(p.X + offsetX, p.Y + offsetY);
+            var newP = p.Offset(offsetX, offsetY);
+            InputBridge.SetCursorPosition(Models.Point2d.FromPointF(newP));
+            return newP;
         }
 
         public static PointF Click(this PointF p, bool rightClick = false)

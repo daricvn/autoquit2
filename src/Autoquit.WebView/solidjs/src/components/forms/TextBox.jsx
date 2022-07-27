@@ -17,7 +17,7 @@ export default function TextBox(props){
                 {props.prepend}
             </span>
         }
-        <input type="text" class={`py-2 w-full text-black bg-white rounded-md focus:outline-none focus:shadow-outline focus:ring-transparent ${paddingClass()} border focus:border-${state().getAccent(state)}`} placeholder={props.placeholder}
+        <input type="text" class={`py-2 w-full text-black bg-white rounded-md focus:outline-none focus:shadow-outline focus:ring-transparent ${paddingClass()} border focus:border-${state.getAccent(state)}`} placeholder={props.placeholder}
             onKeyDown={props.onKeyDown}
             onKeyUp={props.onKeyUp}
             onChange={props.onChange}

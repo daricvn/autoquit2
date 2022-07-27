@@ -9,15 +9,15 @@ export default function AccentSelector(props){
     const [ state, setState ] = useGlobalState()
 
     const setAccent = (name)=>{
-        setState("temporaryState", { ...state().temporaryState, accent: name })
+        setState("temporaryState", { ...state.temporaryState, accent: name })
         if (props.onChange)
             props.onChange()
     }
 
     const getAccent = createMemo(()=>{
-        if (state().temporaryState && state().temporaryState.accent)
-            return state().temporaryState.accent
-        return state().accent
+        if (state.temporaryState && state.temporaryState.accent)
+            return state.temporaryState.accent
+        return state.accent
     })
 
     return <div className="flex space-x-3">

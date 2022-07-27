@@ -13,19 +13,24 @@ export default function MainHeader(){
     const [ showAbout, setShowAbout ] = createSignal(false)
 
     const bringToTop = ()=>{
-        if (!state().target)
+        if (!state.target)
             return;
-        AppRequests.bringToTop(state().target)
+        AppRequests.bringToTop(state.target)
+            .then((res)=>{
+                if (res.data.Status == 404) {
+                    window.showWarning(translate("The application exited or access denied"))
+                }
+            })
     }
 
     return <Header>
-        <div className={`grid grid-cols-5 ${state().blockHeader ? 'pointer-events-none':''}`}>
+        <div className={`grid grid-cols-5 ${state.blockHeader ? 'pointer-events-none':''}`}>
             <div className="col-span-3">
                 <ProcessesDropdownList />
             </div>
             <div class="pl-2 pt-2">
                 <Tooltip value={translate("Bring to front")} position="right">
-                    <FlatCircleButton className={`text-white rounded-full mr-2 hover:shadow-inner`} size={8} disabled={!state().target}
+                    <FlatCircleButton className={`text-white rounded-full mr-2 hover:shadow-inner`} size={8} disabled={!state.target}
                         onClick={bringToTop}>
                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </FlatCircleButton>

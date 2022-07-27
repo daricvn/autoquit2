@@ -9,14 +9,14 @@ export default function FeatureSettings(props){
     const [state, setState] = useGlobalState()
 
     const updateSettings = (key, val)=>{
-        setState('temporaryState', { ...state().temporaryState, [key]: val });
+        setState('temporaryState', { ...state.temporaryState, [key]: val });
         if (props.onChange)
             props.onChange()
     }
 
     const getVal = (key)=>{
-        if (state().temporaryState && state().temporaryState[key] != null)
-            return state().temporaryState[key]
+        if (state.temporaryState && state.temporaryState[key] != null)
+            return state.temporaryState[key]
         return state[key]
     }
 
@@ -29,9 +29,9 @@ export default function FeatureSettings(props){
             </Tooltip>
         </div>
         <div>
-            <Tooltip value={translate("Filter scan result based on the text you typed in")}>
-                <Checkbox onChange={(e)=> updateSettings("scanFiltering", e.checked)}>
-                    <Text>{translate("Filter scan result")}</Text>
+            <Tooltip value={translate("Record mouse movement as well")}>
+                <Checkbox onChange={(e)=> updateSettings("recordMouseMovement", e.checked)} checked={getVal('recordMouseMovement')}>
+                    <Text>{translate("Record mouse movement")}</Text>
                 </Checkbox>
             </Tooltip>
         </div>

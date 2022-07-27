@@ -19,13 +19,13 @@ export default function Main(){
         setState('size', ()=> ({ width: window.innerWidth, height: window.innerHeight }))
     }
 
-    return <div class={`${state().getBackground(state)} flex flex-col`} style="height: 100vh">
+    return <div class={`${state.getBackground(state)} flex flex-col`} style="height: 100vh">
         <MainHeader />
         <div className="flex-grow relative overflow-y-auto overflow-x-hidden pb-8">
         <AppPortal />
         </div>
         {
-            state().block &&
+            state.block &&
             <div className="fixed w-screen h-screen bg-black opacity-30 top-0 left-0 select-none" style="z-index: 10000"></div>
         }
     </div>

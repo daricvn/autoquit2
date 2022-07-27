@@ -1,5 +1,6 @@
 import { list } from "postcss"
 import { createMemo, createSignal, createEffect, For, Show } from "solid-js"
+import CONSTVAR from "../../libs/Const"
 import createDebounce from "../../libs/createDebounce"
 import { useGlobalState } from "../../store"
 import Content from "../forms/Content"
@@ -53,7 +54,7 @@ export default function EditableDropdown(props){
     }
 
     const onCreateNew = ()=>{
-        onItemSelected("", -1)
+        onItemSelected(CONSTVAR.EmptyStr, -1)
         if (props.onRequest)
             props.onRequest()
     }
@@ -68,10 +69,10 @@ export default function EditableDropdown(props){
 
     const getItemClassSelected = (data)=>{
         if (!props.value)
-            return ""
-        if (data == props.value)
-            return `border-${state().getAccent(state)}`
-        return "";
+            return CONSTVAR.EmptyStr
+        if (data == props.value || data == props.value?.value)
+            return `border-${state.getAccent(state)}`
+        return CONSTVAR.EmptyStr;
     }
 
     const getOpenIndicatorClass = ()=>{
@@ -80,9 +81,9 @@ export default function EditableDropdown(props){
         return "transform-gpu rotate-180"
     }
 
-    const getDisplayValue = ()=>{
+    const getDisplayValue = createMemo(()=>{
         if (!props.value || !props.items)
-            return ""
+            return CONSTVAR.EmptyStr
         if (props.value.value && props.value.text != null)
             return props.value.text
         for (let i= 0; i< props.items.length; i++)
@@ -90,8 +91,8 @@ export default function EditableDropdown(props){
                 return props.items[i][value]
             else if (props.items[i] == props.value)
                 return props.items[i]
-        return ""
-    }
+        return CONSTVAR.EmptyStr
+    })
 
     const handleValueChange = (args) => {
         if (props.preventEdit)
@@ -103,14 +104,14 @@ export default function EditableDropdown(props){
 
     const getFilteredItem = createMemo(()=>{
         if (!props.items)
-            return []
+            return CONSTVAR.EmptyArray
         let res = props.items.map((item, i) => ({ 
             text: value ? item[value] : item, 
             value: key ? item[key]: item, 
             icon: iconVal ? item[iconVal]: null, 
             index: i 
         }))
-        if (!getCurrentInput() || !getOpen() || props.noFilter == true)
+        if (!getCurrentInput() || props.noFilter == true)
             return res
         return res.filter(item=> item.text.toLowerCase().indexOf(getCurrentInput().toLowerCase()) >= 0);
     })
@@ -122,7 +123,7 @@ export default function EditableDropdown(props){
     const appendItemComponent = (item, i)=>{
         if (props.appendItem)
             return props.appendItem(item, i)
-        return ""
+        return CONSTVAR.EmptyStr
     }
 
     const buildDropDownIndicator = createMemo(()=>{
@@ -132,7 +133,7 @@ export default function EditableDropdown(props){
                     <polyline points="18 15 12 9 6 15"></polyline>
                 </svg>
                 </label>
-        return <CircularProgress color={state().getAccent(state, 'base')} size={6} className="mx-2" />
+        return <CircularProgress color={state.getAccent(state, 'base')} size={6} className="mx-2" />
     })
 
     const expandList = createMemo(()=> {
@@ -175,11 +176,11 @@ export default function EditableDropdown(props){
       </div>
       {
             <Show when={expandList()}>
-                <div class={`${state().getBackground(state)} absolute rounded shadow bg-white overflow-x-hidden overflow-y-auto flex flex-col w-full mt-1 border border-gray-200 z-50`} style="max-height: 520px" ref={listElement}>
+                <div class={`${state.getBackground(state)} absolute rounded shadow bg-white overflow-x-hidden overflow-y-auto flex flex-col w-full mt-1 border border-gray-200 z-50`} style="max-height: 520px" ref={listElement}>
                     {
                         props.newItemText && 
                         <Content class="cursor-pointer group">
-                            <a class={`block p-2 border-transparent border-l-4 group-hover:border-${state().getAccent(state)} group-hover:bg-gray-100`}
+                            <a class={`block p-2 border-transparent border-l-4 group-hover:border-${state.getAccent(state)} group-hover:bg-gray-100`}
                                 onClick={onCreateNew}>
                                 
                                 <i class="fa fa-plus mr-2" />
@@ -190,9 +191,9 @@ export default function EditableDropdown(props){
                     <For each={getFilteredItem()}>
                         {
                             (item, i)=>
-                            <Content className={`cursor-pointer border-transparent border-l-4 flex hover:border-${state().getAccent(state)} hover:${state().getHoverBackground(state)}`}
+                            <Content className={`cursor-pointer border-transparent border-l-4 flex ${getItemClassSelected(item.value)} hover:border-${state.getAccent(state)} hover:${state.getHoverBackground(state)}`}
                                 onMouseOver={()=> setHoverIndex(i())} onMouseLeave={()=> setHoverIndex(-1)}>
-                                <a class={`flex-auto p-2 flex text-ellipsis select-none overflow-hidden ${getItemClassSelected(item.value)}`}
+                                <a class={`flex-auto p-2 flex text-ellipsis select-none overflow-hidden`}
                                     onClick={()=> onItemSelected(item, item.index)}>
                                     { item.icon && <img className="flex-none pr-1" src={item.icon} height={`${ICON_SIZE}px`} /> }
                                     <span className="flex-auto overflow-hidden">{ item.text }</span>

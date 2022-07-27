@@ -1,4 +1,6 @@
-﻿namespace Autoquit2.Core.Models
+﻿using System.Collections.Generic;
+
+namespace Autoquit2.Core.Models
 {
     class ScriptItem
     {
@@ -13,30 +15,25 @@
         /// <summary>
         /// Value of the action
         /// </summary>
-        public string Value { get; set; }
+        public IDictionary<string, object> Values { get; set; }
         /// <summary>
         /// Script is enabled or not
         /// </summary>
         public bool Enabled { get; set; }
 
-        public ScriptItem Child { get; set; }
-
-        public ScriptItem(string module, string name, string value)
+        public ScriptItem(string module, string name, IDictionary<string, object> values)
         {
             ModuleName = module;
             Name = name;
-            Value = value;
+            Values = values;
             Enabled = true;
-        }
-
-        public ScriptItem(string module, string name, string value, ScriptItem child) : this(module, name, value)
-        {
-            Child = child;
         }
 
         ~ScriptItem()
         {
-            Child = null;
+            if (Values != null)
+                Values.Clear();
+            Values = null;
         }
     }
 }

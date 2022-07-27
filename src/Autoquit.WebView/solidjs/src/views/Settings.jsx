@@ -35,7 +35,7 @@ export default function Settings({ show, onClose }){
 
     const save = ()=>{
         setDirty(false)
-        var newState = { ...state().temporaryState }
+        var newState = { ...state.temporaryState }
         objects.trimFuncs(newState)
         var keys = Object.keys(newState)
         if (keys.length == 0)

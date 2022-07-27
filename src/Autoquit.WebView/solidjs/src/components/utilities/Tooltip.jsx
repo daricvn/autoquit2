@@ -68,7 +68,7 @@ export default function Tooltip({ offset, position, disabled, className, childre
     return <div className={`inline-block ${className ?? ""}`}>
         <Transition name="tooltip">
             <Show when={getHover()}>
-                <div className={`absolute select-none pointer-events-none tooltip font-thin text-sm inline-block px-3 py-1 rounded-lg transform ${state().getBackgroundInvert(state)} bg-opacity-80 text-${state().getTextColourInvert(state)} ${transition()}`} style={getStyle()}>
+                <div className={`absolute select-none pointer-events-none tooltip font-thin text-sm inline-block px-3 py-1 rounded-lg transform ${state.getBackgroundInvert(state)} bg-opacity-80 text-${state.getTextColourInvert(state)} ${transition()}`} style={getStyle()}>
                     { value }
                 </div>
             </Show>

@@ -1,5 +1,5 @@
 import SubContent from "../components/SubContent";
-import translate from "../libs/i18n";
+import translate, { formatString } from "../libs/i18n";
 import { useGlobalState } from "../store";
 import { favicon } from '../assets/favicon'
 import Text from "../components/forms/Text";
