@@ -28,7 +28,7 @@ export default function ProcessesDropdownList(props){
         fetchProcesses()
     })
 
-    const timeThreshold = createMemo(()=> state.scanThrottle ? 12 : 2);
+    const timeThreshold = createMemo(()=> state.scanThrottle ? 16 : 2);
 
     const fetchProcesses = ()=>{
         return new Promise((resolve, reject)=>{
