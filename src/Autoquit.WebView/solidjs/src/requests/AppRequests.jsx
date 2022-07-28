@@ -10,5 +10,8 @@ export const AppRequests = {
     },
     bringToTop: (id)=>{
         return axios.post(ENVIRONMENT.getUrl('app/top'), id)
+    },
+    close: ()=>{
+        return axios.post(ENVIRONMENT.getUrl('app/close'))
     }
 }

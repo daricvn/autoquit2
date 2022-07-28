@@ -18,7 +18,7 @@ export default function MainHeader(){
         AppRequests.bringToTop(state.target)
             .then((res)=>{
                 if (res.data.Status == 404) {
-                    window.showWarning(translate("The application exited or access denied"))
+                    window.showWarning("The application exited or access denied")
                 }
             })
     }

@@ -73,7 +73,7 @@ export const ScriptTable = ()=>{
         let keys = Object.keys(selected).sort((a,b) => (a - b))
         if (keys.length == 0)
             return false;
-        window.showPrompt(translate("Are you sure want to delete selected item(s)?"), 2)
+        window.showPrompt("Are you sure want to delete selected item(s)?", 2)
             .then(()=>{
                 for ( let i = keys.length - 1; i >= 0; i--)
                     if (selected[keys[i]]) {

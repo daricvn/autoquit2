@@ -123,6 +123,13 @@ namespace InputBridge
            IntPtr lpParam);
         [DllImport("user32.dll", EntryPoint = "ShowWindow")]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        [DllImport("user32.dll", EntryPoint = "GetMessage")]
+        public static extern int GetMessage(out MSG lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax);
+        [DllImport("user32.dll", EntryPoint = "TranslateMessage")]
+        static extern bool TranslateMessage([In] ref MSG lpMsg);
+        [DllImport("user32.dll", EntryPoint = "DispatchMessage")]
+        static extern IntPtr DispatchMessage([In] ref MSG lpmsg);
+
         [DllImport("user32.dll", EntryPoint = "SetLayeredWindowAttributes")]
         public static extern bool SetLayeredWindowAttributes(IntPtr hwnd, uint crKey, byte bAlpha, uint dwFlags);
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true, EntryPoint = "GetWindowText")]

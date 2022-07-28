@@ -2,6 +2,7 @@ import { createMemo, createSignal } from "solid-js";
 import QuestionDialog from "./components/forms/QuestionDialog";
 import { ScriptContextProvider } from "./context/ScriptContext";
 import translate from "./libs/i18n";
+import { AppRequests } from "./requests/AppRequests";
 import { StateProvider } from "./store";
 import Main from "./views/Main";
 
@@ -9,6 +10,12 @@ const dialogButtonType = {
   0: { ok: "Ok", cancel: "Cancel" },
   1: { ok: "Yes", cancel: "No" },
   2: { ok: "Confirm", cancel: "Cancel" },
+}
+
+window.closeApp = ()=>{
+  window.showPrompt("Are you sure want to quit?", 1).then(()=>{
+    AppRequests.close()
+  })
 }
 
 function App() {
@@ -27,7 +34,7 @@ function App() {
     return new Promise((resolve, reject)=>{
       setShowQuestion(true)
       setQuestion({
-        text: text,
+        text: translate(text),
         type: type,
         accept: ()=>{
           setShowQuestion(false)
@@ -44,7 +51,7 @@ function App() {
     return new Promise((resolve, reject)=>{
       let obj = {
         show: true,
-        text: text,
+        text: translate(text),
         cancel: showCancelButton ? dialogButtonType[0].cancel : ''
       }
       setWarning({

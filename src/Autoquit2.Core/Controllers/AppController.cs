@@ -1,6 +1,8 @@
 ﻿using Autoquit2.Core.Models;
 using Autoquit2.Core.Models.Struct;
+using Autoquit2.Core.Modules;
 using Chromely.Core.Configuration;
+using Chromely.Core.Host;
 using Chromely.Core.Network;
 using InputBridge;
 using Microsoft.Extensions.Configuration;
@@ -15,10 +17,13 @@ namespace Autoquit2.Core.Controllers
     {
         private readonly IChromelyConfiguration _config;
         private readonly IConfiguration _appConfig;
-        public AppController(IChromelyConfiguration config, IConfiguration appConfig)
+        private readonly IChromelyWindow _host;
+        private HookWindow Window => _host as HookWindow;
+        public AppController(IChromelyConfiguration config, IConfiguration appConfig, IChromelyWindow host)
         {
             _config = config;
             _appConfig = appConfig;
+            _host = host;
         }
 
         [RequestAction(RouteKey = "/app/init")]
@@ -67,6 +72,15 @@ namespace Autoquit2.Core.Controllers
                 }
             }
             return BadRequest(req);
+        }
+
+        [RequestAction(RouteKey = "/app/close")]
+        public IChromelyResponse Close(IChromelyRequest req)
+        {
+            if (Window != null)
+                Window.AllowClosing = true;
+            _host.Close();
+            return Ok(req);
         }
     }
 }

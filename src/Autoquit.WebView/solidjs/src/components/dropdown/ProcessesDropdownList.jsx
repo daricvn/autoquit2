@@ -49,10 +49,10 @@ export default function ProcessesDropdownList(props){
                 }
                 else reject()
                 if (res.data.Status != 200)
-                    window.showWarning(translate("Cannot retrieve application information"))
+                    window.showWarning("Cannot retrieve application information")
             })
             .catch((e)=>{
-                window.showWarning(translate("Cannot retrieve application information"))
+                window.showWarning("Cannot retrieve application information")
                 reject()
             })
             .finally(()=>{

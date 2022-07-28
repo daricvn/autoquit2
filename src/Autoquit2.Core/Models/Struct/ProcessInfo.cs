@@ -23,6 +23,22 @@ namespace Autoquit2.Core.Models.Struct
             { "smss.exe", true },
             { "services.exe", true }
         };
+        private static readonly IReadOnlyDictionary<string, bool> _systemProcesses = new Dictionary<string, bool>()
+        {
+            { "explorer.exe", true },
+            { "WerFault.exe", true },
+            { "ntoskrnl.exe", true },
+            { "backgroundtaskhost.exe", true },
+            { "backgroundtransferhost.exe", true },
+            { "winlogon.exe", true },
+            { "wininit.exe", true },
+            { "taskeng.exe", true },
+            { "taskhost.exe", true },
+            { "systemsettings.exe", true },
+            { "textinputhost.exe", true },
+            { "applicationframehost.exe", true },
+            { "csrss.exe", true }
+        };
         #endregion
         public int Id { get; set; }
         public string Name { get; set; }
@@ -90,7 +106,7 @@ namespace Autoquit2.Core.Models.Struct
         public static ProcessInfo Get(int targetId)
         {
             var pc = Process.GetProcessById(targetId);
-            if (pc == null || pc.HasExited)
+            if (pc == null || pc.HasExited || pc.MainModule == null)
                 return ProcessInfo.Empty;
             var info = new ProcessInfo();
             info.Id = pc.Id;
@@ -111,7 +127,7 @@ namespace Autoquit2.Core.Models.Struct
             return info;
         }
 
-        private static ProcessInfo CreateProcessInfo(Process pc, bool minimal = false)
+        private static ProcessInfo CreateProcessInfo(Process pc, bool minimal = false, bool includeSystemProcess = false)
         {
             try
             {
@@ -128,7 +144,7 @@ namespace Autoquit2.Core.Models.Struct
                     if (pc.MainModule.FileName != null)
                     {
                         info.Ext = Path.GetFileName(pc.MainModule.FileName);
-                        if (_ignoreProcesses.ContainsKey(info.Ext))
+                        if (_ignoreProcesses.ContainsKey(info.Ext.ToLower()) || (!includeSystemProcess && _systemProcesses.ContainsKey(info.Ext.ToLower())))
                             return Empty;
                         if (!minimal)
                             info.IconSrc = Icon.ExtractAssociatedIcon(pc.MainModule.FileName).ToBitmap().GetByteArray(ImageFormat.Png).ToBase64();
