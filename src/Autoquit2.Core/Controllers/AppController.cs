@@ -1,4 +1,5 @@
-﻿using Autoquit2.Core.Models;
+﻿using Autoquit2.Core.Const;
+using Autoquit2.Core.Models;
 using Autoquit2.Core.Models.Struct;
 using Autoquit2.Core.Modules;
 using Chromely.Core.Configuration;
@@ -9,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace Autoquit2.Core.Controllers
 {
@@ -26,6 +29,8 @@ namespace Autoquit2.Core.Controllers
             _host = host;
         }
 
+        public string AppPath => System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
         [RequestAction(RouteKey = "/app/init")]
         public IChromelyResponse InitializeApp(IChromelyRequest req)
         {
@@ -36,6 +41,21 @@ namespace Autoquit2.Core.Controllers
             if (!version.Equals(Program.Version.ToString()))
                 return NotSupported(req);
             return Ok(req);
+        }
+
+
+        [RequestAction(RouteKey = "/app/language")]
+        public IChromelyResponse GetLanguage(IChromelyRequest req)
+        {
+            if (!(req.Parameters is IDictionary<string, string> dict))
+                return BadRequest(req);
+            if (!dict.TryGetValue("target", out string target))
+                return BadRequest(req);
+            var path = Path.Combine(AppPath, AppConst.LOCALIZATION_PATH, Path.ChangeExtension(target, AppConst.LOCALIZATION_EXT));
+            if (!File.Exists(path))
+                return NotFound(req);
+            var res = File.ReadAllText(path);
+            return Ok(req, res);
         }
 
         [RequestAction(RouteKey = "/app/processes")]

@@ -3,7 +3,7 @@ import { createStore } from "solid-js/store"
 
 const initStore = {
     items: [],
-    columnSize: { 0: 60, 1: 0, 2: 65, 3: 110}
+    columnSize: { 0: 60, 1: 0, 2: 65, 3: 65}
 }
 
 const ScriptContext = createContext([

@@ -1,4 +1,6 @@
-import { onMount } from "solid-js"
+import { createEffect, onMount, Show } from "solid-js"
+import { useLocalizationContext } from "../context/LocalizationContext"
+import translate from "../libs/i18n"
 import { useGlobalState } from "../store"
 import AppPortal from "./AppPortal"
 import MainHeader from "./MainHeader"
@@ -7,12 +9,20 @@ const accentList = ['info', 'danger', 'warning', 'green', 'orange']
 
 export default function Main(){
     const [ state, setState ] = useGlobalState()
+    const [ localize, setLocalize ] = useLocalizationContext()
     onMount(()=>{
         setState('size', ()=> ({ width: window.innerWidth, height: window.innerHeight }))
         window.onresize = ()=>{
             if (window.raiseResizeEvent)
                 window.raiseResizeEvent()
         }
+        if (localize.language)
+            setLocalize(localize.language)
+                .catch(status=>{
+                    if (status == 200)
+                        window.showWarning(translate("Invalid localization file"))
+                    else window.showWarning(translate("Cannot locate the localization file"))
+                })
     })
 
     window.raiseResizeEvent = ()=>{
@@ -24,9 +34,8 @@ export default function Main(){
         <div className="flex-grow relative overflow-y-auto overflow-x-hidden pb-8">
         <AppPortal />
         </div>
-        {
-            state.block &&
-            <div className="fixed w-screen h-screen bg-black opacity-30 top-0 left-0 select-none" style="z-index: 10000"></div>
-        }
+        <Show when={state.block}>
+            <div className="whiteboard-overlay"></div>
+        </Show>
     </div>
 }

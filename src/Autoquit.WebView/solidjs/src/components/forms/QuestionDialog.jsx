@@ -16,7 +16,7 @@ export default function QuestionDialog(props){
             props.onAccept()
     }
 
-    return <Dialog className={`px-6 py-4 w-96 ${props.className}`} show={props.show} transition="slide-down" style={props.style}>
+    return <Dialog className={`px-6 py-4 w-96 ${props.className}`} show={props.show} transition="slide-down" style={props.style} containerStyle={props.containerStyle} zIndex={props.zIndex}>
         <div className={`block pb-6 text-${state.getTextColour(state)}`}>
             {props.value}
         </div>

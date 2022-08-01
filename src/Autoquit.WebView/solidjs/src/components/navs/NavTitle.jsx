@@ -1,6 +1,4 @@
 import { useGlobalState } from "../../store";
-import FlatCircleButton from "../buttons/FlatCircleButton";
-import WaveButton from "../buttons/WaveButton";
 import Text from "../forms/Text";
 
 export default function NavTitle(props){

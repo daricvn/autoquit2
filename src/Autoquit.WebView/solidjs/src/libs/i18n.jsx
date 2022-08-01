@@ -15,6 +15,10 @@ export default function translate(key){
     return res + ''
 }
 
+export function updateLanguage(key, json) {
+    i18n.set(key, json)
+}
+
 export function capitalize(str){
     return str.charAt(0).toUpperCase() + str.slice(1)
 }

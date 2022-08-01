@@ -1,5 +1,6 @@
 {
   "about": "About",
+  "are you sure want to quit?": "Are you sure want to quit?",
   "build": "Build",
   "version": "Version",
   "help": "Help",
@@ -34,7 +35,18 @@
   "save": "Save",
   "ok": "Ok",
   "cancel": "Cancel",
+  "yes": "Yes",
+  "no": "No",
+  "confirm": "Confirm",
   "reset": "Reset",
   "revert": "Revert",
-  "undo": "Undo"
+  "undo": "Undo",
+  "new file": "New script",
+  "select file": "Select script",
+  "the application exited or access denied": "The application exited or access denied.",
+  "invalid localization file": "Invalid localization file.",
+  "cannot locate the localization file": "Cannot locate the localization file.",
+  "record mouse movement": "Record mouse movement",
+  "record mouse movement as well": "Record all mouse movements during Script Recording",
+  "are you sure want to delete selected item(s)?": "Are you sure want to delete selected item(s)?"
 }

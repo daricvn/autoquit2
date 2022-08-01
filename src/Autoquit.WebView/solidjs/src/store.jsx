@@ -4,6 +4,7 @@ import { accentPreset, themePreset } from "./theme";
 
 const initStore = {
     theme: '',
+    language: 'en-UK',
     accent: 'ocean',
     target: '',
     process: '',

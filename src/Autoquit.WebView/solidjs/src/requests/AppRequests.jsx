@@ -5,6 +5,9 @@ export const AppRequests = {
     getProcesses: ()=>{
         return axios.get(ENVIRONMENT.getUrl('app/processes'))
     },
+    getLanguage: (target)=>{
+        return axios.get(ENVIRONMENT.getUrl('app/language?target=' + target))
+    },
     getProcessesLazily: ()=>{
         return axios.get(ENVIRONMENT.getUrl('app/lazyprocesses'))
     },

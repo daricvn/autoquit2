@@ -5,6 +5,7 @@ import { useGlobalState } from "../../store"
 import FlatCircleButton from "../buttons/FlatCircleButton"
 import ScriptFileBrowser from "../navs/ScriptFileBrowser"
 import ScriptTableNav from "../navs/ScriptTableNav"
+import Checkbox from "./Checkbox"
 import { ResizableTable } from "./ResizableTable"
 import './ScriptTable.css'
 
@@ -85,14 +86,15 @@ export const ScriptTable = ()=>{
                 else
                     setItems([ ...items ]);
             })
+            .catch(()=> {})
     }
 
     const headers = createMemo(()=>{
         return [
-            <input type="checkbox" className="select-none" checked={isCheckedAll()} onChange={handleCheckedAll}></input>,
+            <Checkbox type="checkbox" className="select-none" checked={isCheckedAll()} onChange={handleCheckedAll} />,
             translate("Type"),
             translate("Enabled"),
-            translate("Action"),
+            "",
         ]
     })
 
@@ -102,12 +104,12 @@ export const ScriptTable = ()=>{
                 <For each={getItems()}>
                     { (item, i)=> 
                     <tr>
-                        <td className="text-center"><input type="checkbox" className="select-none" checked={!!getSelected()[i()]} onChange={(e)=> handleCheckedChange(i())} ></input></td>
+                        <td className="text-center"><Checkbox type="checkbox" className="select-none" checked={!!getSelected()[i()]} onChange={(e)=> handleCheckedChange(i())} /></td>
                         <td className="overflow-hidden text-ellipsis">{item.Name}</td>
-                        <td className="text-center"><input type="checkbox" className="select-none" checked={item.Enabled}></input></td>
+                        <td className="text-center"><Checkbox type="checkbox" className="select-none" checked={item.Enabled} /></td>
                         <td className="text-right">
                             <FlatCircleButton size={8} color={state.getTextColour(state)}>
-                                <i class="fa-solid fa-pen-to-square text-green-500"></i>
+                                <i class={`fa-solid fa-pen-to-square text-${state.getAccent(state)}`}></i>
                             </FlatCircleButton>
                         </td>
                     </tr>
