@@ -7,11 +7,11 @@ using Chromely.Core.Host;
 using Chromely.Core.Network;
 using InputBridge;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
 
 namespace Autoquit2.Core.Controllers
 {
@@ -68,7 +68,7 @@ namespace Autoquit2.Core.Controllers
         {
             foreach (var proc in ProcessInfo.EnumAll(false, false))
             {
-                string script = $"window.updateProcess({JsonConvert.SerializeObject(proc)})";
+                string script = $"window.updateProcess({JsonSerializer.Serialize(proc)})";
                 _config.JavaScriptExecutor.ExecuteScript(script);
             }
             return Ok(req);

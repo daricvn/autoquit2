@@ -45,7 +45,7 @@ namespace Autoquit2.Core.Models.Struct
         public string Ext { get; set; }
         public string Title { get; set; }
         public string IconSrc { get; set; }
-        public IntPtr MainHandle { get; set; }
+        public int MainHandle { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -112,7 +112,7 @@ namespace Autoquit2.Core.Models.Struct
             info.Id = pc.Id;
             info.Title = GetName(pc.MainWindowTitle, pc.ProcessName);
             info.Name = info.Title;
-            info.MainHandle = pc.MainWindowHandle;
+            info.MainHandle = (int) pc.MainWindowHandle;
             info.IconSrc = Resources.env.defaultAppIcon;
             try
             {

@@ -1,10 +1,12 @@
 ﻿using Autoquit2.Core.Models.Struct;
 using Chromely.Core.Network;
+using System.Text.Json;
 
 namespace Autoquit2.Core.Models
 {
     public abstract class BaseController : ChromelyController
     {
+        private static ActionResult OkStatus = new ActionResult(200);
         private static readonly ActionResult CreatedStatus = new ActionResult(201);
         private static readonly ActionResult NoContentStatus = new ActionResult(204);
         private static readonly ActionResult NotModifiedStatus = new ActionResult(304);
@@ -29,7 +31,10 @@ namespace Autoquit2.Core.Models
         protected ChromelyResponse NotSupported(IChromelyRequest req)
             => new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = NotSupportedStatus };
         protected ChromelyResponse Ok(IChromelyRequest req, object data = null)
-            => new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = new ActionResult(data) };
+        {
+            OkStatus.Content = data;
+            return new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = JsonSerializer.Serialize(OkStatus) };
+        }
         protected ChromelyResponse NoContent(IChromelyRequest req)
             => new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = NoContentStatus };
         protected ChromelyResponse NotModified(IChromelyRequest req)

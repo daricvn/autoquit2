@@ -1,10 +1,9 @@
 ﻿using Autoquit.Packaging.LZMA;
 using Autoquit2.Core.Models;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 
 namespace Autoquit2.Core.Utilities
 {
@@ -13,7 +12,7 @@ namespace Autoquit2.Core.Utilities
         private const string EXTENSION = ".script";
         public static string Save(Script script, string path, string password = "")
         {
-            ReadOnlySpan<char> contents = JsonConvert.SerializeObject(script, Formatting.None).AsSpan();
+            ReadOnlySpan<char> contents = JsonSerializer.Serialize(script).AsSpan();
             var byteCount = Encoding.UTF8.GetByteCount(contents);
             Span<byte> input = stackalloc byte[byteCount];
             Encoding.UTF8.GetBytes(contents, input);
@@ -36,7 +35,7 @@ namespace Autoquit2.Core.Utilities
                 if (result != null && result.Length > 0)
                 {
                     var content = Encoding.UTF8.GetString(result);
-                    return JsonConvert.DeserializeObject<Script>(content);
+                    return JsonSerializer.Deserialize<Script>(content);
                 }
             }
             return null;
