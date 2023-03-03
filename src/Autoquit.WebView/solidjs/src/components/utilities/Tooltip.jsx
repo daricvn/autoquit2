@@ -1,12 +1,13 @@
 import { createEffect, createMemo, createSignal, onCleanup, onMount, Show } from 'solid-js';
-import createDebounce from '../../libs/createDebounce';
+import { debounce } from '@solid-primitives/scheduled'
 import { Transition } from 'solid-transition-group';
 import { useGlobalState } from '../../store';
 import './Tooltip.css'
 
-export default function Tooltip({ offset, position, disabled, className, children, value, style }){
+export default function Tooltip(props){
+    //const { offset, position, disabled, className, children, value, style } = props
     const [ state, setState ] = useGlobalState()
-    const _debounce = createDebounce()
+    const debounceHover = debounce((setter, val)=> setter(val), 80)
     const [ getHover, setHover ] = createSignal(false)
     const [ getStyle, setStyle ] = createSignal("")
     const [ getMounted, setMounted ] = createSignal(false)
@@ -24,35 +25,33 @@ export default function Tooltip({ offset, position, disabled, className, childre
         getHover()
         if (!reference)
             return
-        let fx = +(offset ?? 4)
+        let fx = +(props.offset ?? 4)
         let rect = reference.getBoundingClientRect()
         let x = Math.round(reference.offsetLeft + (rect.width/2))
         let y = Math.round(reference.offsetTop + (rect.height/2))
-        if (position == "top")
+        if (props.position == "top")
             y -= Math.round(rect.height/2 + fx)
-        else if (position == "left")
+        else if (props.position == "left")
             x -= Math.round(rect.width/2 + fx)
-        else if (position == "right")
+        else if (props.position == "right")
             x += Math.round(rect.width/2 + fx)
         else
             y += (fx + rect.height / 2)
-        setStyle(`top: ${y}px; left: ${x}px; ${style ?? ""}`)
+        setStyle(`top: ${y}px; left: ${x}px; ${props.style ?? ""}`)
     })
 
     const handleMouseHover = ()=>{
-        if (!disabled)
+        if (!props.disabled)
             setHover(true)  
     }
 
     const handleMouseOut = ()=>{
-        _debounce(()=> {
-            setHover(false)
-        }, 60);
+        debounceHover(setHover, false);
     }
 
     const transition = createMemo(()=> 
     {   
-        switch (position)
+        switch (props.position)
         {
             case "left":
                 return "-translate-y-1/2 -translate-x-full";
@@ -65,16 +64,16 @@ export default function Tooltip({ offset, position, disabled, className, childre
         }
     })
 
-    return <div className={`inline-block ${className ?? ""}`}>
+    return <div className={`inline-block ${props.className ?? ""}`}>
         <Transition name="tooltip">
             <Show when={getHover()}>
                 <div className={`absolute select-none pointer-events-none tooltip font-thin text-sm inline-block px-3 py-1 rounded-lg transform ${state.getBackgroundInvert(state)} bg-opacity-80 text-${state.getTextColourInvert(state)} ${transition()}`} style={getStyle()}>
-                    { value }
+                    { props.value }
                 </div>
             </Show>
         </Transition>
         <div ref={reference} onMouseOver={handleMouseHover} onMouseLeave={handleMouseOut}>
-            { children }
+            { props.children }
         </div>
     </div>
 }

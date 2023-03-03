@@ -17,16 +17,21 @@ namespace Autoquit2.Core.Models
         /// </summary>
         public IDictionary<string, object> Values { get; set; }
         /// <summary>
+        /// Miliseconds delay
+        /// </summary>
+        public int Delay { get; set; }
+        /// <summary>
         /// Script is enabled or not
         /// </summary>
         public bool Enabled { get; set; }
 
-        public ScriptItem(string module, string name, IDictionary<string, object> values)
+        public ScriptItem(string module, string name, IDictionary<string, object> values, int delay)
         {
             ModuleName = module;
             Name = name;
             Values = values;
             Enabled = true;
+            Delay = delay;
         }
 
         ~ScriptItem()

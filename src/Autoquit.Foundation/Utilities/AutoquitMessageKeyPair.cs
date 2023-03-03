@@ -66,6 +66,14 @@ namespace Autoquit.Foundation.Utilities
             return null;
         }
 
+        public byte GetInteractiveMode()
+        {
+            if (TryGetValue(StaticKeys.INTERACTIVE_MODE, out string val) && byte.TryParse(val, out byte res))
+            {
+                return res;
+            }
+            return 0;
+        }
         public IntPtr GetWindowHandle()
         {
             if (TryGetValue(StaticKeys.WINDOW_HANDLE, out string val) && int.TryParse(val, out int hnd))

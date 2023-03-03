@@ -1,11 +1,21 @@
 ﻿using InputBridge.Models;
 using InputBridge.Models.Platforms.Windows;
+using System;
 using System.Runtime.InteropServices;
 
 namespace InputBridge.Utilities
 {
-    static class InputTypeConverter
+    public static class InputTypeConverter
     {
+        public static Point2d ToCoordinate(this IntPtr pointer)
+        {
+#if WINDOWS_OS
+            var input = Marshal.PtrToStructure<WindowMouseInput>(pointer);
+            return new Point2d(input.dx, input.dy);
+#endif
+            return Point2d.Empty;
+        }
+
         public static MouseEventType ToMouseEvent(this int src)
         {
 #if WINDOWS_OS

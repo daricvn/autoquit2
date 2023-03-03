@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { createEffect, createSignal } from "solid-js";
 import FlatCircleButton from "../components/buttons/FlatCircleButton";
 import ProcessesDropdownList from "../components/dropdown/ProcessesDropdownList";
 import Header from "../components/navs/Header";
@@ -23,6 +23,8 @@ export default function MainHeader(){
             })
     }
 
+    createEffect(()=> console.log("ShowAbout" + showAbout()));
+
     return <Header>
         <div className={`grid grid-cols-5 ${state.blockHeader ? 'pointer-events-none':''}`}>
             <div className="col-span-3">
@@ -38,11 +40,11 @@ export default function MainHeader(){
             </div>
             <div className="text-right pt-2">
                 <FlatCircleButton className={`text-white mr-2 hover:shadow-inner`} size={8}
-                    onClick={()=> setShowAbout(true)}>
+                    onClick={()=> {setShowAbout(true); console.log("Click!") }}>
                     <i className="fa fa-info-circle"></i>
                 </FlatCircleButton>
             </div>
         </div>
-        <About show={showAbout} onClose={()=> setShowAbout(false) } />
+        <About show={showAbout()} onClose={()=> setShowAbout(false) } />
     </Header>
 }

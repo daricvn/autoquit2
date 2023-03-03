@@ -1,7 +1,7 @@
 import { list } from "postcss"
+import { debounce } from "@solid-primitives/scheduled"
 import { createMemo, createSignal, createEffect, For, Show } from "solid-js"
 import CONSTVAR from "../../libs/Const"
-import createDebounce from "../../libs/createDebounce"
 import { useGlobalState } from "../../store"
 import Content from "../forms/Content"
 import CircularProgress from "../progress/CircularProgress"
@@ -12,7 +12,7 @@ export default function EditableDropdown(props){
     const [ getOpen, setOpen ] = createSignal(false)
     const [ getCurrentInput, setCurrentInput ] = createSignal()
     const [ getHoverIndex, setHoverIndex ] = createSignal(-1)
-    const debounce = createDebounce()
+    const debounceUpdate = debounce((method)=> method(), 350);
     const [ state, getState ] = useGlobalState()
     const key = props.dataMember
     const value = props.displayMember
@@ -50,7 +50,7 @@ export default function EditableDropdown(props){
             props.onChange(item, index)
         if (!retain)
             setOpen(false)
-        debounce(updateCurrentInput, 500)
+        debounceUpdate(updateCurrentInput);
     }
 
     const onCreateNew = ()=>{
@@ -99,7 +99,7 @@ export default function EditableDropdown(props){
             args.preventDefault()
         if (props.onChange)
             props.onChange(dropdownInput.value, -1)
-        debounce(updateCurrentInput, 350)
+        debounceUpdate(updateCurrentInput)
     }
 
     const getFilteredItem = createMemo(()=>{

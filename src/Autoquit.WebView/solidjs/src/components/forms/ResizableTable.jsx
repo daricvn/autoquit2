@@ -2,7 +2,7 @@ import {  createMemo, For, Show } from 'solid-js';
 import { useGlobalState } from '../../store';
 import './ResizableTable.css';
 
-export const ResizableTable= ({ columns, columnSize, className, style, onColumnSizeChanged, children })=>{
+export const ResizableTable= (props)=>{
     const [ state, setState ] = useGlobalState()
 
     const handleMouseDown = (e, i)=>{
@@ -11,17 +11,17 @@ export const ResizableTable= ({ columns, columnSize, className, style, onColumnS
         document.resizeStartW = parseInt(styles.width, 10);
         document.resizeStartX = e.clientX;
         document.resizeTarget = e.target;
-        document.resizeIndexCallback = onColumnSizeChanged;
+        document.resizeIndexCallback = props.onColumnSizeChanged;
         document.resizeRightToLeft = false;
     }
 
     const headers = createMemo(()=>{
-        if (!columns) return ""
-        return <For each={columns}>
-            { (col, i) => <th className={`select-none ${state.getBackground(state)}`} style={ columnSize && columnSize[i()] ? "width: "+ columnSize[i()] + "px": ""}>
+        if (!props.columns) return ""
+        return <For each={props.columns}>
+            { (col, i) => <th className={`select-none ${state.getBackground(state)}`} style={ props.columnSize && props.columnSize[i()] ? "width: "+ props.columnSize[i()] + "px": ""}>
                     {col}
                     {
-                        <Show when={i() < columns.length - 1}>
+                        <Show when={i() < props.columns.length - 1}>
                             <div className="resizer" onMouseDown={(e)=>handleMouseDown(e, i())} />
                         </Show>
                     }
@@ -29,14 +29,14 @@ export const ResizableTable= ({ columns, columnSize, className, style, onColumnS
         </For>
     })
 
-    return <table className={`resizable-table ${className}`} style={style}>
+    return <table className={`resizable-table ${props.className}`} style={props.style}>
         <thead>
             <tr>
                 { headers() }
             </tr>
         </thead>
         <tbody>
-            {children}
+            {props.children}
         </tbody>
     </table>
 }

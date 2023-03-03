@@ -4,18 +4,21 @@ import { useGlobalState } from "../store";
 import { favicon } from '../assets/favicon'
 import Text from "../components/forms/Text";
 import Dialog from "../components/forms/Dialog";
+import { createEffect } from "solid-js";
 
 let version = "2.0.0"
 let flavour = "Windows"
 
-export default function About({ show, onClose }){
+export default function About(props){
     const [ state, setState ] = useGlobalState()
     const close = ()=>{
-        if (onClose)
-            onClose();
+        if (props.onClose)
+            props.onClose();
         return false;
     }
-    return <Dialog className="h-full" transition="slide-left" fullScreen={true} show={show()}>
+
+    createEffect(()=> console.log("Changed" + props.show))
+    return <Dialog className="h-full" transition="slide-left" fullScreen={true} show={props.show}>
         <SubContent className="px-8 md:px-24 lg:px-52 pt-12" title={translate("About")} onNavigateBack={close}>
             <div className="flex space-x-4">
                 <div>

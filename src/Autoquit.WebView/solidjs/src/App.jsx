@@ -38,8 +38,8 @@ function App() {
     return buttonType
   })
 
-  window.showPrompt = (text, type)=>{
-    return new Promise((resolve, reject)=>{
+  /*@once*/ window.showPrompt = (text, type)=>{
+    return /*@once*/new Promise((resolve, reject)=>{
       setShowQuestion(true)
       setQuestion({
         text: translate(text),
@@ -55,11 +55,11 @@ function App() {
       })
     })
   }
-  window.showWarning = (text, showCancelButton)=>{
-    return new Promise((resolve, reject)=>{
-      let obj = {
+  /*@once*/window.showWarning = (text, showCancelButton)=>{
+    /*@once*/ return new Promise((resolve, reject)=>{
+      /*@once*/let obj = {
         show: true,
-        text: translate(text),
+        /*@once*/text: /*@once*/translate(text),
         cancel: showCancelButton ? dialogButtonType[0].cancel : ''
       }
       setWarning({

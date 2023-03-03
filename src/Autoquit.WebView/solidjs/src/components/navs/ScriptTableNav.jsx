@@ -3,25 +3,26 @@ import { Transition } from "solid-transition-group"
 import { useGlobalState } from "../../store"
 import CircleButton from "../buttons/CircleButton"
 
-export default function ScriptTableNav({ showDelete, onDeleteRequest, onAddRequest }){
+export default function ScriptTableNav(props){
     const [ state, setState ] = useGlobalState()
 
     const handleDeleteRequest = ()=>{
-        if (onDeleteRequest)
-            onDeleteRequest()
+        console.log("Hello")
+        if (props.onDeleteRequest)
+        props.onDeleteRequest()
     }
 
     const handleAddRequest = ()=>{
-        if (onAddRequest)
-            onAddRequest()
+        if (props.onAddRequest)
+        props.onAddRequest()
     }
 
     const shouldShowDelete = createMemo(()=>{
-        if (showDelete === undefined)
+        if (props.showDelete === undefined)
             return false;
-        if (typeof(showDelete) === 'function')
-            return showDelete()
-        return showDelete
+        if (typeof(props.showDelete) === 'function')
+            return props.showDelete()
+        return props.showDelete
     })
     
     return <div className="px-3 pt-2 block">

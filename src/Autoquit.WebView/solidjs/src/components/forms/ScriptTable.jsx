@@ -1,10 +1,11 @@
 import { createEffect, createMemo, createSignal, For } from "solid-js"
 import { useScriptContext } from "../../context/ScriptContext"
-import translate from "../../libs/i18n"
+import translate, { capitalize } from "../../libs/i18n"
 import { useGlobalState } from "../../store"
 import FlatCircleButton from "../buttons/FlatCircleButton"
 import ScriptFileBrowser from "../navs/ScriptFileBrowser"
 import ScriptTableNav from "../navs/ScriptTableNav"
+import Tooltip from "../utilities/Tooltip"
 import Checkbox from "./Checkbox"
 import { ResizableTable } from "./ResizableTable"
 import './ScriptTable.css'
@@ -111,6 +112,9 @@ export const ScriptTable = ()=>{
                             <FlatCircleButton size={8} color={state.getTextColour(state)}>
                                 <i class={`fa-solid fa-pen-to-square text-${state.getAccent(state)}`}></i>
                             </FlatCircleButton>
+                                <FlatCircleButton size={8} color={state.getTextColour(state)}>
+                                    <i class={`fa-solid fa-play text-green`}></i>
+                                </FlatCircleButton>
                         </td>
                     </tr>
                 }

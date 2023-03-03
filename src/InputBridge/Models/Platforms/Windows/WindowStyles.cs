@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if WINDOWS_OS
+using System;
 
 namespace InputBridge.Models.Platforms.Windows
 { /// <summary>
@@ -87,3 +88,4 @@ namespace InputBridge.Models.Platforms.Windows
         WS_VSCROLL = 0x200000
     }
 }
+#endif

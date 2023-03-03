@@ -1,18 +1,19 @@
 import NavTitle from "./navs/NavTitle";
 
-export default function SubContent({ onNavigateBack, className, title, children }){
+export default function SubContent(props){
+    //const { onNavigateBack, className, title, children } = props./
     const goBack = ()=>{
-        if (onNavigateBack && onNavigateBack() === false)
+        if (props.onNavigateBack && props.onNavigateBack() === false)
             return;
     }
 
-    return <div className={className}>
+    return <div className={props.className}>
         <NavTitle onClick={goBack}>
-            {title}
+            {props.title}
         </NavTitle>
         <hr className="mt-1 mb-1" />
         <div className="block pt-4">
-            { children }
+            { props.children }
         </div>
     </div>
 }

@@ -43,6 +43,26 @@ namespace InputBridge
             WM_CLEAR = 0x0303,
             WM_UNDO = 0x0304
         }
+
+        public enum MouseEvents
+        {
+            WM_LBUTTONDBLCLK = 0x0203,
+            WM_LBUTTONDOWN = 0x0201,
+            WM_LBUTTONUP = 0x0202,
+            WM_MBUTTONDBLCLK = 0x0209,
+            WM_MBUTTONDOWN = 0x0207,
+            WM_MBUTTONUP = 0x0208,
+            WM_RBUTTONDBLCLK = 0x0206,
+            WM_RBUTTONDOWN = 0x0204,
+            WM_RBUTTONUP = 0x0205,
+        }
+        public enum MouseParams
+        {
+            MK_LBUTTON = 0x0001, 
+            MK_MBUTTON = 0x0010,
+            MK_RBUTTON = 0x0002
+        }
+
         public enum ListMessage
         {
             CB_GETEDITSEL = 0x0140,

@@ -45,7 +45,7 @@ namespace Autoquit2.Core.Models.Struct
         public string Ext { get; set; }
         public string Title { get; set; }
         public string IconSrc { get; set; }
-        public int MainHandle { get; set; }
+        public long MainHandle { get; set; }
 
         public override bool Equals(object obj)
         {

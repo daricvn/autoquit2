@@ -1,4 +1,6 @@
-﻿using System;
+﻿using InputBridge.Models;
+using System;
+using System.Linq;
 
 namespace InputBridge
 {
@@ -13,6 +15,14 @@ namespace InputBridge
                     _instance = new NativeAPI();
                 return _instance;
             }
+        }
+
+        public void SendMouse(IntPtr target, MouseEventType type, Point2d coordinate)
+        {
+#if WINDOWS_OS
+            var mouseEvent = Win32Map.Instance.ConvertMouseEvents(type);
+            InputBridge.PostMessage(target, (uint)mouseEvent, 0, (int)coordinate.ToParams());
+#endif
         }
 
         public void BringToTop(IntPtr target)

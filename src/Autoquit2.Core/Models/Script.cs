@@ -26,6 +26,6 @@ namespace Autoquit2.Core.Models
         /// An option allow the tool to calculate the coordinate based on the resolution at the recorded time
         /// </summary>
         public bool RelativeCoordinate { get; set; }
-        public IList<ScriptItem> Scripts { get; set; }
+        public IList<ScriptItem> Scripts { get; set; } = new List<ScriptItem>();
     }
 }
