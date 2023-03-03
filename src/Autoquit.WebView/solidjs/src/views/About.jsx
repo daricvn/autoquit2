@@ -33,8 +33,9 @@ export default function About(props){
                         </div>
                         <hr class="mt-3" />
                         <div class="mt-3 text-body-2">
-                            Autoquit is an open-source automation tool developed by <b>Darick Nguyen.</b> <br />
-                            It can operate many commands on your desktop automatically with or without focusing on the application, by providing the script that you wrote or recorded, not only let you freely change the playback speed, but also allow you to link between scripts to make a chain of behaviour when automating your repetitive works.
+                            Autoquit is an open-source automation tool for desktop applications, developed by <b>Darick Nguyen</b> <br />
+                            The tool can execute many commands automatically by using scripts that you can either write your own scripts or record your actions and edit them later. It also lets you adjust the playback speed and link multiple scripts together to create a chain of actions. <br></br> 
+                            Autoquit can help you automate your repetitive tasks with ease and efficiency.
                         </div>
                     </Text>
                 </div>
