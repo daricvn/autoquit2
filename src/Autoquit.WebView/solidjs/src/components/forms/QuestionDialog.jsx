@@ -3,6 +3,17 @@ import { useGlobalState } from "../../store";
 import WaveButton from "../buttons/WaveButton";
 import Dialog from "./Dialog";
 
+// export interface IQuestionDialogProps extends JSX.HTMLAttributes<HTMLDivElement> {
+//     show: boolean | undefined;
+//     ok?: string;
+//     cancel?: string;
+//     value?: any;
+//     containerStyle?: string;
+//     zIndex?: number;
+//     onAccept?: ()=> void;
+//     onReject?: ()=> void;
+// }
+
 export default function QuestionDialog(props){
     const [ state, useState ] = useGlobalState()
 
@@ -25,7 +36,7 @@ export default function QuestionDialog(props){
                 <WaveButton className={`transition-colors outline-none px-3 py-1 text-white bg-${state.getAccent(state)} rounded-lg mr-2 hover:shadow-inner hover:shadow-md`} onClick={handleOk}>
                     {props.ok}
                 </WaveButton>
-                <Show when={!!props.cancel}>
+                <Show when={props.cancel && props.cancel.length > 0}>
                     <WaveButton className={`transition-colors outline-none px-3 py-1 text-white bg-gray-500 rounded-lg mr-2 hover:shadow-inner hover:bg-gray-600`} onClick={handleClose}>
                         {props.cancel}
                     </WaveButton>

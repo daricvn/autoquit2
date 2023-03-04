@@ -37,11 +37,12 @@ namespace Autoquit2.Core
                     WindowOptions = new WindowOptions()
                     {
                         Title = "Autoquit2",
-                        DisableResizing = true,
+                        DisableResizing = false,
                         RelativePathToIconFile = "fav.ico",
                         StartCentered = true,
-                        DisableMinMaximizeControls = true,
-                        Size = new WindowSize(1080, 700)
+                        DisableMinMaximizeControls = false,
+                        Size = new WindowSize(1080, 700),
+                        MinimumSize = new System.Drawing.Size(960, 576)
                     },
                     UrlSchemes = new List<UrlScheme>()
                     {

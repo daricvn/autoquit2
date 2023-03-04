@@ -44,9 +44,8 @@ export default function Settings({ show, onClose }){
             setState(keys[i], newState[keys[i]])
     }
 
-
-    return <Dialog className="h-full z-10" transition="slide-left" fullScreen={true} show={show()}>
-            <SubContent className="px-8 md:px-24 lg:px-52 pt-12 w-full h-full relative" title={translate("Settings")}
+    return <Dialog className="h-full z-10 overflow-y-auto" transition="slide-left" fullScreen={true} show={show()}>
+            <SubContent className="px-8 md:px-24 lg:px-52 pt-12 w-full h-full relative pb-4" title={translate("Settings")}
             onNavigateBack={close}>
             <div className={`flex flex-wrap flex-col`}>
                 <div className="px-8 md:px-12 lg:px-16">
@@ -78,7 +77,7 @@ export default function Settings({ show, onClose }){
                 <Transition name="slide-left" appear>
                     {
                         getDirty() && 
-                        <div className="px-8 md:px-12 lg:px-16 mt-8 mr-8 flex justify-end">
+                        <div className="px-8 md:px-12 lg:px-16 mt-8 mr-8 mb-4 flex justify-end">
                             <div>
                                 <WaveButton className={`transition-colors outline-none px-3 py-1 text-white bg-green-500 border border-green-500 hover:bg-green-600 hover:shadow-inner rounded-full mr-2`}
                                     onClick={save}>

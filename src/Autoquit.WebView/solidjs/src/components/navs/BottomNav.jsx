@@ -1,15 +1,16 @@
 
-import { createSignal } from "solid-js"
+import { createSignal, lazy, Show } from "solid-js"
 import { Transition } from "solid-transition-group"
 import translate from "../../libs/i18n"
 import { useGlobalState } from "../../store"
-import Settings from "../../views/Settings"
 import WaveButton from "../buttons/WaveButton"
 import { CircularProgressWithText } from "../progress/CircularProgress"
 import Tooltip from "../utilities/Tooltip"
 
+const Settings = lazy(()=> import("../../views/Settings"));
+
 export default function BottomNav(){
-    const [ showSetting, setShowSetting] = createSignal(false)
+    const [ showSetting, setShowSetting] = createSignal(null)
     const [ state, setState ] = useGlobalState()
     const gotoSettings = ()=>{
         setShowSetting(true)
@@ -44,6 +45,8 @@ export default function BottomNav(){
             </div>
         </div>
     </div>
-    <Settings show={showSetting} onClose={handleCloseSettings} />
+    <Show when={showSetting() !== null}>
+        <Settings show={showSetting} onClose={handleCloseSettings} />
+    </Show>
     </>
 }

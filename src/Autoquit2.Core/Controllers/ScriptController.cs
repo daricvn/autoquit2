@@ -5,7 +5,6 @@ using Chromely.Core.Configuration;
 using Chromely.Core.Network;
 using InputBridge;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Autoquit2.Core.Controllers

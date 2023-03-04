@@ -5,6 +5,7 @@ import CONSTVAR from "../../libs/Const"
 import { useGlobalState } from "../../store"
 import Content from "../forms/Content"
 import CircularProgress from "../progress/CircularProgress"
+import DropdownItem from "./DropdownItem"
 
 const ICON_SIZE = 56;
 
@@ -196,7 +197,7 @@ export default function EditableDropdown(props){
                                 <a class={`flex-auto p-2 flex text-ellipsis select-none overflow-hidden`}
                                     onClick={()=> onItemSelected(item, item.index)}>
                                     { item.icon && <img className="flex-none pr-1" src={item.icon} height={`${ICON_SIZE}px`} /> }
-                                    <span className="flex-auto overflow-hidden">{ item.text }</span>
+                                    <DropdownItem value={item.text} highlight={props.noFilter ? '' : getCurrentInput()}></DropdownItem>
                                 </a>
                                 <Show when={props.appendItem && getHoverIndex() == i()}>
                                     <div className="pr-1 pt-2">

@@ -2,6 +2,14 @@ import {  createMemo } from "solid-js";
 import { Transition } from "solid-transition-group";
 import { useGlobalState } from "../../store";
 
+// export interface IDialogProps extends JSX.HTMLAttributes<HTMLDivElement> {
+//     transition?: string;
+//     show: boolean | undefined;
+//     zIndex?: number;
+//     containerStyle?: string;
+//     fullScreen?: boolean;
+// }
+
 export default function Dialog(props){
     const [ state, useState ] = useGlobalState()
 

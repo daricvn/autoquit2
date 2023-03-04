@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { createSignal, lazy } from "solid-js";
 import { routes } from "../../routes/config";
 import TextBox from "../forms/TextBox";
 

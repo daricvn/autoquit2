@@ -1,8 +1,6 @@
 ﻿using SevenZip;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Autoquit.Packaging.LZMA
 {
