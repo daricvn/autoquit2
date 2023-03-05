@@ -52,3 +52,18 @@
 .fade-exit-to {
     opacity: 0;
 }
+
+
+.rotate-enter-active {
+    transition: all 0.25s cubic-bezier(.17, .67, .48, 1.16);
+}
+
+.rotate-exit-active {
+    transition: all 0.25s cubic-bezier(.17, .67, .48, 1.16);
+}
+
+.rotate-enter,
+.rotate-exit-to {
+    transform: rotate(-135deg);
+    opacity: 0;
+}

@@ -83,12 +83,12 @@ function App() {
       <LocalizationContextProvider>
         <ScriptContextProvider>
           <Main></Main>
-          <QuestionDialog show={getShowQuestion()} value={getQuestion().text} ok={translate(getDialogButton().ok)} cancel={translate(getDialogButton().cancel)}
+          <QuestionDialog show={getShowQuestion()} value={getQuestion().text} ok={getDialogButton().ok} cancel={getDialogButton().cancel}
             onAccept={getQuestion().accept}
             onReject={getQuestion().reject}
             style="box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);"
             zIndex={20000} />
-          <QuestionDialog show={shouldShowWarning()} value={getWarning().text} ok={translate(dialogButtonType[0].ok)} cancel={translate(getWarning().cancel)}
+          <QuestionDialog show={shouldShowWarning()} value={getWarning().text} ok={dialogButtonType[0].ok} cancel={getWarning().cancel}
             onAccept={getWarning().accept}
             onReject={getWarning().reject}
             style="box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);"

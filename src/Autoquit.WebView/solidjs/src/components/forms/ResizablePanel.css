@@ -5,7 +5,7 @@
 .resizable-panel td > .resizer {
     position: absolute;
     top: 0;
-    width: 4px;
+    width: 0.52rem;
     cursor: col-resize;
     user-select: none;
     height: 100%;
