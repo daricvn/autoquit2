@@ -1,36 +1,40 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+body{
+  margin: 0px;
+}
 
 .grid-2-cols {
-    display: grid;
-    grid-template-areas: "a a";
-    grid-auto-columns: min-content;
+  display: grid;
+  grid-template-areas: "a a";
+  grid-auto-columns: min-content;
 }
 
 .checkbox-accent {
-    --chkbg: var(--a);
-    --chkfg: var(--ac);
+  --chkbg: var(--a);
+  --chkfg: var(--ac);
 }
 
 .whiteboard-overlay {
-    position: fixed;
-    user-select: none;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 100000;
-    background: linear-gradient(90deg, rgba(255,255,255, 0.5), rgba(255,255,255, 0.55), rgba(255,255,255, 0.8), rgba(255,255,255, 0.55), rgba(255,255,255, 0.5));
-    background-repeat: repeat;
-    animation: whiteboardAnimation 1.2s linear infinite;
+  position: fixed;
+  user-select: none;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100000;
+  background: linear-gradient(90deg, rgba(255,255,255, 0.5), rgba(255,255,255, 0.55), rgba(255,255,255, 0.8), rgba(255,255,255, 0.55), rgba(255,255,255, 0.5));
+  background-repeat: repeat;
+  animation: whiteboardAnimation 1.2s linear infinite;
+}
+
+button{
+  outline: none;
 }
 
 @keyframes whiteboardAnimation {
-    from {
-        background-position: 0px 0px;
-    }
-    to {
-        background-position: 100vw 0px;
-    }
+  from {
+      background-position: 0px 0px;
+  }
+  to {
+      background-position: 100vw 0px;
+  }
 }
