@@ -1,20 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Configurations>Debug;Release;DebugWinx64;DebugLinux;DebugWinx86</Configurations>
+    <TargetFramework>net7.0</TargetFramework>
+    <Configurations>Debug;Release;Debug-Win64;Debug-Linux;Debug-Win86</Configurations>
     <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugWinx64|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Win64|x64'">
     <DefineConstants>TRACE;WINDOWS_OS</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugWinx86|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Win86|x64'">
     <DefineConstants>TRACE;WINDOWS_OS</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugLinux|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Linux|x64'">
     <DefineConstants>TRACE;LINUX_OS</DefineConstants>
   </PropertyGroup>
 

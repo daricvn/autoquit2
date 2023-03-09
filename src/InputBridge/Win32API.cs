@@ -43,6 +43,26 @@ namespace InputBridge
             WM_CLEAR = 0x0303,
             WM_UNDO = 0x0304
         }
+
+        public enum MouseEvents
+        {
+            WM_LBUTTONDBLCLK = 0x0203,
+            WM_LBUTTONDOWN = 0x0201,
+            WM_LBUTTONUP = 0x0202,
+            WM_MBUTTONDBLCLK = 0x0209,
+            WM_MBUTTONDOWN = 0x0207,
+            WM_MBUTTONUP = 0x0208,
+            WM_RBUTTONDBLCLK = 0x0206,
+            WM_RBUTTONDOWN = 0x0204,
+            WM_RBUTTONUP = 0x0205,
+        }
+        public enum MouseParams
+        {
+            MK_LBUTTON = 0x0001, 
+            MK_MBUTTON = 0x0010,
+            MK_RBUTTON = 0x0002
+        }
+
         public enum ListMessage
         {
             CB_GETEDITSEL = 0x0140,
@@ -78,7 +98,8 @@ namespace InputBridge
             CB_SETHORIZONTALEXTENT = 0x015E,
             CB_GETDROPPEDWIDTH = 0x015F,
             CB_SETDROPPEDWIDTH = 0x0160,
-            CB_INITSTORAGE = 0x0161
+            CB_INITSTORAGE = 0x0161,
+            SW_RESTORE = 9
         }
 
         [DllImport("user32.dll", EntryPoint = "GetWindowRect")]
@@ -122,6 +143,13 @@ namespace InputBridge
            IntPtr lpParam);
         [DllImport("user32.dll", EntryPoint = "ShowWindow")]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        [DllImport("user32.dll", EntryPoint = "GetMessage")]
+        public static extern int GetMessage(out MSG lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax);
+        [DllImport("user32.dll", EntryPoint = "TranslateMessage")]
+        static extern bool TranslateMessage([In] ref MSG lpMsg);
+        [DllImport("user32.dll", EntryPoint = "DispatchMessage")]
+        static extern IntPtr DispatchMessage([In] ref MSG lpmsg);
+
         [DllImport("user32.dll", EntryPoint = "SetLayeredWindowAttributes")]
         public static extern bool SetLayeredWindowAttributes(IntPtr hwnd, uint crKey, byte bAlpha, uint dwFlags);
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true, EntryPoint = "GetWindowText")]
@@ -133,7 +161,10 @@ namespace InputBridge
         internal static extern bool BringWindowToTop(IntPtr hWnd);
         [DllImport("user32.dll", EntryPoint = "SetForegroundWindow")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool SetForegroundWindow(IntPtr hWnd);
+        internal static extern bool SetForegroundWindow(IntPtr hWnd); 
+
+        [DllImport("user32.dll", EntryPoint = "IsIconic")]
+        internal static extern bool IsIconic(IntPtr handle);
 
 
         public static string GetWindowTitle(IntPtr target)

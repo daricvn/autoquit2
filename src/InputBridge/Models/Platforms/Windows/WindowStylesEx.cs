@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if WINDOWS_OS
+using System;
 
 namespace InputBridge.Models.Platforms.Windows
 {
@@ -151,3 +152,4 @@ namespace InputBridge.Models.Platforms.Windows
         WS_EX_WINDOWEDGE = 0x00000100
     }
 }
+#endif

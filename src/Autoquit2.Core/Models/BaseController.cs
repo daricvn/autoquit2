@@ -1,30 +1,45 @@
-﻿using Chromely.Core.Network;
+﻿using Autoquit2.Core.Models.Struct;
+using Chromely.Core.Network;
+using System.Text.Json;
 
 namespace Autoquit2.Core.Models
 {
     public abstract class BaseController : ChromelyController
     {
+        private static ActionResult OkStatus = new ActionResult(200);
+        private static readonly ActionResult CreatedStatus = new ActionResult(201);
+        private static readonly ActionResult NoContentStatus = new ActionResult(204);
+        private static readonly ActionResult NotModifiedStatus = new ActionResult(304);
+        private static readonly ActionResult NotFoundStatus = new ActionResult(404);
+        private static readonly ActionResult UnauthorizedStatus = new ActionResult(401);
+        private static readonly ActionResult BadRequestStatus = new ActionResult(400);
+        private static readonly ActionResult ForbiddenStatus = new ActionResult(403);
+        private static readonly ActionResult ConflictStatus = new ActionResult(409);
+        private static readonly ActionResult NotSupportedStatus = new ActionResult(501);
         protected ChromelyResponse NotFound(IChromelyRequest req)
-            => new ChromelyResponse() { RequestId = req.Id, Status = 404 };
+            => new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = NotFoundStatus };
         protected ChromelyResponse Unauthorized(IChromelyRequest req)
-            => new ChromelyResponse() { RequestId = req.Id, Status = 401 };
+            => new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = UnauthorizedStatus };
         protected ChromelyResponse BadRequest(IChromelyRequest req)
-            => new ChromelyResponse() { RequestId = req.Id, Status = 400 };
+            => new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = BadRequestStatus };
         protected ChromelyResponse Forbidden(IChromelyRequest req)
-            => new ChromelyResponse() { RequestId = req.Id, Status = 403 };
+            => new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = ForbiddenStatus };
         protected ChromelyResponse Conflict(IChromelyRequest req)
-            => new ChromelyResponse() { RequestId = req.Id, Status = 409 };
+            => new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = ConflictStatus };
         protected ChromelyResponse ServerError(IChromelyRequest req)
             => new ChromelyResponse() { RequestId = req.Id, Status = 500 };
         protected ChromelyResponse NotSupported(IChromelyRequest req)
-            => new ChromelyResponse() { RequestId = req.Id, Status = 501 };
+            => new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = NotSupportedStatus };
         protected ChromelyResponse Ok(IChromelyRequest req, object data = null)
-            => new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = data };
+        {
+            OkStatus.Content = data;
+            return new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = JsonSerializer.Serialize(OkStatus) };
+        }
         protected ChromelyResponse NoContent(IChromelyRequest req)
-            => new ChromelyResponse() { RequestId = req.Id, Status = 204 };
+            => new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = NoContentStatus };
         protected ChromelyResponse NotModified(IChromelyRequest req)
-            => new ChromelyResponse() { RequestId = req.Id, Status = 304 };
+            => new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = NotModifiedStatus };
         protected ChromelyResponse Created(IChromelyRequest req)
-            => new ChromelyResponse() { RequestId = req.Id, Status = 201 };
+            => new ChromelyResponse() { RequestId = req.Id, Status = 200, Data = CreatedStatus };
     }
 }

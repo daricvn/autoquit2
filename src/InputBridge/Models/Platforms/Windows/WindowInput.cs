@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿#if WINDOWS_OS
 namespace InputBridge.Models.Platforms.Windows
 {
     public struct WindowInput
@@ -10,3 +7,4 @@ namespace InputBridge.Models.Platforms.Windows
         public WindowInputMessage u;
     }
 }
+#endif

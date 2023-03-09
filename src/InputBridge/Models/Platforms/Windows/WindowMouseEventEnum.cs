@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿#if WINDOWS_OS
+using System.Reflection;
 
 namespace InputBridge.Models.Platforms.Windows
 {
@@ -17,3 +18,4 @@ namespace InputBridge.Models.Platforms.Windows
         WM_RBUTTONDBLCLK = 0x0206
     }
 }
+#endif

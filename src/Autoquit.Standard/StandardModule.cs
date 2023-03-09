@@ -1,11 +1,9 @@
 ﻿using Autoquit.DynamicModules;
 using Autoquit.Foundation.Interfaces;
-using Autoquit.Foundation.Utilities;
-using Autoquit.Standard.Actions;
+using Autoquit.Standard.Actions.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace Autoquit.Standard
 {
@@ -25,7 +23,7 @@ namespace Autoquit.Standard
 
         private Type[] _typeToLoad = new Type[]
         {
-            typeof(MouseLeftClick)
+            typeof(MouseClickAction)
         };
 
         public bool Load(out IEnumerable<IAutoquitFunction> functionList)
