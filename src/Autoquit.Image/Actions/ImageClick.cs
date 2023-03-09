@@ -15,6 +15,7 @@ namespace Autoquit.Image.Actions
         public string Name => "image-click";
 
         public string Description => "Using math to look up control or item by a provided template picture.";
+        public FunctionIcon Icon { get; set; } = FunctionIcon.Image;
 
         public int MaxLength => -1;
 

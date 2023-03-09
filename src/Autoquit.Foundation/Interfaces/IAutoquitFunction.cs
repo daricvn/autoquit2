@@ -26,6 +26,11 @@ namespace Autoquit.Foundation.Interfaces
         string Description { get; }
 
         /// <summary>
+        /// Icon of the function
+        /// </summary>
+        FunctionIcon Icon { get; set; }
+
+        /// <summary>
         /// Max length of the input. Leaving negative will use its default value 32767.
         /// </summary>
         int MaxLength { get; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if WINDOWS_OS
+using System;
 
 namespace InputBridge.Models.Platforms.Windows
 {
@@ -39,3 +40,4 @@ namespace InputBridge.Models.Platforms.Windows
         XUp = 0x0100
     }
 }
+#endif

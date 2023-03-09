@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if WINDOWS_OS
+using System;
 using System.Runtime.InteropServices;
 
 namespace InputBridge.Models.Platforms.Windows
@@ -14,3 +15,4 @@ namespace InputBridge.Models.Platforms.Windows
         public IntPtr dwExtraInfo;
     }
 }
+#endif

@@ -11,6 +11,7 @@ namespace Autoquit.Standard.Actions.Abstract
         protected const string MOUSE_MODE = "interactive";
         public string Id { get; set; }
         public string AssemblyName { get; set; }
+        public FunctionIcon Icon { get; set; } = FunctionIcon.Mouse;
 
         public abstract string Name { get; }
 

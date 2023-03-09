@@ -1,10 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
     <Configurations>Debug;Release;Debug-Win64;Release-Win64</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
+    <ApplicationIcon />
+    <StartupObject />
+    <Version>2.0.0</Version>
+	<AssemblyVersion>2.0.0.0</AssemblyVersion>
+	<FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Win64|x64'">
@@ -16,12 +21,41 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Chromely" Version="5.1.83.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Chromely" Version="5.1.86" />
+    <PackageReference Include="Serilog" Version="2.11.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Autoquit.DynamicModule\Autoquit.DynamicModules.csproj" />
     <ProjectReference Include="..\Autoquit.Foundation\Autoquit.Foundation.csproj" />
+    <ProjectReference Include="..\Autoquit.Packaging\Autoquit.Packaging.csproj" />
+    <ProjectReference Include="..\Autoquit.Standard\Autoquit.Standard.csproj" />
   </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="..\Autoquit.WebView\solidjs\dist\**">
+			<Visible>false</Visible>
+		</EmbeddedResource>
+		<EmbeddedResource Include="..\..\res\fav.ico" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Resources\env.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>env.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\env.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>env.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="appsettings.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Localization\en-UK.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
 </Project>

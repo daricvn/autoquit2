@@ -52,8 +52,13 @@
         /// </summary>
         ControlLocator = 12,
         /// <summary>
-        /// Retrieve the locator of the control. Return the handle of the target control.
+        /// Return the list of selectable action
         /// </summary>
-        ListItem = 13
+        ActionList = 13,
+        /// <summary>
+        /// Return a list of mouse coordinate, each coordinate should follow X:Y:T pattern, and is separated by a semicolon (;).
+        /// Where X is horizontal, Y is vertical and T is the miliseconds gap between previous coordinate.
+        /// </summary>
+        MousePattern = 14
     }
 }

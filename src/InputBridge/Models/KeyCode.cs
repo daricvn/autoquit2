@@ -5,6 +5,7 @@ namespace InputBridge.Models
     [Obfuscation(ApplyToMembers = true)]
     public enum KeyCode
     {
+        None = -1,
         /// <summary>
         /// Left mouse button
         /// </summary>

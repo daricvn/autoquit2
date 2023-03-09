@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿#if WINDOWS_OS
+using System.Runtime.InteropServices;
 
 namespace InputBridge.Models.Platforms.Windows
 {
@@ -10,3 +11,4 @@ namespace InputBridge.Models.Platforms.Windows
         public ushort wParamH;
     }
 }
+#endif

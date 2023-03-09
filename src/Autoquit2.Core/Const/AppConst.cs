@@ -4,5 +4,9 @@
     {
         public const string MODULE_FOLDER = "plugins";
         public const string MODULE_FILE_CONFIG = "config.include";
+
+        public const string APP_HOST = "requests";
+        public const string LOCALIZATION_PATH = "Localization";
+        public const string LOCALIZATION_EXT = "json";
     }
 }
