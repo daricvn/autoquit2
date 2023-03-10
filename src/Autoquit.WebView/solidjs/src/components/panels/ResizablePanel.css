@@ -10,6 +10,7 @@
     user-select: none;
     height: 100%;
     padding-right: 1px;
+    border-left: 1px solid rgba(43,43,43,0.1);
 }
 
 .resizable-panel td > .resizer.left {

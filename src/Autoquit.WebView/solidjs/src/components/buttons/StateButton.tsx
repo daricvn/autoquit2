@@ -12,6 +12,7 @@ export interface IStateButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonEl
     stateClass?: StateValue;
     stateText?: StateValue;
     icons?: string[];
+    color?: string;
 }
 
 export default function StateButton(props: IStateButtonProps){
@@ -25,7 +26,7 @@ export default function StateButton(props: IStateButtonProps){
         return !props.stateIndex ? props.stateText[0]: props.stateText[props.stateIndex]
     });
 
-    return <WaveButton class={`${props.class} ${stateClass()}`} onClick={props.onClick} disabled={props.disabled}>
+    return <WaveButton class={`${props.class} ${stateClass()}`} onClick={props.onClick} disabled={props.disabled} color={props.color}>
         <div class="flex gap-2 w-full h-full items-center">
             <div class={`relative h-${props.size} w-${props.size} justify-items-center`}>
                 <For each={props.icons}>
@@ -39,7 +40,7 @@ export default function StateButton(props: IStateButtonProps){
                 }
                 </For>
             </div>
-            <div class="pr-1">
+            <div class="pr-1 text-center grow">
                 {translate(stateText())}
             </div>
         </div>

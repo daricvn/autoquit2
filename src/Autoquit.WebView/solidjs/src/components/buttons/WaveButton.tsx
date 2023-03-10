@@ -1,6 +1,7 @@
-import { createEffect, createMemo, createSignal, For, JSX, splitProps } from "solid-js"
-import Ripple from "./elements/Ripple"
+import { createEffect, createMemo, createSignal, For, JSX, lazy, splitProps } from "solid-js"
 import './WaveButton.css'
+
+const Ripple = lazy(()=> import("./elements/Ripple"))
 
 export interface IWaveButtonProps extends JSX.HTMLAttributes<HTMLButtonElement> {
     color?: string;
@@ -44,7 +45,7 @@ export default function WaveButton(props: IWaveButtonProps){
         {props.children}
         <For each={getRipples()}>
             {
-                (item, i) => <Ripple x={item.x} y={item.y} w={item.size} h={item.size} onTransitionEnd={()=> removeItem(i())} color={props.color} />
+                (item, i) => <Ripple x={item.x} y={item.y} w={item.size} h={item.size} onTransitionEnd={()=> removeItem(i())} color={props.color ?? 'bg-white'} />
             }
         </For>
     </button>

@@ -106,10 +106,10 @@ export const ScriptTable = ()=>{
                         <td class="overflow-hidden text-ellipsis">{item.Name}</td>
                         <td class="text-center"><Checkbox type="checkbox" class="select-none" checked={item.Enabled} /></td>
                         <td class="text-right">
-                            <FlatCircleButton size={8} color={state.getTextColour?.call(null, state)}>
+                            <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)}>
                                 <i class={`fa-solid fa-pen-to-square text-${state.getAccent?.call(null, state)}`}></i>
                             </FlatCircleButton>
-                                <FlatCircleButton size={8} color={state.getTextColour?.call(null, state)}>
+                                <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)}>
                                     <i class={`fa-solid fa-play text-green`}></i>
                                 </FlatCircleButton>
                         </td>

@@ -19,7 +19,6 @@ export const ResizablePanel= (props: IResizablePanelProps)=>{
         const el = e.target as HTMLElement;
         const container = el.parentElement;
         if (container == null) return;
-        console.log(container)
         const styles = window.getComputedStyle(container);
         setObservator('index', i);
         setObservator('referencePoint',  { x: e.clientX, w: parseInt(styles.width, 10) });

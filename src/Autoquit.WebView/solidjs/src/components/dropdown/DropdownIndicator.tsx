@@ -1,7 +1,7 @@
-import { JSX } from 'solid-js'
+import { JSX, lazy } from 'solid-js'
 import { useGlobalState } from "../../context/GlobalStore"
-import CircularProgress from "../progress/CircularProgress"
 
+const CircularProgress = lazy(()=> import("../progress/CircularProgress"))
 export interface IDropdownIndicatorProps extends JSX.HTMLAttributes<HTMLLabelElement> {
     loading?: boolean;
     open?: boolean;

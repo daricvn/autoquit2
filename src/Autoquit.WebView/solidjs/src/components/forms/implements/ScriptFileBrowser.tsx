@@ -36,13 +36,13 @@ export default function ScriptFileBrowser(){
             return <div>
                 <Show when={!!getInputText()}>
                     <Tooltip position="top" value={`${translate("save")} (Ctrl + S)`} style="min-width: 130px; text-align: center">
-                        <FlatCircleButton size={8} color={state.getTextColour?.call(null, state)}>
+                        <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)}>
                             <i class="fa-solid fa-floppy-disk text-green-500"></i>
                         </FlatCircleButton>
                     </Tooltip>
                 </Show>
                 <Tooltip position="top" value={translate("save as")} style="min-width: 90px; text-align: center">
-                    <FlatCircleButton size={8} color={state.getTextColour?.call(null, state)}>
+                    <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)}>
                         <i class="fa-solid fa-file-export text-blue-500"></i>
                     </FlatCircleButton>
                 </Tooltip>
@@ -53,10 +53,10 @@ export default function ScriptFileBrowser(){
     const itemComponents = (item: any, index: number) =>{
         return <div>
             <CircleButton size={6} class="bg-blue-500 text-white mr-1">
-                <i class="fa-solid fa-pen text-sm"></i>
+                <i class="fa-solid fa-pen text-xs" style="transform: translateY(-1px)"></i>
             </CircleButton>
             <CircleButton size={6} class="bg-red-500 text-white">
-                <i class="fa-solid fa-trash text-sm"></i>
+                <i class="fa-solid fa-trash text-xs" style="transform: translateY(-1px)"></i>
             </CircleButton>
         </div>
     }
@@ -71,7 +71,7 @@ export default function ScriptFileBrowser(){
                     items={itemTest}
                     onChange={onTargetChanged}
                     placeholder={translate("Select File")}
-                    enableClearItem={true}
+                    disableClearItem={true}
                     dropdownAppendContent={saveComponents()}
                     position="top"
                     itemAppendContent={itemComponents}

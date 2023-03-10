@@ -12,7 +12,6 @@ export interface IDialogProps extends JSX.HTMLAttributes<HTMLDivElement> {
 
 export default function Dialog(props: IDialogProps){
     const [ state, useState ] = useGlobalState()
-    const [ getShow, setShow ] = createSignal<boolean>(false)
 
     const fullScreenClass = createMemo<string>(()=>{
         if (!props.fullScreen)
@@ -26,16 +25,11 @@ export default function Dialog(props: IDialogProps){
         return 45;
     })
 
-    createEffect(()=>{
-        setShow(!!props.show)
-        console.log("Hello")
-    })
-
     return <>
         <div class="fixed bottom-0">
         </div>
         <Transition name={props.transition ?? "fade"} appear>
-            <Show when={getShow()}>
+            <Show when={props.show}>
                 <div class={`w-full fixed top-0 z-50 ${fullScreenClass()}`} style={`z-index: ${props.zIndex ?? '50'};${props.containerStyle ?? ''}`}>
                     <div class={`relative mx-auto ${state.getBackground?.call(state, state)} rounded drop-shadow-lg z-50 ${props.class ?? ""}`} style={props.style}>
                         { props.children }
@@ -44,7 +38,7 @@ export default function Dialog(props: IDialogProps){
             </Show>
         </Transition>
         <Transition name="fade" appear>
-            <Show when={getShow()}>
+            <Show when={props.show}>
                 <div class="fixed top-0 left-0 w-screen h-screen overflow-hidden bg-black bg-opacity-30" style={`z-index: ${ overlayZIndex() }`} />
             </Show>
         </Transition>

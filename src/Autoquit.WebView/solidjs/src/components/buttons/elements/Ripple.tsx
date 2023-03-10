@@ -10,22 +10,24 @@ export interface IRippleProps {
 }
 
 export default function Ripple(props: IRippleProps){
-    let color = props.color ?? 'white'
-    let ripple: HTMLDivElement | any;
+    let color = props.color ?? 'bg-white'
+    let ripple: HTMLDivElement | undefined;
     let w = props.w ?? 0
     let h = props.h ?? 0
     let x = (props.x ?? 0) - (w / 2)
     let y = (props.y ?? 0) - (h / 2)
-    const styles = createMemo(()=> `position: absolute; background-color: ${color}; border-radius: 50%; width: ${w}px; height: ${h}px; top: ${y}px; left: ${x}px;`)
+    const styles = createMemo(()=> `position: absolute; border-radius: 50%; width: ${w}px; height: ${h}px; top: ${y}px; left: ${x}px;`)
     createEffect(()=>{
         if (!ripple)
             return;
+        if (ripple)
+            ripple.ontransitionend = ()=>{
+                props.onTransitionEnd?.call(null)
+            }
         setTimeout(()=>{
-            ripple.className += " ripple-end"
+            if (ripple)
+                ripple.className += " ripple-end"
         }, 10);
-        setTimeout(()=>{
-            props.onTransitionEnd?.call(null)
-        }, 310);
     })
-    return <div class="ripple-start pointer-events-none	select-none" style={styles()} ref={ripple} />
+    return <div class={/*@once*/`ripple-start pointer-events-none select-none ${color}`} style={styles()} ref={ripple} />
 }

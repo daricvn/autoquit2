@@ -23,7 +23,7 @@ export interface IEditableDropdownProps{
     position?: 'top' | 'bottom';
     disabled?: boolean;
     noFilter?: boolean;
-    enableClearItem?: boolean;
+    disableClearItem?: boolean;
     placeholder?: string;
     selectOnly?: boolean;
     dropdownAppendContent?: Element | any;
@@ -34,7 +34,7 @@ export default function EditableDropdown(props: IEditableDropdownProps){
     const [ getOpen, setOpen ] = createSignal(false)
     const [ getCurrentInput, setCurrentInput ] = createSignal<any>()
     const [ getHoverIndex, setHoverIndex ] = createSignal(-1)
-    const debounceUpdate = debounce((method: ()=> void)=> method(), 350);
+    const debounceUpdate = debounce((method: ()=> void)=> method(), 250);
     const [ state, getState ] = useGlobalState()
     const key = props.dataMember
     const value = props.displayMember
@@ -151,7 +151,7 @@ export default function EditableDropdown(props: IEditableDropdownProps){
             disabled={props.disabled}
             checked />
         {
-            !props.enableClearItem && <button class="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-gray-600" hidden={!props.value || props.disabled}
+            !props.disableClearItem && <button class="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-gray-600" hidden={!props.value || props.disabled}
                 onClick={()=> onItemSelected("", -1, true)}>
                 <svg class="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
