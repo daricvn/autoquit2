@@ -1,6 +1,7 @@
 import { createMemo, createSignal, onMount } from "solid-js";
 import { useGlobalState } from "../../context/GlobalStore";
 import translate, { formatString } from "../../localization/translate";
+import { AppState } from "../../models/AppState";
 import { AppRequests } from "../../requests/AppRequests";
 import EditableDropdown from "./EditableDropdown";
 
@@ -23,6 +24,8 @@ export default function ProcessesDropdownList(){
     })
 
     const timeThreshold = createMemo(()=> state.scanThrottling ? 16 : 2);
+
+    const isAppBusy = createMemo(()=> ((state.appState ?? 0) & AppState.Busy) != 0)
 
     const onStateChange = (open: boolean)=>{
         if (open)
@@ -106,5 +109,6 @@ export default function ProcessesDropdownList(){
                     onChange={onTargetChanged}
                     placeholder={translate("Select Process")}
                     noFilter={!shouldFilter()}
+                    disabled={isAppBusy()}
                 ></EditableDropdown>
 }

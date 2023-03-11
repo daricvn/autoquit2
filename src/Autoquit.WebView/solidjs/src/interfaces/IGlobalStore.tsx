@@ -1,7 +1,10 @@
 import { Part } from "solid-js/store";
+import { AppState } from "../models/AppState";
+import { IPlaybackInfo } from "./IPlaybackInfo";
 
 export interface IGlobalStore {
     theme?: string;
+    appState?: AppState;
     language?: string;
     accent?: string;
     target?: string;
@@ -13,6 +16,7 @@ export interface IGlobalStore {
     scanAll?: boolean;
     enableLogging?: boolean;
     temporaryState?: IGlobalStore | undefined;
+    playbackOptions?: IPlaybackInfo;
     getTheme?: (state: IGlobalStore) => string | any;
     getBackground?: (state: IGlobalStore) => string | any;
     getHoverBackground?: (state: IGlobalStore) => string | any;

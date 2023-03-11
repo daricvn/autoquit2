@@ -1,4 +1,4 @@
-import { createMemo, createSignal, Show } from "solid-js"
+import { createMemo, createSignal, JSX, Show } from "solid-js"
 import { useGlobalState } from "../../../context/GlobalStore";
 import { IFileItem } from "../../../interfaces/IFileItem";
 import translate from "../../../localization/translate";
@@ -13,7 +13,7 @@ const itemTest : IFileItem[] = [
 ]
 
 
-export default function ScriptFileBrowser(){
+export default function ScriptFileBrowser(props: JSX.InputHTMLAttributes<HTMLInputElement>){
     const [ getLoadingState, setLoadingState ] = createSignal<boolean>(false)
     const [ getTarget, setTarget ] = createSignal<number>(-1);
     const [ getIndex, setIndex ] = createSignal<number>(-1);
@@ -36,13 +36,13 @@ export default function ScriptFileBrowser(){
             return <div>
                 <Show when={!!getInputText()}>
                     <Tooltip position="top" value={`${translate("save")} (Ctrl + S)`} style="min-width: 130px; text-align: center">
-                        <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)}>
+                        <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)} disabled={props.disabled}>
                             <i class="fa-solid fa-floppy-disk text-green-500"></i>
                         </FlatCircleButton>
                     </Tooltip>
                 </Show>
                 <Tooltip position="top" value={translate("save as")} style="min-width: 90px; text-align: center">
-                    <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)}>
+                    <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)} disabled={props.disabled}>
                         <i class="fa-solid fa-file-export text-blue-500"></i>
                     </FlatCircleButton>
                 </Tooltip>
@@ -76,6 +76,7 @@ export default function ScriptFileBrowser(){
                     position="top"
                     itemAppendContent={itemComponents}
                     noFilter={getIndex() >= 0}
+                    disabled={props.disabled}
                 ></EditableDropdown>
     </div>
 }

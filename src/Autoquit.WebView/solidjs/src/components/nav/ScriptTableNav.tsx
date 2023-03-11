@@ -8,6 +8,7 @@ export interface IScriptTableNav {
     onDeleteRequest?: IVoid;
     onAddRequest?: IVoid;
     showDelete?: boolean;
+    disabled?: boolean;
 }
 
 export default function ScriptTableNav(props: IScriptTableNav){
@@ -31,13 +32,13 @@ export default function ScriptTableNav(props: IScriptTableNav){
     
     return <div class="px-3 pt-2 block">
         <CircleButton class="bg-green-500 text-white shadow-sm shadow-green-500/50 hover:shadow-md mr-1" size={8} color={"bg-" + state.getTextColourInvert?.call(null, state)}
-            onClick={handleAddRequest}>
+            onClick={handleAddRequest} disabled={props.disabled}>
             <i class="fa-solid fa-plus"></i>
         </CircleButton>
         <Transition name="appear">
             <Show when={shouldShowDelete()}>
                 <CircleButton class="bg-red-500 text-white shadow-sm shadow-red-500/50 hover:shadow-md" size={8} color={"bg-" + state.getTextColourInvert?.call(null, state)}
-                    onClick={handleDeleteRequest}>
+                    onClick={handleDeleteRequest} disabled={props.disabled}>
                     <i class="fa-solid fa-trash-can"></i>
                 </CircleButton>
             </Show>

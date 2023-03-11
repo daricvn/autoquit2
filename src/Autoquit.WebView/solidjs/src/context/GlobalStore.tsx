@@ -2,10 +2,13 @@ import { createContext, createSignal, useContext } from "solid-js";
 import { createStore, SetStoreFunction } from 'solid-js/store'
 import CONSTVAR from "../@static/constVar";
 import { IGlobalStore } from "../interfaces/IGlobalStore";
+import { AppState } from "../models/AppState";
+import { RepeatType } from "../models/RepeatType";
 import { accentPreset, themePreset } from "../theme/Theme";
 
 const initStore : IGlobalStore = {
     theme: '',
+    appState: AppState.Idle,
     language: 'en-UK',
     accent: 'ocean',
     target: '',
@@ -17,6 +20,12 @@ const initStore : IGlobalStore = {
     enableLogging: false,
     scanAll: false,
     temporaryState: {},
+    playbackOptions: {
+        repeat: {
+            type: RepeatType.None,
+            total: 1
+        }
+    },
     getTheme: (state)=>{
         let theme = state?.theme;
         if (state?.temporaryState && state.temporaryState.theme)
@@ -54,9 +63,15 @@ const StateContext = createContext<[ get: IGlobalStore, set: SetStoreFunction<IG
     CONSTVAR.Void
 ])
 
+declare global {
+    interface Window {
+      setGlobalStore: any;
+    }
+  }  
+
 export const StateProvider = (props: { children: any })=>{
     const [ store, setStore ] = createStore<IGlobalStore>(initStore)
-
+    window.setGlobalStore = setStore
     return <StateContext.Provider value={[ store, setStore ]}>
         {props.children}
     </StateContext.Provider>

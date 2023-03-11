@@ -26,6 +26,20 @@
     opacity: 0;
 }
 
+.flip-enter-active {
+    transition: all 0.25s cubic-bezier(.17, .67, .48, 1.16);
+}
+
+.flip-exit-active {
+    transition: all 0.25s cubic-bezier(.17, .67, .48, 1.16);
+}
+
+.flip-enter,
+.flip-exit-to {
+    transform: rotateY(-90deg);
+    opacity: 0;
+}
+
 .appear-enter-active {
     transition: all 0.25s cubic-bezier(.17, .67, .48, 1.16);
 }

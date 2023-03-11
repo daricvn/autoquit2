@@ -11,6 +11,7 @@ import FlatCircleButton from "../buttons/FlatCircleButton"
 import ScriptTableNav from "../nav/ScriptTableNav"
 import ScriptFileBrowser from "../forms/implements/ScriptFileBrowser"
 import { ISelectionInfo } from "../../interfaces/ISelectionInfo"
+import { AppState } from "../../models/AppState"
 
 export const ScriptTable = ()=>{
     const [ selection, setSelection ] = createStore<ISelectionInfo>({ list: [] })
@@ -20,6 +21,8 @@ export const ScriptTable = ()=>{
     const [ state, setState ] = useGlobalState()
     const [ scriptTable, setScriptTable ] = useScriptContext()
     let tableContainer : HTMLDivElement | undefined
+
+    const isBusy = createMemo(()=> state.appState == AppState.Playback)
 
     const handleColumnSizeChanged = (state?: IObservatorState)=>{
         if (state == null) return;
@@ -104,14 +107,14 @@ export const ScriptTable = ()=>{
                     <tr>
                         <td class="text-center"><Checkbox type="checkbox" class="select-none" checked={!!selection.list[i()]} onChange={(e)=> handleCheckedChange(i())} /></td>
                         <td class="overflow-hidden text-ellipsis">{item.Name}</td>
-                        <td class="text-center"><Checkbox type="checkbox" class="select-none" checked={item.Enabled} /></td>
+                        <td class="text-center"><Checkbox type="checkbox" class="select-none" checked={item.Enabled} disabled={isBusy()} /></td>
                         <td class="text-right">
-                            <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)}>
+                            <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)} disabled={isBusy()}>
                                 <i class={`fa-solid fa-pen-to-square text-${state.getAccent?.call(null, state)}`}></i>
                             </FlatCircleButton>
-                                <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)}>
-                                    <i class={`fa-solid fa-play text-green`}></i>
-                                </FlatCircleButton>
+                            <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)} disabled={isBusy()}>
+                                <i class={`fa-solid fa-play text-green`}></i>
+                            </FlatCircleButton>
                         </td>
                     </tr>
                 }
@@ -120,13 +123,13 @@ export const ScriptTable = ()=>{
         </div>
         <div class="pb-1">
             <div class="block">
-                <ScriptTableNav showDelete={anySelected()} onDeleteRequest={handleDeleteRequest} onAddRequest={handleAddItem} />
+                <ScriptTableNav showDelete={anySelected()} onDeleteRequest={handleDeleteRequest} onAddRequest={handleAddItem} disabled={isBusy()} />
             </div>
             <div class="grid grid-cols-3">
                 <div>             
                 </div>
                 <div class="col-span-2 block">
-                    <ScriptFileBrowser />
+                    <ScriptFileBrowser disabled={isBusy()} />
                 </div>
             </div>
         </div>

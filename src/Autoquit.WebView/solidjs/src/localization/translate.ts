@@ -8,7 +8,7 @@ const i18n : any = rosetta({
 });
 i18n.locale("en-UK")
 
-export default function translate(key?: string){
+export default function translate(key?: string | any){
     var res = i18n.t(key?.toLowerCase() ?? '')
     if (!res)
         return key;

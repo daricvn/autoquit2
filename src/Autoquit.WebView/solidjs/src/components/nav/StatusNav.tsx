@@ -1,8 +1,9 @@
 
-import { createSignal, lazy, Show } from "solid-js"
+import { createMemo, createSignal, lazy, Show } from "solid-js"
 import { Transition } from "solid-transition-group"
 import { useGlobalState } from "../../context/GlobalStore";
 import translate from "../../localization/translate";
+import { AppState } from "../../models/AppState";
 import { CircularProgressWithText } from "../progress/CircularProgress"
 import Tooltip from "../tooltip/Tooltip";
 
@@ -18,6 +19,8 @@ export default function BottomNav(){
     const handleCloseSettings = ()=>{
         setShowSetting(false);
     }
+
+    const isBusy = createMemo(()=> state.appState == AppState.Playback || state.appState == AppState.Recording)
 
     return <>
         <div class={`w-screen h-9 fixed bottom-0 left-0 block bg-${state.getAccent?.call(state, state)}`}>
@@ -37,7 +40,8 @@ export default function BottomNav(){
             <div class="text-right pr-1">
                 <Tooltip value={translate("Settings")} position="left">
                     <button class={`rounded-full text-white w-8 h-8 group outline-none`}
-                        onClick={gotoSettings}>
+                        onClick={gotoSettings}
+                        disabled={isBusy()}>
                         <i class="fas fa-cog transition-all duration-500 transform group-hover:rotate-180"></i>
                     </button>
                 </Tooltip>

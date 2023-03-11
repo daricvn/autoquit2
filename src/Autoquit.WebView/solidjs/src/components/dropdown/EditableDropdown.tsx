@@ -5,6 +5,7 @@ import Content from "../content/Content";
 import CONSTVAR from "../../@static/constVar";
 import DropdownIndicator from "./DropdownIndicator";
 import DropdownItem from "./DropdownItem";
+import IEditableDropdownItem from "./IEditableDropdownItem";
 
 const ICON_SIZE = 56;
 
@@ -12,7 +13,7 @@ export interface IEditableDropdownProps{
     class?: string;
     loading?: boolean;
     onStateChange?: (open: boolean) => void;
-    onChange?: (value: any, index: number) => void;
+    onChange?: (value: IEditableDropdownItem | any, index: number) => void;
     newItemContent?: Element | any;
     onNewItem?: ()=> void;
     dataMember?: string;
@@ -24,6 +25,7 @@ export interface IEditableDropdownProps{
     disabled?: boolean;
     noFilter?: boolean;
     disableClearItem?: boolean;
+    disableInput?: boolean;
     placeholder?: string;
     selectOnly?: boolean;
     dropdownAppendContent?: Element | any;
@@ -104,6 +106,14 @@ export default function EditableDropdown(props: IEditableDropdownProps){
         return CONSTVAR.EmptyStr
     })
 
+    const handleKeyDown = (e: KeyboardEvent)=>{
+        if (props.disableInput){
+            e.preventDefault()
+            return;
+        }
+        handleValueChange(e);
+    }
+
     const handleValueChange = (e: Event) => {
         if (props.selectOnly)
             e.preventDefault()
@@ -115,11 +125,11 @@ export default function EditableDropdown(props: IEditableDropdownProps){
     const getFilteredItem = createMemo(()=>{
         if (!props.items)
             return CONSTVAR.EmptyArray
-        let res = props.items.map((item, i) => ({ 
+        let res: IEditableDropdownItem[] = props.items.map((item, i) => ({ 
+            index: i,
             text: value ? item[value] : item, 
             value: key ? item[key]: item, 
-            icon: iconVal ? item[iconVal]: null, 
-            index: i 
+            icon: iconVal ? item[iconVal]: null
         }))
         if (!getCurrentInput() || props.noFilter == true)
             return res
@@ -144,25 +154,25 @@ export default function EditableDropdown(props: IEditableDropdownProps){
             <div class={`fixed w-full h-full z-10 left-0 select-none top-0 left-0`} onClick={()=> setOpen(false)} />
         </Show>
         <input ref={dropdownInput} value={getDisplayValue()} placeholder={props.placeholder} 
-            onKeyDown={handleValueChange} 
-            onKeyUp={handleValueChange}
+            onKeyDown={handleKeyDown} 
+            onKeyUp={handleKeyDown}
             name="select" id="select" class={`px-2 appearance-none outline-none text-gray-800 flex-auto ${!getOpen() ? "" : "z-20"}`}
             onFocus={()=> setOpen(true)}
             disabled={props.disabled}
             checked />
-        {
-            !props.disableClearItem && <button class="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-gray-600" hidden={!props.value || props.disabled}
+        <Show when={!props.disabled && !props.disableClearItem}> 
+            <button class="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-gray-600" hidden={!props.value || props.disabled}
                 onClick={()=> onItemSelected("", -1, true)}>
                 <svg class="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </button>
-        }
+        </Show>
         {
             props.dropdownAppendContent
         }
-        <DropdownIndicator loading={props.loading} open={getOpen()} onClick={()=> toggleOpen()} />
+        <DropdownIndicator loading={props.loading} open={getOpen()} onClick={()=> toggleOpen()} disabled={props.disabled} />
       </div>
       {
             <Show when={expandList()}>

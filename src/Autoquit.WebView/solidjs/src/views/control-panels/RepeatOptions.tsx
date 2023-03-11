@@ -1,19 +1,27 @@
-import { createMemo, createSignal, Match, Switch } from "solid-js";
+import { createEffect, createMemo, createSignal, JSX, lazy, Match, Switch } from "solid-js";
 import EditableDropdown from "../../components/dropdown/EditableDropdown";
+import { useGlobalState } from "../../context/GlobalStore";
 import translate from "../../localization/translate";
 import { RepeatType } from "../../models/RepeatType";
 
-const repeatOptions : RepeatType[] = [ RepeatType.None, RepeatType.Times, RepeatType.Timer, RepeatType.Schedule ]
+const TimerCounter = lazy(()=> import("../../components/panels/repeat-options/TimerCounter"));
+const TimesCounter = lazy(()=> import("../../components/panels/repeat-options/TimesCounter"));
+const repeatOptions : RepeatType[] = [ RepeatType.None, RepeatType.Times, RepeatType.Timer ]
 
-export default function RepeatOptions()
+export default function RepeatOptions(props: JSX.InputHTMLAttributes<HTMLInputElement>)
 {
-    const [ getType, setType ] = createSignal<RepeatType>(RepeatType.None)
+    const [ state, setState ] = useGlobalState()
 
     const items = createMemo(()=> repeatOptions.map(x=> ({ type: x, text: translate(x) })))
 
     const handleChange = (val: any, index: number)=>{
-        setType(val.value)
+        setState('playbackOptions', 'repeat', 'type', val.value)
     }
+
+    const onInitRepeatOption = createEffect(()=>{
+        if (!state.playbackOptions?.repeat)
+            setState('playbackOptions', 'repeat', ()=> ({ type: RepeatType.None }))
+    })
 
     return <div class="flex flex-col gap-2">
         <div class="flex gap-1 items-center">
@@ -21,22 +29,17 @@ export default function RepeatOptions()
                 {translate("Repeat")}:
             </div>
             <div>
-                <EditableDropdown items={items()} value={getType()} onChange={handleChange} dataMember="type" displayMember="text" selectOnly noFilter disableClearItem={true} />
+                <EditableDropdown items={items()} value={state.playbackOptions?.repeat?.type} onChange={handleChange} dataMember="type" displayMember="text" selectOnly noFilter disableClearItem={true} disableInput
+                    disabled={props.disabled} />
             </div>
         </div>
         <div>
             <Switch>
-                <Match when={ getType() == RepeatType.None }>
-                    None Type
+                <Match when={ state.playbackOptions?.repeat?.type == RepeatType.Times }>
+                    <TimesCounter disabled={props.disabled} />
                 </Match>
-                <Match when={ getType() == RepeatType.Times }>
-                    Times Type
-                </Match>
-                <Match when={ getType() == RepeatType.Timer }>
-                    Timer Type
-                </Match>
-                <Match when={ getType() == RepeatType.Schedule }>
-                    Schedule Type
+                <Match when={ state.playbackOptions?.repeat?.type == RepeatType.Timer }>
+                    <TimerCounter disabled={props.disabled} />
                 </Match>
             </Switch>
         </div>

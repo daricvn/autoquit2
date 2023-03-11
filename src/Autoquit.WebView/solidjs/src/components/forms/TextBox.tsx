@@ -1,4 +1,4 @@
-import { createMemo, JSX } from "solid-js"
+import { createMemo, JSX, splitProps } from "solid-js"
 import { useGlobalState } from "../../context/GlobalStore";
 
 export interface ITextBoxProps extends JSX.InputHTMLAttributes<HTMLInputElement>{
@@ -8,34 +8,27 @@ export interface ITextBoxProps extends JSX.InputHTMLAttributes<HTMLInputElement>
 
 export default function TextBox(props: ITextBoxProps){
     const [ state, _ ] = useGlobalState()
+    const [ localProps, otherProps ] = splitProps(props, [ 'type', 'append', 'prepend', 'class' ]);
 
     const paddingClass = createMemo(()=> {
-        let right = !props.append ? 3:10;
-        let left = !props.prepend ? 3:10;
+        let right = !localProps.append ? 3:10;
+        let left = !localProps.prepend ? 3:10;
         return `pl-${left} pr-${right}`;
     });
 
-    return <div class={`relative text-gray-600 focus-within:text-gray-400 ${props.class}`}>
+    return <div class={`relative text-gray-600 focus-within:text-gray-400 ${localProps.class}`}>
         {
-            !!props.prepend &&
+            !!localProps.prepend &&
             <span class="absolute text-black inset-y-0 left-0 flex items-center pl-2">
-                {props.prepend}
+                {localProps.prepend}
             </span>
         }
-        <input type="text" class={`py-2 w-full text-black bg-white rounded-md focus:outline-none focus:shadow-outline focus:ring-transparent ${paddingClass()} border focus:border-${state.getAccent?.call(null, state)}`} placeholder={props.placeholder}
-            onKeyDown={props.onKeyDown}
-            onKeyUp={props.onKeyUp}
-            onChange={props.onChange}
-            value={props.value}
-            disabled={props.disabled}
-            readOnly={props.readOnly}
-            onClick={props.onClick}
-            onDblClick={props.onDblClick}
-            style={props.style} />
+        <input type={localProps.type ?? "text"} class={`py-2 w-full text-black bg-white rounded-md focus:outline-none focus:shadow-outline focus:ring-transparent ${paddingClass()} border focus:border-${state.getAccent?.call(null, state)}`} 
+           {...otherProps} />
         {
-            !!props.append &&
+            !!localProps.append &&
             <span class="absolute text-black inset-y-0 right-0 flex items-center pr-2">
-                {props.append}
+                {localProps.append}
             </span>
         }
     </div>

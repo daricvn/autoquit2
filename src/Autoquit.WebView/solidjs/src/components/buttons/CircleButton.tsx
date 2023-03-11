@@ -10,7 +10,8 @@ export default function CircleButton(props: ICircleButtonProps)
 {   
     const size = createMemo(()=> props.size ?? 12)
     return <WaveButton class={`rounded-full outline-none w-${size()} h-${size()} transition-all disabled:shadow-none ${!props.disabled ? '':'opacity-50'} ${props.class}`} color={props.color}
-        onClick={props.onClick}>
+        onClick={props.onClick}
+        disabled={props.disabled}>
         {props.children}
     </WaveButton>
 }
