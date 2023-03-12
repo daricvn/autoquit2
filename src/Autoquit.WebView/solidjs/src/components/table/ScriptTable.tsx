@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal, For } from "solid-js"
+import { createEffect, createMemo, createSignal, For, Show } from "solid-js"
 import { useGlobalState } from "../../context/GlobalStore"
 import { useScriptContext } from "../../context/ScriptContext"
 import translate from "../../localization/translate"
@@ -12,12 +12,17 @@ import ScriptTableNav from "../nav/ScriptTableNav"
 import ScriptFileBrowser from "../forms/implements/ScriptFileBrowser"
 import { ISelectionInfo } from "../../interfaces/ISelectionInfo"
 import { AppState } from "../../models/AppState"
+import { createVirtualizer } from "@tanstack/solid-virtual"
+import { debounce } from "@solid-primitives/scheduled"
+
+const ROW_SIZE : number = 41;
 
 export const ScriptTable = ()=>{
     const [ selection, setSelection ] = createStore<ISelectionInfo>({ list: [] })
     const [ getItems, setItems ] = createSignal<any[]>([], {
         equals: false
     })
+    const debounceUpdate = debounce((method: ()=> void)=> method(), 100);
     const [ state, setState ] = useGlobalState()
     const [ scriptTable, setScriptTable ] = useScriptContext()
     let tableContainer : HTMLDivElement | undefined
@@ -40,7 +45,7 @@ export const ScriptTable = ()=>{
         let items = getItems()
         items.push({ Name: 'new item', Desc: '', Enabled: true })
         setItems(items)
-        tableContainer?.scrollTo(0, tableContainer.scrollHeight)
+        debounceUpdate(scrollToBottom)
     }
 
     const handleCheckedAll = ()=>{
@@ -99,15 +104,38 @@ export const ScriptTable = ()=>{
         ]
     })
 
+    const rowVisualizer = createMemo(()=>{
+        let res = createVirtualizer({
+            count: getItems().length,
+            getScrollElement: ()=> (tableContainer as Element),
+            estimateSize:()=> ROW_SIZE,
+            overscan: 3
+        })
+        return res;
+    });
+
+    const scrollToBottom = ()=>{
+        rowVisualizer().scrollToIndex(getItems().length);
+        tableContainer?.scrollTo(0, tableContainer.scrollHeight)
+    }
+
+    const paddingTop = createMemo(()=> rowVisualizer().getVirtualItems()?.[0]?.start || 0);
+    const paddingBottom = createMemo(()=> rowVisualizer().getTotalSize() - (rowVisualizer().getVirtualItems()?.[rowVisualizer().getVirtualItems().length - 1]?.end || 0));
+
     return <div class={`flex flex-col h-full ${state.getBackground?.call(null, state)} text-${state.getTextColour?.call(null, state)}`} style="max-height: 88vh">
         <div class="flex-auto w-full overflow-y-auto script-table-container" ref={tableContainer}>
             <ResizableTable items={headers()} class={`script-table border padding-table w-full`} columns={scriptTable.columnSize} minColumns={scriptTable.minSize} onSizeChanged={handleColumnSizeChanged}>
-                <For each={getItems()}>
-                    { (item, i)=> 
+                <Show when={paddingTop() > 0}>
                     <tr>
-                        <td class="text-center"><Checkbox type="checkbox" class="select-none" checked={!!selection.list[i()]} onChange={(e)=> handleCheckedChange(i())} /></td>
-                        <td class="overflow-hidden text-ellipsis">{item.Name}</td>
-                        <td class="text-center"><Checkbox type="checkbox" class="select-none" checked={item.Enabled} disabled={isBusy()} /></td>
+                        <td style={`height: ${paddingTop()}px`}></td>
+                    </tr>
+                </Show>
+                <For each={rowVisualizer().getVirtualItems()}>
+                    { (item)=> 
+                    <tr>
+                        <td class="text-center"><Checkbox type="checkbox" class="select-none" checked={!!selection.list[item.index]} onChange={(e)=> handleCheckedChange(item.index)} /></td>
+                        <td class="overflow-hidden text-ellipsis">{getItems()[item.index].Name}</td>
+                        <td class="text-center"><Checkbox type="checkbox" class="select-none" checked={getItems()[item.index].Enabled} disabled={isBusy()} /></td>
                         <td class="text-right">
                             <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)} disabled={isBusy()}>
                                 <i class={`fa-solid fa-pen-to-square text-${state.getAccent?.call(null, state)}`}></i>
@@ -119,6 +147,11 @@ export const ScriptTable = ()=>{
                     </tr>
                 }
                 </For>
+                <Show when={paddingBottom() > 0}>
+                    <tr>
+                        <td style={`height: ${paddingBottom()}px`}></td>
+                    </tr>
+                </Show>
             </ResizableTable>
         </div>
         <div class="pb-1">
