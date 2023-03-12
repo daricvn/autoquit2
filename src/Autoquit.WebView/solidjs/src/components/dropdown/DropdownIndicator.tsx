@@ -22,5 +22,5 @@ export default function DropdownIndicator(props: IDropdownIndicatorProps){
                     <polyline points="18 15 12 9 6 15"></polyline>
                 </svg>
             </label>
-    return <CircularProgress color={state.getAccent?.call(null, state, 'base')} size={6} class="mx-2" />
+    return <CircularProgress color={state.getAccent(null, state, 'base')} size={6} class="mx-2" />
 }

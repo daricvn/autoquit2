@@ -2,6 +2,7 @@ import { createMemo, createSignal } from "solid-js";
 import Text from "../../components/content/Text";
 import Slider from "../../components/forms/Slider";
 import { useGlobalState } from "../../context/GlobalStore";
+import { useScriptContext } from "../../context/ScriptContext";
 import translate from "../../localization/translate";
 import { AppState } from "../../models/AppState";
 import RepeatOptions from "./RepeatOptions";
@@ -11,12 +12,13 @@ const DEFAULT_SPEED = 100
 export default function PlaybackOptions()
 {
     const [ state, setState ] = useGlobalState()
+    const [ script, setScript ] = useScriptContext()
 
     const handleChange = (e: any)=>{
-        setState('playbackOptions', 'speed', e.target.value)
+        setScript('playbackOptions', 'speed', e.target.value)
     }
 
-    const getSpeed = createMemo(()=> state.playbackOptions?.speed ?? DEFAULT_SPEED)
+    const getSpeed = createMemo(()=> script.playbackOptions?.speed ?? DEFAULT_SPEED)
 
     const isBusy = createMemo(()=> state.appState == AppState.Playback || state.appState == AppState.Recording)
 

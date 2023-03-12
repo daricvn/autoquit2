@@ -23,7 +23,7 @@ export default function TextBox(props: ITextBoxProps){
                 {localProps.prepend}
             </span>
         }
-        <input type={localProps.type ?? "text"} class={`py-2 w-full text-black bg-white rounded-md focus:outline-none focus:shadow-outline focus:ring-transparent ${paddingClass()} border focus:border-${state.getAccent?.call(null, state)}`} 
+        <input type={localProps.type ?? "text"} class={`py-2 w-full text-black bg-white rounded-md focus:outline-none focus:shadow-outline focus:ring-transparent ${paddingClass()} border focus:border-${state.getAccent}`} 
            {...otherProps} />
         {
             !!localProps.append &&

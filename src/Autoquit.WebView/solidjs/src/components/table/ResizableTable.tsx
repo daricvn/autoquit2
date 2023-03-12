@@ -38,7 +38,7 @@ export const ResizableTable= (props: IResizableTableProps)=>{
     const headers = createMemo(()=>{
         if (!props.items) return ""
         return <For each={props.items}>
-            { (col, i) => <th class={`select-none ${state.getBackground?.call(null, state)}`} style={buildColumnStyle(props.columns![i()], props.minColumns ? props.minColumns[i()]:0)}>
+            { (col, i) => <th class={`select-none ${state.getBackground}`} style={buildColumnStyle(props.columns![i()], props.minColumns ? props.minColumns[i()]:0)}>
                     {col}
                     {
                         <Show when={i() < (props.items?.length ?? 0) - 1}>

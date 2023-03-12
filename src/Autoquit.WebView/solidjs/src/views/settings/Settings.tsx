@@ -30,7 +30,7 @@ export default function Settings(props: ISettingsProps){
 
     const close = ()=>{
         undo()
-        props.onClose?.call(null);
+        props.onClose(null);
         return false;
     }
 

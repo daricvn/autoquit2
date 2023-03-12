@@ -16,7 +16,7 @@ export default function Slider(props: ISliderProps)
         if (props.lockBefore && +e.target.value < props.lockBefore)
             e.target.value = props.lockBefore;
         setValue(+(e.target.value));
-        (props.onChange as any)?.call(null, e);
+        (props.onChange as any)(null, e);
     }
 
     const percent = createMemo(()=> {
@@ -26,7 +26,7 @@ export default function Slider(props: ISliderProps)
         return val * 100 / range;
     })
 
-    const accentColor = createMemo(()=>(props.disabled ? 'bg-gray-400' :`bg-${state.getAccent?.call(null, state)}`))
+    const accentColor = createMemo(()=>(props.disabled ? 'bg-gray-400' :`bg-${state.getAccent}`))
 
     return <div class={`relative w-full bg-neutral-200 min-h-2 ${props.class}`}>
         <input

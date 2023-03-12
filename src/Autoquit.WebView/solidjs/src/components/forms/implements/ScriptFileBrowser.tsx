@@ -36,13 +36,13 @@ export default function ScriptFileBrowser(props: JSX.InputHTMLAttributes<HTMLInp
             return <div>
                 <Show when={!!getInputText()}>
                     <Tooltip position="top" value={`${translate("save")} (Ctrl + S)`} style="min-width: 130px; text-align: center">
-                        <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)} disabled={props.disabled}>
+                        <FlatCircleButton size={8} color={"bg-" + state.getTextColour} disabled={props.disabled}>
                             <i class="fa-solid fa-floppy-disk text-green-500"></i>
                         </FlatCircleButton>
                     </Tooltip>
                 </Show>
                 <Tooltip position="top" value={translate("save as")} style="min-width: 90px; text-align: center">
-                    <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)} disabled={props.disabled}>
+                    <FlatCircleButton size={8} color={"bg-" + state.getTextColour} disabled={props.disabled}>
                         <i class="fa-solid fa-file-export text-blue-500"></i>
                     </FlatCircleButton>
                 </Tooltip>

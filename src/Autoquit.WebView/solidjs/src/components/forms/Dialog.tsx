@@ -31,7 +31,7 @@ export default function Dialog(props: IDialogProps){
         <Transition name={props.transition ?? "fade"} appear>
             <Show when={props.show}>
                 <div class={`w-full fixed top-0 z-50 ${fullScreenClass()}`} style={`z-index: ${props.zIndex ?? '50'};${props.containerStyle ?? ''}`}>
-                    <div class={`relative mx-auto ${state.getBackground?.call(state, state)} rounded drop-shadow-lg z-50 ${props.class ?? ""}`} style={props.style}>
+                    <div class={`relative mx-auto ${state.getBackground} rounded drop-shadow-lg z-50 ${props.class ?? ""}`} style={props.style}>
                         { props.children }
                     </div>
                 </div>

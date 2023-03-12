@@ -1,6 +1,7 @@
 import { createEffect, createMemo, createSignal, JSX, lazy, Match, Switch } from "solid-js";
 import EditableDropdown from "../../components/dropdown/EditableDropdown";
 import { useGlobalState } from "../../context/GlobalStore";
+import { useScriptContext } from "../../context/ScriptContext";
 import translate from "../../localization/translate";
 import { RepeatType } from "../../models/RepeatType";
 
@@ -11,16 +12,17 @@ const repeatOptions : RepeatType[] = [ RepeatType.None, RepeatType.Times, Repeat
 export default function RepeatOptions(props: JSX.InputHTMLAttributes<HTMLInputElement>)
 {
     const [ state, setState ] = useGlobalState()
+    const [ script, setScript ] = useScriptContext()
 
     const items = createMemo(()=> repeatOptions.map(x=> ({ type: x, text: translate(x) })))
 
     const handleChange = (val: any, index: number)=>{
-        setState('playbackOptions', 'repeat', 'type', val.value)
+        setScript('playbackOptions', 'repeat', 'type', val.value)
     }
 
     const onInitRepeatOption = createEffect(()=>{
-        if (!state.playbackOptions?.repeat)
-            setState('playbackOptions', 'repeat', ()=> ({ type: RepeatType.None }))
+        if (!script.playbackOptions?.repeat)
+            setScript('playbackOptions', 'repeat', ()=> ({ type: RepeatType.None }))
     })
 
     return <div class="flex flex-col gap-2">
@@ -29,16 +31,16 @@ export default function RepeatOptions(props: JSX.InputHTMLAttributes<HTMLInputEl
                 {translate("Repeat")}:
             </div>
             <div>
-                <EditableDropdown items={items()} value={state.playbackOptions?.repeat?.type} onChange={handleChange} dataMember="type" displayMember="text" selectOnly noFilter disableClearItem={true} disableInput
+                <EditableDropdown items={items()} value={script.playbackOptions?.repeat?.type} onChange={handleChange} dataMember="type" displayMember="text" selectOnly noFilter disableClearItem={true} disableInput
                     disabled={props.disabled} />
             </div>
         </div>
         <div>
             <Switch>
-                <Match when={ state.playbackOptions?.repeat?.type == RepeatType.Times }>
+                <Match when={ script.playbackOptions?.repeat?.type == RepeatType.Times }>
                     <TimesCounter disabled={props.disabled} />
                 </Match>
-                <Match when={ state.playbackOptions?.repeat?.type == RepeatType.Timer }>
+                <Match when={ script.playbackOptions?.repeat?.type == RepeatType.Timer }>
                     <TimerCounter disabled={props.disabled} />
                 </Match>
             </Switch>

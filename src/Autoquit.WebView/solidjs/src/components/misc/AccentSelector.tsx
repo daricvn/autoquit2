@@ -16,7 +16,7 @@ export default function AccentSelector(props: IAccentSelectorProps){
 
     const setAccent = (name: string)=>{
         setState("temporaryState", "accent", name);
-        props.onChange?.call(null);
+        props.onChange(null);
     }
 
     const getAccent = createMemo(()=>{

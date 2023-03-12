@@ -19,9 +19,6 @@ const ROW_SIZE : number = 41;
 
 export const ScriptTable = ()=>{
     const [ selection, setSelection ] = createStore<ISelectionInfo>({ list: [] })
-    const [ getItems, setItems ] = createSignal<any[]>([], {
-        equals: false
-    })
     const debounceUpdate = debounce((method: ()=> void)=> method(), 100);
     const [ state, setState ] = useGlobalState()
     const [ scriptTable, setScriptTable ] = useScriptContext()
@@ -42,21 +39,19 @@ export const ScriptTable = ()=>{
     }
 
     const handleAddItem = ()=>{
-        let items = getItems()
-        items.push({ Name: 'new item', Desc: '', Enabled: true })
-        setItems(items)
+        setScriptTable('items', (prev)=> [ ...prev!, { Name: 'new item', Desc: '', Enabled: true }])
         debounceUpdate(scrollToBottom)
     }
 
     const handleCheckedAll = ()=>{
         const checkedState = !isCheckedAll();
-        for ( let i = 0; i < getItems().length; i++)
+        for ( let i = 0; i < (scriptTable.items?.length ?? 0); i++)
             setSelection('list', i, checkedState);
     }
     
     const isCheckedAll = createMemo(()=> {
         let keys = Object.keys(selection.list)
-        if (keys.length != getItems().length)
+        if (keys.length != scriptTable.items?.length)
             return false;
         for ( let i = 0; i < keys.length; i++)
             if (!selection.list[+keys[i]])
@@ -76,21 +71,24 @@ export const ScriptTable = ()=>{
     })
 
     const handleDeleteRequest = ()=>{
-        let items = getItems()
+        let items = scriptTable.items?.map(x=> x);
         let keys = Object.keys(selection.list).map(x=> +x).sort((a,b) => (a - b))
+        let currentFocusIndex = scriptTable.index;
         if (keys.length == 0)
             return false;
         window.showPrompt("Are you sure want to delete selected item(s)?", 2)
             .then(()=>{
                 for ( let i = keys.length - 1; i >= 0; i--)
                     if (selection.list[keys[i]]) {
-                        items.splice(keys[i], 1)
+                        items?.splice(keys[i], 1)
+                        if (keys[i] == currentFocusIndex)
+                            setScriptTable('index', undefined);
                     }
                 setSelection((state)=> ({ list: {}}))
-                if (items.length == 0)
-                    setItems([])
-                else
-                    setItems([ ...items ]);
+                if ((items?.length ?? 0) > 0)
+                    setScriptTable('items', items);
+                else 
+                    setScriptTable('items', []);
             })
             .catch(()=> {})
     }
@@ -106,7 +104,7 @@ export const ScriptTable = ()=>{
 
     const rowVisualizer = createMemo(()=>{
         let res = createVirtualizer({
-            count: getItems().length,
+            count: scriptTable.items?.length ?? 0,
             getScrollElement: ()=> (tableContainer as Element),
             estimateSize:()=> ROW_SIZE,
             overscan: 3
@@ -115,14 +113,14 @@ export const ScriptTable = ()=>{
     });
 
     const scrollToBottom = ()=>{
-        rowVisualizer().scrollToIndex(getItems().length);
+        rowVisualizer().scrollToIndex(scriptTable.items?.length ?? 0);
         tableContainer?.scrollTo(0, tableContainer.scrollHeight)
     }
 
     const paddingTop = createMemo(()=> rowVisualizer().getVirtualItems()?.[0]?.start || 0);
     const paddingBottom = createMemo(()=> rowVisualizer().getTotalSize() - (rowVisualizer().getVirtualItems()?.[rowVisualizer().getVirtualItems().length - 1]?.end || 0));
 
-    return <div class={`flex flex-col h-full ${state.getBackground?.call(null, state)} text-${state.getTextColour?.call(null, state)}`} style="max-height: 88vh">
+    return <div class={`flex flex-col h-full ${state.getBackground} text-${state.getTextColour}`} style="max-height: 88vh">
         <div class="flex-auto w-full overflow-y-auto script-table-container" ref={tableContainer}>
             <ResizableTable items={headers()} class={`script-table border padding-table w-full`} columns={scriptTable.columnSize} minColumns={scriptTable.minSize} onSizeChanged={handleColumnSizeChanged}>
                 <Show when={paddingTop() > 0}>
@@ -132,15 +130,16 @@ export const ScriptTable = ()=>{
                 </Show>
                 <For each={rowVisualizer().getVirtualItems()}>
                     { (item)=> 
-                    <tr>
+                    <tr class={item.index == scriptTable.index ? "bg-"+ state.getAccent + "/25 ease-out duration-200":''}>
                         <td class="text-center"><Checkbox type="checkbox" class="select-none" checked={!!selection.list[item.index]} onChange={(e)=> handleCheckedChange(item.index)} /></td>
-                        <td class="overflow-hidden text-ellipsis">{getItems()[item.index].Name}</td>
-                        <td class="text-center"><Checkbox type="checkbox" class="select-none" checked={getItems()[item.index].Enabled} disabled={isBusy()} /></td>
+                        <td class="overflow-hidden text-ellipsis">{scriptTable.items?.[item.index].Name}</td>
+                        <td class="text-center"><Checkbox type="checkbox" class="select-none" checked={scriptTable.items?.[item.index].Enabled} disabled={isBusy()} /></td>
                         <td class="text-right">
-                            <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)} disabled={isBusy()}>
-                                <i class={`fa-solid fa-pen-to-square text-${state.getAccent?.call(null, state)}`}></i>
+                            <FlatCircleButton size={8} color={"bg-" + state.getTextColour} disabled={isBusy()}>
+                                <i class={`fa-solid fa-pen-to-square text-${state.getAccent}`}></i>
                             </FlatCircleButton>
-                            <FlatCircleButton size={8} color={"bg-" + state.getTextColour?.call(null, state)} disabled={isBusy()}>
+                            <FlatCircleButton size={8} color={"bg-" + state.getTextColour} disabled={isBusy()}
+                                onClick={()=> setScriptTable('index', item.index)}>
                                 <i class={`fa-solid fa-play text-green`}></i>
                             </FlatCircleButton>
                         </td>

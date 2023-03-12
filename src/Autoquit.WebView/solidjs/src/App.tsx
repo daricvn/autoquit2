@@ -8,6 +8,7 @@ import QuestionDialog from './components/forms/implements/QuestionDialog';
 import Index from './views/Index';
 import { createStore } from 'solid-js/store';
 import { ObservatorContextProvider } from './context/ObservatorContext';
+import { Toaster } from 'solid-toast';
 
 declare global {
   interface Window {
@@ -69,6 +70,7 @@ const App: Component = () => {
     <ObservatorContextProvider>
       <LocalizationContextProvider>
         <ScriptContextProvider>
+          <Toaster />
           <Index />
           <QuestionDialog show={questionInfo.show} value={questionInfo.text} ok={translate(getDialogButton(questionInfo.type).yes)} cancel={translate(getDialogButton(questionInfo.type).cancel)}
             onAccept={questionInfo.accept}

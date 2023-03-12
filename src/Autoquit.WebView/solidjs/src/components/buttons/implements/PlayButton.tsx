@@ -5,12 +5,12 @@ import StateButton, { IStateButtonProps } from "../StateButton";
 
 export default function PlayButton(props: IStateButtonProps){
     const [ state, setState ] = useGlobalState()
-    const textColor = createMemo(()=> "text-" + state.getTextColourInvert?.call(null, state)) 
+    const textColor = createMemo(()=> "text-" + state.getTextColourInvert) 
     const mainColor = createMemo(()=> props.disabled ? "gray-400" : "green-600");
     const stateClasses = createMemo(()=> [ `bg-${mainColor()} ${textColor()}`, `border-4 border-${mainColor()} text-${mainColor()}` ])
     const states = createMemo(()=> [ "fa-solid fa-play text-2xl absolute left-3 top-0",  "fa-solid fa-pause text-2xl absolute left-2 top-0" ])
     const texts = createMemo(()=> [ "Play", "Pause" ])
-    const color = createMemo(()=> "bg-" + (state.appState == AppState.Idle ? state.getTextColourInvert?.call(null, state) : state.getTextColour?.call(null, state)))
+    const color = createMemo(()=> "bg-" + (state.appState == AppState.Idle ? state.getTextColourInvert : state.getTextColour))
     const handleStateChange = ()=> setState('appState', state.appState == AppState.Idle ? AppState.Playback : AppState.Idle)
     const stateIndex = createMemo(()=> state.appState == AppState.Playback ? 1 : 0);
 

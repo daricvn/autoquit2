@@ -1,6 +1,5 @@
 import { Part } from "solid-js/store";
 import { AppState } from "../models/AppState";
-import { IPlaybackInfo } from "./IPlaybackInfo";
 
 export interface IGlobalStore {
     theme?: string;
@@ -16,14 +15,13 @@ export interface IGlobalStore {
     scanAll?: boolean;
     enableLogging?: boolean;
     temporaryState?: IGlobalStore | undefined;
-    playbackOptions?: IPlaybackInfo;
-    getTheme?: (state: IGlobalStore) => string | any;
-    getBackground?: (state: IGlobalStore) => string | any;
-    getHoverBackground?: (state: IGlobalStore) => string | any;
-    getBackgroundInvert?: (state: IGlobalStore) => string | any;
-    getTextColour?: (state: IGlobalStore) => string | any;
-    getTextColourInvert?: (state: IGlobalStore) => string | any;
-    getAccent?: (state: IGlobalStore, type?: 'light' | 'dark' | 'base' | undefined) => string | any;
+    getTheme?: string | any;
+    getBackground?: string | any;
+    getHoverBackground?: string | any;
+    getBackgroundInvert?: string | any;
+    getTextColour?: string | any;
+    getTextColourInvert?: string | any;
+    getAccent?: string | any;
 }
 
 export interface IGlobalStoreKeyPreset {

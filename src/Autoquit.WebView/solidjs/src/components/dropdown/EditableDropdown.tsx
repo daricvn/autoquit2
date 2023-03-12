@@ -89,7 +89,7 @@ export default function EditableDropdown(props: IEditableDropdownProps){
         if (!props.value)
             return CONSTVAR.EmptyStr
         if (data == props.value || data == props.value?.value)
-            return `border-${state.getAccent?.call(null, state)}`
+            return `border-${state.getAccent}`
         return CONSTVAR.EmptyStr;
     }
 
@@ -176,11 +176,11 @@ export default function EditableDropdown(props: IEditableDropdownProps){
       </div>
       {
             <Show when={expandList()}>
-                <div class={`${state.getBackground?.call(null, state)} absolute rounded shadow overflow-x-hidden overflow-y-auto flex flex-col w-full mt-1 border border-gray-200 z-50`} style="max-height: 520px" ref={listElement}>
+                <div class={`${state.getBackground} absolute rounded shadow overflow-x-hidden overflow-y-auto flex flex-col w-full mt-1 border border-gray-200 z-50`} style="max-height: 520px" ref={listElement}>
                     {
                         props.newItemContent != undefined && 
                         <Content class="cursor-pointer group">
-                            <a class={`block p-2 border-transparent border-l-4 group-hover:border-${state.getAccent?.call(null, state)} group-hover:bg-gray-100`}
+                            <a class={`block p-2 border-transparent border-l-4 group-hover:border-${state.getAccent} group-hover:bg-gray-100`}
                                 onClick={onCreateNew}>
                                 
                                 <i class="fa fa-plus mr-2" />
@@ -191,7 +191,7 @@ export default function EditableDropdown(props: IEditableDropdownProps){
                     <For each={getFilteredItem()}>
                         {
                             (item, i)=>
-                            <Content class={`cursor-pointer border-transparent border-l-4 flex ${getSelectedItemClass(item.value)} hover:border-${state.getAccent?.call(null, state)} hover:${state.getHoverBackground?.call(null, state)}`}
+                            <Content class={`cursor-pointer border-transparent border-l-4 flex ${getSelectedItemClass(item.value)} hover:border-${state.getAccent} hover:${state.getHoverBackground}`}
                                 onMouseOver={()=> setHoverIndex(i())} onMouseLeave={()=> setHoverIndex(-1)}>
                                 <a class={`flex-auto p-2 flex text-ellipsis select-none overflow-hidden`}
                                     onClick={()=> onItemSelected(item, item.index)}>

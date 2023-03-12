@@ -64,7 +64,7 @@ export default function Tooltip(props: ITooltipProps){
     return <div class={`inline-block ${props.class ?? ""}`}>
         <Transition name="tooltip">
             <Show when={getHover()}>
-                <div class={`absolute select-none pointer-events-none tooltip font-thin text-sm inline-block px-3 py-1 rounded-lg transform ${state.getBackgroundInvert?.call(null, state)} bg-opacity-80 text-${state.getTextColourInvert?.call(null, state)} ${transition()}`} style={tooltipStyle()}>
+                <div class={`absolute select-none pointer-events-none tooltip font-thin text-sm inline-block px-3 py-1 rounded-lg transform ${state.getBackgroundInvert} bg-opacity-80 text-${state.getTextColourInvert} ${transition()}`} style={tooltipStyle()}>
                     { props.value }
                 </div>
             </Show>

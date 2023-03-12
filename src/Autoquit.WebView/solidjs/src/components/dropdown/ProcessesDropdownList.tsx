@@ -49,13 +49,13 @@ export default function ProcessesDropdownList(){
                     setLastFetch(new Date().getTime() / 1000);
                     resolve(list)
                 }
-                else reject?.call(null)
+                else reject(null)
                 if (res.data.Status != 200)
                     window.showWarning("Cannot retrieve application information")
             })
             .catch((e)=>{
                 window.showWarning("Cannot retrieve application information")
-                reject?.call(null)
+                reject(null)
             })
             .finally(()=>{
                 doneUpdateProcess()

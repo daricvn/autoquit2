@@ -28,12 +28,12 @@ export default function QuestionDialog(props: IQuestionDialogProps){
     }
 
     return <Dialog class={`px-6 py-4 w-96 ${props.class}`} show={props.show} transition="slide-down" style={props.style} containerStyle={props.containerStyle} zIndex={props.zIndex}>
-        <div class={`block pb-6 text-${state.getTextColour?.call(state, state)}`}>
+        <div class={`block pb-6 text-${state.getTextColour}`}>
             {props.value}
         </div>
         <div class="block pb-2 justify-end flex space-x-2 select-none">
             <div>
-                <WaveButton class={`transition-colors outline-none px-3 py-1 text-white bg-${state.getAccent?.call(state, state)} rounded-lg mr-2 hover:shadow-inner hover:shadow-md`} onClick={handleOk}>
+                <WaveButton class={`transition-colors outline-none px-3 py-1 text-white bg-${state.getAccent} rounded-lg mr-2 hover:shadow-inner hover:shadow-md`} onClick={handleOk}>
                     {props.ok}
                 </WaveButton>
                 <Show when={!!props.cancel}>

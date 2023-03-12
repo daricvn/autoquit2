@@ -18,7 +18,7 @@ export default function Index(){
                 })
     })
 
-    return <div class={`${state.getBackground?.call(null, state)} flex flex-col`} style="height: 100vh">
+    return <div class={`${state.getBackground} flex flex-col`} style="height: 100vh">
         <Header />
         <div class="flex-grow relative overflow-y-auto overflow-x-hidden pb-8">
         <Main></Main>

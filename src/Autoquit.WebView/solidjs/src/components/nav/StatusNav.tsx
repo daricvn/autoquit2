@@ -23,7 +23,7 @@ export default function BottomNav(){
     const isBusy = createMemo(()=> state.appState == AppState.Playback || state.appState == AppState.Recording)
 
     return <>
-        <div class={`w-screen h-9 fixed bottom-0 left-0 block bg-${state.getAccent?.call(state, state)}`}>
+        <div class={`w-screen h-9 fixed bottom-0 left-0 block bg-${state.getAccent}`}>
         <div class="grid grid-cols-3 gap-1 pt-1">
             <div class="col-span-2">
                 <CircularProgressWithText class="pl-2" size={8} width={2} color="white" hidden={!state.processingStatus}>

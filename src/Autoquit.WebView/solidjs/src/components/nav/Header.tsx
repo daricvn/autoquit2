@@ -23,7 +23,7 @@ export default function Header(){
             })
     }
 
-    return <div class={`h-12 bg-${state.getAccent?.call(null, state)} px-1`}>
+    return <div class={`h-12 bg-${state.getAccent} px-1`}>
         <div class={`grid grid-cols-5 ${state.preventHeader ? 'pointer-events-none':''}`}>
             <div class="col-span-3">
                 <ProcessesDropdownList />
