@@ -10,7 +10,7 @@ export interface IColourProps extends JSX.HTMLAttributes<HTMLDivElement>
 export default function ColourItem(props: IColourProps){
     const [ state, _ ] = useGlobalState()
 
-    const classState = createMemo(()=> props.selected ? "/50" : "/25 bg-opacity-80 hover:bg-opacity-60")
+    const classState = createMemo(()=> props.selected ? "/50" : "/25 bg-opacity-70 hover:bg-opacity-50")
 
     return <div class={`rounded-full w-10 h-10 border-4 transition-all border-${state.getTextColour}${classState()} bg-${props.color}`} onClick={props.onClick}>
 

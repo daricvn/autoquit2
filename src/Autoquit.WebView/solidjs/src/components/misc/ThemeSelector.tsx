@@ -11,7 +11,7 @@ export default function ThemeSelector(props: IAccentSelectorProps){
     const [ state, setState ] = useGlobalState()
 
     const setTheme = (theme: string)=>{
-        setState("temporaryState", "theme", theme)
+        setState("temporaryState", 'theme', theme)
         if (props.onChange)
             props.onChange()
     }

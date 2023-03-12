@@ -16,7 +16,7 @@ export default function Slider(props: ISliderProps)
         if (props.lockBefore && +e.target.value < props.lockBefore)
             e.target.value = props.lockBefore;
         setValue(+(e.target.value));
-        (props.onChange as any)(null, e);
+        (props.onChange as any)?.call(null, e);
     }
 
     const percent = createMemo(()=> {

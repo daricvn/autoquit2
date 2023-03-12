@@ -25,12 +25,12 @@ export default function Settings(props: ISettingsProps){
         if (!getDirty())
             return;
         setDirty(false)
-        setState((state) => ({ ...state, temporaryState: {}}));
+        setState((state) => ({ temporaryState: {}}));
     }
 
     const close = ()=>{
         undo()
-        props.onClose(null);
+        props.onClose?.call(null);
         return false;
     }
 

@@ -22,7 +22,7 @@ export default function Ripple(props: IRippleProps){
             return;
         if (ripple)
             ripple.ontransitionend = ()=>{
-                props.onTransitionEnd(null)
+                props.onTransitionEnd?.call(null)
             }
         setTimeout(()=>{
             if (ripple)

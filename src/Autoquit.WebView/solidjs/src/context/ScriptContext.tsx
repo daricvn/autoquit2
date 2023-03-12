@@ -10,6 +10,7 @@ const initStore : IScriptTableConfig = {
     minSize: [0, 0, 0, 85],
     index: undefined,
     playbackOptions: {
+        speed: 100,
         repeat: {
             type: RepeatType.None,
             total: 1

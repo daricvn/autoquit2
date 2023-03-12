@@ -18,28 +18,7 @@ const initStore : IGlobalStore = {
     recordMouseMovement: false,
     enableLogging: false,
     scanAll: false,
-    temporaryState: {},
-    get getTheme(){
-        let theme = this.theme;
-        if (this.temporaryState && this.temporaryState.theme)
-            theme = this.temporaryState.theme
-        return theme;
-    },
-    get getBackground(){
-        return this.getTheme == 'dark' ? themePreset.bg_dark: themePreset.bg_light
-    },
-    get getHoverBackground() {
-        return this.getTheme == 'dark' ? themePreset.bg_dark_hover: themePreset.bg_light_hover
-    },
-    get getBackgroundInvert() {
-        return this.getTheme == 'dark' ? themePreset.bg_light: themePreset.bg_dark
-    },
-    get getTextColour(){
-        return this.getTheme == 'dark' ? themePreset.txt_dark : themePreset.txt_light
-    },
-    get getTextColourInvert(){
-        return this.getTheme == 'dark' ? themePreset.txt_light : themePreset.txt_dark
-    }
+    temporaryState: {}
 }
 
 const StateContext = createContext<[ get: IGlobalStore, set: SetStoreFunction<IGlobalStore> ]>([
@@ -56,10 +35,35 @@ declare global {
 export const StateProvider = (props: { children: any })=>{
     const [ store, setStore ] = createStore<IGlobalStore>({
         ...initStore,
+        get getTheme() : any {
+            return getTheme()
+        },
         get getAccent() {
             return getAccent()
-        }
+        },
+        get getBackground(){
+            return this.getTheme == 'dark' ? themePreset.bg_dark: themePreset.bg_light
+        },
+        get getHoverBackground() {
+            return this.getTheme == 'dark' ? themePreset.bg_dark_hover: themePreset.bg_light_hover
+        },
+        get getBackgroundInvert() {
+            return this.getTheme == 'dark' ? themePreset.bg_light: themePreset.bg_dark
+        },
+        get getTextColour(){
+            return this.getTheme == 'dark' ? themePreset.txt_dark : themePreset.txt_light
+        },
+        get getTextColourInvert(){
+            return this.getTheme == 'dark' ? themePreset.txt_light : themePreset.txt_dark
+        },
     })
+
+    const getTheme = ()=>{
+        let theme = store.theme;
+        if (store.temporaryState && store.temporaryState.theme)
+            theme = store.temporaryState.theme
+        return theme;
+    }
 
     const getAccent = createMemo(()=> {
         let t = 'base'
