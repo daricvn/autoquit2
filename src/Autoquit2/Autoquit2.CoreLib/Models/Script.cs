@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace Autoquit2.Core.Models
+namespace Autoquit2.CoreLib.Models
 {
-    class Script
+    public class Script
     {
         /// <summary>
         /// Author of the script

@@ -1,11 +1,10 @@
 ﻿using InputBridge.Models;
-using System.Collections.Generic;
 
-namespace Autoquit2.Core.Utilities
+namespace Autoquit2.CoreLib.Utilities
 {
     internal class StandardModuleMap
     {
-        private static StandardModuleMap _instance;
+        private static StandardModuleMap? _instance;
         public static StandardModuleMap Instance => _instance ??= new StandardModuleMap();
 
         private IReadOnlyDictionary<MouseEventType, string> _mouseMap = new Dictionary<MouseEventType, string>()

@@ -1,7 +1,7 @@
 ﻿using Autoquit2.Core.Models;
 using Autoquit2.Core.Modules;
-using Autoquit2.Core.Utilities;
-using Chromely.Core.Configuration;
+using Autoquit2.CoreLib.Interfaces;
+using Autoquit2.CoreLib.Utilities;
 using Chromely.Core.Network;
 using InputBridge;
 using System;
@@ -12,13 +12,13 @@ namespace Autoquit2.Core.Controllers
     [ControllerProperty(Name = "ScriptController")]
     public class ScriptController : BaseController
     {
-        private readonly IChromelyConfiguration _config;
+        private readonly IJavascriptExpression _js;
         private readonly AppSession _session;
         private readonly InputListener _listener;
         private readonly Stopwatch _watch;
-        public ScriptController(IChromelyConfiguration config, AppSession session, InputListener listener)
+        public ScriptController(IJavascriptExpression js, AppSession session, InputListener listener)
         {
-            _config = config;
+            _js = js;
             _session = session;
             _listener = listener;
             _listener.OnInput += OnUserInput;
@@ -31,6 +31,7 @@ namespace Autoquit2.Core.Controllers
             if (ScriptItemFactory.Instance.TryCreate(args, Convert.ToInt32(_watch.ElapsedMilliseconds), out var item))
             {
                 _session.CurrentScript.Scripts.Add(item);
+                _js.AddScriptItemAsBrief(_session.CurrentScript.Scripts.Count - 1, item);
             }
             _watch.Restart();
         }

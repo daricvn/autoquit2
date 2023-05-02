@@ -1,4 +1,4 @@
-﻿namespace Autoquit2.Core.Models.Struct
+﻿namespace Autoquit2.CoreLib.Models.Struct
 {
     internal struct FileFolder
     {

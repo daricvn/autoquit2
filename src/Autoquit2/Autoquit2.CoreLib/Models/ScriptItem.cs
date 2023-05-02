@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace Autoquit2.Core.Models
+﻿namespace Autoquit2.CoreLib.Models
 {
-    class ScriptItem
+    public class ScriptItem
     {
         /// <summary>
         /// The module this item used
@@ -15,7 +13,7 @@ namespace Autoquit2.Core.Models
         /// <summary>
         /// Value of the action
         /// </summary>
-        public IDictionary<string, object> Values { get; set; }
+        public IDictionary<string, object>? Values { get; set; }
         /// <summary>
         /// Miliseconds delay
         /// </summary>

@@ -6,7 +6,7 @@ import Checkbox from "../forms/Checkbox"
 import { ResizableTable } from "./ResizableTable"
 import { IObservatorState } from "../../interfaces/IObservator"
 import './ScriptTable.css'
-import { createStore } from "solid-js/store"
+import { createStore, produce, reconcile } from "solid-js/store"
 import FlatCircleButton from "../buttons/FlatCircleButton"
 import ScriptTableNav from "../nav/ScriptTableNav"
 import ScriptFileBrowser from "../forms/implements/ScriptFileBrowser"
@@ -38,10 +38,18 @@ export const ScriptTable = ()=>{
             setSelection('list', index, true)
     }
 
-    const handleAddItem = ()=>{
-        setScriptTable('items', (prev)=> [ ...prev!, { Name: 'new item', Desc: '', Enabled: true }])
+    const handleAddItem = (index: number, name: string)=>{
+        setScriptTable(produce(script=> {
+            script.items?.push({ Index: index, Name: name, Enabled: true });
+        }));
         debounceUpdate(scrollToBottom)
     }
+
+    const handleAddNewItem = ()=>{
+        handleAddItem(-1, "new item");
+    }
+
+    (window as any).addScriptItem = handleAddItem;
 
     const handleCheckedAll = ()=>{
         const checkedState = !isCheckedAll();
@@ -71,7 +79,6 @@ export const ScriptTable = ()=>{
     })
 
     const handleDeleteRequest = ()=>{
-        let items = scriptTable.items?.map(x=> x);
         let keys = Object.keys(selection.list).map(x=> +x).sort((a,b) => (a - b))
         let currentFocusIndex = scriptTable.index;
         if (keys.length == 0)
@@ -80,15 +87,14 @@ export const ScriptTable = ()=>{
             .then(()=>{
                 for ( let i = keys.length - 1; i >= 0; i--)
                     if (selection.list[keys[i]]) {
-                        items?.splice(keys[i], 1)
-                        if (keys[i] == currentFocusIndex)
-                            setScriptTable('index', undefined);
+                        setScriptTable(produce(state=>{
+                            state.items?.splice(keys[i], 1);
+                            if (keys[i] == currentFocusIndex){
+                                state.index = undefined;
+                            }
+                        }));
                     }
                 setSelection((state)=> ({ list: {}}))
-                if ((items?.length ?? 0) > 0)
-                    setScriptTable('items', items);
-                else 
-                    setScriptTable('items', []);
             })
             .catch(()=> {})
     }
@@ -122,7 +128,7 @@ export const ScriptTable = ()=>{
 
     return <div class={`flex flex-col h-full ${state.getBackground} text-${state.getTextColour}`} style="max-height: 88vh">
         <div class="flex-auto w-full overflow-y-auto script-table-container" ref={tableContainer}>
-            <ResizableTable items={headers()} class={`script-table border padding-table w-full`} columns={scriptTable.columnSize} minColumns={scriptTable.minSize} onSizeChanged={handleColumnSizeChanged}>
+            <ResizableTable columnHeaderItems={headers()} class={`script-table border padding-table w-full`} columns={scriptTable.columnSize} minColumns={scriptTable.minSize} onSizeChanged={handleColumnSizeChanged}>
                 <Show when={paddingTop() > 0}>
                     <tr>
                         <td style={`height: ${paddingTop()}px`}></td>
@@ -155,7 +161,7 @@ export const ScriptTable = ()=>{
         </div>
         <div class="pb-1">
             <div class="block">
-                <ScriptTableNav showDelete={anySelected()} onDeleteRequest={handleDeleteRequest} onAddRequest={handleAddItem} disabled={isBusy()} />
+                <ScriptTableNav showDelete={anySelected()} onDeleteRequest={handleDeleteRequest} onAddRequest={handleAddNewItem} disabled={isBusy()} />
             </div>
             <div class="grid grid-cols-3">
                 <div>             

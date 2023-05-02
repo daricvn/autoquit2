@@ -1,4 +1,4 @@
-﻿using Autoquit2.Core.Models;
+﻿using Autoquit2.CoreLib.Models;
 
 namespace Autoquit2.Core.Modules
 {

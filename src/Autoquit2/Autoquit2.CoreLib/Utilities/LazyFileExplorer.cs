@@ -1,10 +1,6 @@
-﻿using Autoquit2.Core.Models.Struct;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using Autoquit2.CoreLib.Models.Struct;
 
-namespace Autoquit2.Core.Utilities
+namespace Autoquit2.CoreLib.Utilities
 {
     internal static class LazyFileExplorer
     {

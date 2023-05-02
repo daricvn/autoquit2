@@ -10,7 +10,7 @@ export interface IResizableTableProps{
     children?: any;
     columns?: number[];
     minColumns?: number[];
-    items?: any[];
+    columnHeaderItems?: any[];
     rightToLeft?: boolean;
     onSizeChanged?: IObservatorFinishCallback;
 }
@@ -36,12 +36,12 @@ export const ResizableTable= (props: IResizableTableProps)=>{
     }
 
     const headers = createMemo(()=>{
-        if (!props.items) return ""
-        return <For each={props.items}>
+        if (!props.columnHeaderItems) return ""
+        return <For each={props.columnHeaderItems}>
             { (col, i) => <th class={`select-none ${state.getBackground}`} style={buildColumnStyle(props.columns![i()], props.minColumns ? props.minColumns[i()]:0)}>
                     {col}
                     {
-                        <Show when={i() < (props.items?.length ?? 0) - 1}>
+                        <Show when={i() < (props.columnHeaderItems?.length ?? 0) - 1}>
                             <div class="resizer" onMouseDown={(e)=>handleMouseDown(e, i())} />
                         </Show>
                     }

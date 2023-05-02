@@ -1,9 +1,8 @@
-﻿using Autoquit.DynamicModules;
-using Autoquit.DynamicModules.Generic;
+﻿using Autoquit.DynamicModules.Generic;
 using Autoquit.DynamicModules.Generic.Implement;
 using Autoquit.Foundation.Interfaces;
 using Autoquit2.Core.Const;
-using Autoquit2.Core.Security;
+using Autoquit2.CoreLib.Security;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

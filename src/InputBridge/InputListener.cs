@@ -11,6 +11,7 @@ namespace InputBridge
         private const int WH_KEYBOARD_LL = 13;
         private const int WH_MOUSE_LL = 14;
         private IntPtr _hookID = IntPtr.Zero;
+        private IntPtr _keyHookID = IntPtr.Zero;
         private bool _isListening = false;
 
         public event InputEventHandler OnInput;
@@ -20,9 +21,16 @@ namespace InputBridge
         public void Start()
         {
 #if WINDOWS_OS
-            _hookID = SetHook(HookCallback);
+            _hookID = SetHook(HookCallback, WH_MOUSE_LL);
+            _keyHookID = SetHook(HookCallback, WH_KEYBOARD_LL);
+            _isListening = _hookID != IntPtr.Zero && _keyHookID != IntPtr.Zero;
+            // For .NET 7, a message loop is required
+            while (_isListening && !GetMessage(out var msg, IntPtr.Zero, 0, 0))
+            {
+                TranslateMessage(ref msg);
+                DispatchMessage(ref msg);
+            }
 #endif
-            _isListening = true;
         }
 
         public void Stop()
@@ -34,14 +42,13 @@ namespace InputBridge
             _isListening = false;
         }
 
-        private IntPtr SetHook(LowLevelKeyboardProc proc)
+        private IntPtr SetHook(LowLevelKeyboardProc proc, int type)
         {
 #if WINDOWS_OS
             using (Process curProcess = Process.GetCurrentProcess())
             using (ProcessModule curModule = curProcess.MainModule)
             {
-                return SetWindowsHookEx(WH_KEYBOARD_LL | WH_MOUSE_LL, proc,
-                    GetModuleHandle(curModule.ModuleName), 0);
+                return SetWindowsHookEx(type, proc, GetModuleHandle(curModule.ModuleName), 0);
             }
 #else
             return IntPtr.Zero;
@@ -51,7 +58,7 @@ namespace InputBridge
         private delegate IntPtr LowLevelKeyboardProc(
             int nCode, IntPtr wParam, IntPtr lParam);
 
-        private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        public IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0)
             {
@@ -85,7 +92,17 @@ namespace InputBridge
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true, EntryPoint = "GetModuleHandle")]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
-#endregion
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true, EntryPoint = "GetMessage")]
+        public static extern bool GetMessage(out MSG lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true, EntryPoint = "TranslateMessage")]
+        public static extern bool TranslateMessage([In] ref MSG lpMsg);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true, EntryPoint = "DispatchMessage")]
+        public static extern IntPtr DispatchMessage([In] ref MSG lpmsg);
+
+        #endregion
 #endif
     }
 }

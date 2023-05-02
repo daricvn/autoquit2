@@ -1,7 +1,8 @@
 import { IPlaybackInfo } from "./IPlaybackInfo";
+import IScriptItemBriefInfo from "./IScriptItemBriefInfo";
 
 export interface IScriptTableConfig {
-    items?: any[];
+    items?: IScriptItemBriefInfo[];
     columnSize: number[];
     minSize?: number[];
     playbackOptions?: IPlaybackInfo;

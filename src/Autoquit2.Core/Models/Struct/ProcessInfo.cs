@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using Autoquit2.Core.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using Autoquit2.Core.Utilities;
 
 namespace Autoquit2.Core.Models.Struct
 {
@@ -113,7 +112,7 @@ namespace Autoquit2.Core.Models.Struct
             info.Title = GetName(pc.MainWindowTitle, pc.ProcessName);
             info.Name = info.Title;
             info.MainHandle = (int) pc.MainWindowHandle;
-            info.IconSrc = Resources.env.defaultAppIcon;
+            info.IconSrc = Core.Resources.env.defaultAppIcon;
             try
             {
                 info.Name = GetName(pc.MainModule?.FileVersionInfo?.FileDescription, pc.ProcessName);
@@ -137,7 +136,7 @@ namespace Autoquit2.Core.Models.Struct
                 info.Id = pc.Id;
                 info.Title = GetName(pc.MainWindowTitle, pc.ProcessName);
                 info.Name = info.Ext = info.Title;
-                info.IconSrc = Resources.env.defaultAppIcon;
+                info.IconSrc = Core.Resources.env.defaultAppIcon;
                 try
                 {
                     info.Name = info.Ext = GetName(pc.MainModule.FileVersionInfo.FileDescription, pc.ProcessName);

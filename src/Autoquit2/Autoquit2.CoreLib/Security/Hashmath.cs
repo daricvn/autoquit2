@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 
-namespace Autoquit2.Core.Security
+namespace Autoquit2.CoreLib.Security
 {
     public class Hashmath
     {

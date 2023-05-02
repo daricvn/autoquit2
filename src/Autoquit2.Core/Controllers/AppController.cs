@@ -2,7 +2,7 @@
 using Autoquit2.Core.Models;
 using Autoquit2.Core.Models.Struct;
 using Autoquit2.Core.Modules;
-using Chromely.Core.Configuration;
+using Autoquit2.CoreLib.Interfaces;
 using Chromely.Core.Host;
 using Chromely.Core.Network;
 using InputBridge;
@@ -11,21 +11,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text.Json;
 
 namespace Autoquit2.Core.Controllers
 {
     [ControllerProperty(Name = "AppController")]
     public class AppController : BaseController
     {
-        private readonly IChromelyConfiguration _config;
-        private readonly IConfiguration _appConfig;
+        private readonly IJavascriptExpression _js;
         private readonly IChromelyWindow _host;
         private HookWindow Window => _host as HookWindow;
-        public AppController(IChromelyConfiguration config, IConfiguration appConfig, IChromelyWindow host)
+        public AppController(IJavascriptExpression js, IConfiguration appConfig, IChromelyWindow host)
         {
-            _config = config;
-            _appConfig = appConfig;
+            _js = js;
             _host = host;
         }
 
@@ -68,8 +65,7 @@ namespace Autoquit2.Core.Controllers
         {
             foreach (var proc in ProcessInfo.EnumAll(false, false))
             {
-                string script = $"window.updateProcess({JsonSerializer.Serialize(proc)})";
-                _config.JavaScriptExecutor.ExecuteScript(script);
+                _js.UpdateProcess(proc);
             }
             return Ok(req);
         }

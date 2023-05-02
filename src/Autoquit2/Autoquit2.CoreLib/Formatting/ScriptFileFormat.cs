@@ -1,11 +1,9 @@
 ﻿using Autoquit.Packaging.LZMA;
-using Autoquit2.Core.Models;
-using System;
-using System.IO;
+using Autoquit2.CoreLib.Models;
 using System.Text;
 using System.Text.Json;
 
-namespace Autoquit2.Core.Utilities
+namespace Autoquit2.CoreLib.Formatting
 {
     internal class ScriptFileFormat
     {
@@ -35,7 +33,7 @@ namespace Autoquit2.Core.Utilities
                 if (result != null && result.Length > 0)
                 {
                     var content = Encoding.UTF8.GetString(result);
-                    return JsonSerializer.Deserialize<Script>(content);
+                    return JsonSerializer.Deserialize<Script>(content)!;
                 }
             }
             return null;
