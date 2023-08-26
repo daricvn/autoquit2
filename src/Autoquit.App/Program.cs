@@ -16,10 +16,10 @@ namespace Autoquit
         {
             var cefInstaller = new CefInstaller(CEF_INSTALLER);
             if (cefInstaller.ShouldInstall)
-                cefInstaller.Install();
+                _ = cefInstaller.Install();
             if (!System.IO.File.Exists(REQUIRE_LIB))
             {
-                MessageBox.Show("Invalid installation. Please re-install the application", "Error during load", Models.MsgBoxTypes.Ok, Models.MsgBoxIcons.Error);
+                _ = MessageBox.Show("Invalid installation. Please re-install the application", "Error during load", Models.MsgBoxTypes.Ok, Models.MsgBoxIcons.Error);
             }
             else Run();
         }
@@ -33,7 +33,7 @@ namespace Autoquit
                 var method = type.GetMethod("RunApp", BindingFlags.Static | BindingFlags.NonPublic);
                 var implement = type.GetMethod("GetModuleManager", BindingFlags.Static | BindingFlags.NonPublic);
                 var moduleManager = implement?.Invoke(null, null);
-                method?.Invoke(null, new object[] { moduleManager });
+                _ = (method?.Invoke(null, new object[] { moduleManager }));
             }
         }
 

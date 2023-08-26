@@ -1,6 +1,6 @@
 using Autoquit.TestBase;
-using Autoquit2.Core.Modules;
 using Autoquit2.Core.Modules.Implement;
+using Autoquit2.CoreLib.Interfaces;
 using NUnit.Framework;
 using System.Linq;
 
@@ -8,7 +8,7 @@ namespace Autoquit.Core.Tests
 {
     public class ModuleManagerTests
     {
-        private IModuleManager _moduleManager;
+        private IAppModuleService _moduleManager;
         [SetUp]
         public void Setup()
         {
@@ -19,7 +19,7 @@ namespace Autoquit.Core.Tests
         public void TestLoadModule_CanLoad()
         {
             // Assign
-            var moduleList = _moduleManager.LoadedModules.ToList();
+            var moduleList = _moduleManager.AvailableModules.ToList();
             // Act
             var loadedModule = _moduleManager.LoadModule(moduleList.FirstOrDefault()).ToList();
             // Assert

@@ -1,6 +1,6 @@
 ﻿using Autoquit2.Core.Const;
-using Autoquit2.Core.Modules;
 using Autoquit2.Core.Modules.Implement;
+using Autoquit2.CoreLib.Interfaces;
 using Chromely.Core;
 using Chromely.Core.Configuration;
 using Chromely.Core.Network;
@@ -14,17 +14,17 @@ namespace Autoquit2.Core
     [Obfuscation(Exclude = true, ApplyToMembers = true)]
     class Program
     {
-        internal static Version Version => Assembly.GetExecutingAssembly().GetName().Version; 
+        internal static Version Version => Assembly.GetExecutingAssembly().GetName().Version;
 
         static void Main(string[] args)
         {
 
         }
 
-        internal static IModuleManager GetModuleManager()
+        internal static IAppModuleService GetModuleManager()
             => ModuleManager.Instance;
 
-        private static void RunApp(IModuleManager moduleManager)
+        private static void RunApp(IAppModuleService moduleManager)
         {
             AppBuilder.Create()
                 .UseApp<Modules.ChromelyApp>()

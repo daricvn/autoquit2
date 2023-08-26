@@ -1,31 +1,32 @@
-﻿using Autoquit2.CoreLib.Models;
+﻿using Autoquit.Foundation.Interfaces;
+using Autoquit2.CoreLib.Models;
+using Autoquit2.CoreLib.Models.Data;
 using InputBridge.Models.Platforms.Windows;
-using InputBridge.Utilities;
 
 namespace Autoquit2.CoreLib.Utilities
 {
     public class ScriptItemFactory : IDisposable
     {
-        private const string STANDARD_MODULE = "Autoquit.Standard.alib";
-        private const int MERGE_DELAY_THRESHOLD = 1000;
+        private const int MERGE_DELAY_THRESHOLD = 800;
         private static ScriptItemFactory? _instance;
         public static ScriptItemFactory Instance => _instance ??= new ScriptItemFactory();
         private ScriptItem? _lastItem;
 
         public ScriptItem? LastItem => _lastItem;
-        public bool TryCreate(InputEventArgs args, int delay, out ScriptItem? res)
+        public bool TryCreate(IEnumerable<IAutoquitModule> modules, InputEventArgs args, int delay, out ScriptItem? res)
         {
             res = null;
-            if (args.MouseType != InputBridge.Models.MouseEventType.NONE)
+            foreach (var module in modules)
             {
-                var mouseEvent = StandardModuleMap.Instance.GetMouseEvent(args.MouseType);
-                if (string.IsNullOrEmpty(mouseEvent) || _lastItem?.Name == mouseEvent) return false;
-                if (_lastItem == null || delay >= MERGE_DELAY_THRESHOLD || !StandardModuleMap.Instance.MergeMouseAction(_lastItem.Name, mouseEvent, out mouseEvent))
+                var input = new InputEvent(args);
+                if (!module.TryParse(input, out var function, out var parameters))
                 {
-                    _lastItem = res = new ScriptItem(STANDARD_MODULE, mouseEvent, new Dictionary<string, object>()
-                    {
-                        { "mouse-coordinate", args.LastParam.ToCoordinate().ToString() }
-                    }, delay);
+                    continue;
+                }
+                string mouseEvent = function.Name;
+                if (_lastItem == null || delay >= MERGE_DELAY_THRESHOLD || !StandardModuleMap.Instance.MergeMouseAction(_lastItem.Name, function.Name, out mouseEvent))
+                {
+                    _lastItem = res = new ScriptItem(function.AssemblyName, mouseEvent, parameters, delay);
                 }
                 else
                 {

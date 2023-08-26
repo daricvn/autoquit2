@@ -1,12 +1,32 @@
 ﻿using Autoquit.Foundation.StaticVariables;
 using InputBridge.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Autoquit.Foundation.Utilities
 {
-    public class AutoquitMessageKeyPair : Dictionary<string, string>
+    public class AutoquitMessageKeyPair : Dictionary<string, string>, IDictionary
     {
+        public static AutoquitMessageKeyPair Empty => ImmutableDictionary<string, string>.Empty;
+
+        public static implicit operator AutoquitMessageKeyPair(ImmutableDictionary<string, string> immDict) => immDict;
+
+        public static implicit operator ImmutableDictionary<string, string>(AutoquitMessageKeyPair dictionary) => dictionary;
+
+        public bool? GetCheckState(string key)
+        {
+            if (TryGetValue(key, out string val))
+            {
+                if (!string.IsNullOrEmpty(val) && int.TryParse(val, out int state))
+                {
+                    return state == 1 ? true : false;
+                }
+            }
+            return null;
+        }
+
         public Point2d? GetCoordinate(string key)
         {
             if (TryGetValue(key, out string val))
@@ -27,6 +47,27 @@ namespace Autoquit.Foundation.Utilities
             return null;
         }
 
+        public byte GetInteractiveMode()
+        {
+            if (TryGetValue(StaticKeys.INTERACTIVE_MODE, out string val) && byte.TryParse(val, out byte res))
+            {
+                return res;
+            }
+            return 0;
+        }
+
+        public KeyCode? GetKeyCode(string key)
+        {
+            if (TryGetValue(key, out string val))
+            {
+                if (!string.IsNullOrEmpty(val) && int.TryParse(val, out int keyCode))
+                {
+                    return (KeyCode)keyCode;
+                }
+            }
+            return null;
+        }
+
         public Range? GetRange(string key)
         {
             if (TryGetValue(key, out string val))
@@ -42,46 +83,15 @@ namespace Autoquit.Foundation.Utilities
             }
             return null;
         }
-        public bool? GetCheckState(string key)
-        {
-            if (TryGetValue(key, out string val))
-            {
-                if (!string.IsNullOrEmpty(val) && int.TryParse(val, out int state))
-                {
-                    return state == 1 ? true : false;
-                }
-            }
-            return null;
-        }
-
-        public KeyCode? GetKeyCode(string key)
-        {
-            if (TryGetValue(key, out string val))
-            {
-                if (!string.IsNullOrEmpty(val) && int.TryParse(val, out int keyCode))
-                {
-                    return (KeyCode)keyCode;
-                }
-            }
-            return null;
-        }
-
-        public byte GetInteractiveMode()
-        {
-            if (TryGetValue(StaticKeys.INTERACTIVE_MODE, out string val) && byte.TryParse(val, out byte res))
-            {
-                return res;
-            }
-            return 0;
-        }
         public IntPtr GetWindowHandle()
         {
             if (TryGetValue(StaticKeys.WINDOW_HANDLE, out string val) && int.TryParse(val, out int hnd))
             {
-                return (IntPtr) hnd;
+                return hnd;
             }
             return IntPtr.Zero;
         }
+
         public Rectangle2d? GetWindowRect()
         {
             if (TryGetValue(StaticKeys.WINDOW_RECT, out string val) && val.Contains(":"))

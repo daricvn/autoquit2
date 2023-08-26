@@ -29,7 +29,6 @@
     <ProjectReference Include="..\Autoquit.DynamicModule\Autoquit.DynamicModules.csproj" />
     <ProjectReference Include="..\Autoquit.Foundation\Autoquit.Foundation.csproj" />
     <ProjectReference Include="..\Autoquit.Packaging\Autoquit.Packaging.csproj" />
-    <ProjectReference Include="..\Autoquit.Standard\Autoquit.Standard.csproj" />
     <ProjectReference Include="..\Autoquit2\Autoquit2.CoreLib\Autoquit2.CoreLib.csproj" />
   </ItemGroup>
 	<ItemGroup>

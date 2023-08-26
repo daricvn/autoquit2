@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Autoquit.Foundation.Utilities;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Autoquit.Foundation.Interfaces
 {
@@ -22,5 +21,13 @@ namespace Autoquit.Foundation.Interfaces
         /// </summary>
         /// <returns></returns>
         bool Load(out IEnumerable<IAutoquitFunction> functionList);
+
+        /// <summary>
+        /// Perform a parse event to create a function, if possible
+        /// </summary>
+        /// <param name="inputEvent"></param>
+        /// <param name="autoquitFunction"></param>
+        /// <returns></returns>
+        bool TryParse(IInputEvent inputEvent, out IAutoquitFunction autoquitFunction, out AutoquitMessageKeyPair builtParameters);
     }
 }

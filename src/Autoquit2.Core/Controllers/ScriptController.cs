@@ -1,5 +1,6 @@
 ﻿using Autoquit2.Core.Models;
 using Autoquit2.Core.Modules;
+using Autoquit2.Core.Modules.Implement;
 using Autoquit2.CoreLib.Interfaces;
 using Autoquit2.CoreLib.Utilities;
 using Chromely.Core.Network;
@@ -28,7 +29,7 @@ namespace Autoquit2.Core.Controllers
         private void OnUserInput(InputBridge.Models.Platforms.Windows.InputEventArgs args)
         {
             if (args.Code < 0) return;
-            if (ScriptItemFactory.Instance.TryCreate(args, Convert.ToInt32(_watch.ElapsedMilliseconds), out var item))
+            if (ScriptItemFactory.Instance.TryCreate(ModuleManager.Instance.AllModules, args, Convert.ToInt32(_watch.ElapsedMilliseconds), out var item))
             {
                 _session.CurrentScript.Scripts.Add(item);
                 _js.AddScriptItemAsBrief(_session.CurrentScript.Scripts.Count - 1, item);
@@ -44,6 +45,7 @@ namespace Autoquit2.Core.Controllers
             _watch.Start();
             return Ok(req);
         }
+
         [RequestAction(RouteKey = "/script/record/stop")]
         public IChromelyResponse StopRecord(IChromelyRequest req)
         {

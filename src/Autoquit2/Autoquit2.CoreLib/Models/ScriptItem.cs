@@ -1,4 +1,6 @@
-﻿namespace Autoquit2.CoreLib.Models
+﻿using Autoquit.Foundation.Utilities;
+
+namespace Autoquit2.CoreLib.Models
 {
     public class ScriptItem
     {
@@ -13,7 +15,7 @@
         /// <summary>
         /// Value of the action
         /// </summary>
-        public IDictionary<string, object>? Values { get; set; }
+        public AutoquitMessageKeyPair? Values { get; set; }
         /// <summary>
         /// Miliseconds delay
         /// </summary>
@@ -23,7 +25,7 @@
         /// </summary>
         public bool Enabled { get; set; }
 
-        public ScriptItem(string module, string name, IDictionary<string, object> values, int delay)
+        public ScriptItem(string module, string name, AutoquitMessageKeyPair values, int delay)
         {
             ModuleName = module;
             Name = name;
