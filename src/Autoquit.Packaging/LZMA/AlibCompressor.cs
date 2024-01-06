@@ -1,8 +1,6 @@
 ﻿using SevenZip;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace Autoquit.Packaging.LZMA
 {
@@ -25,8 +23,8 @@ namespace Autoquit.Packaging.LZMA
             {
                 var res = new Dictionary<string, byte[]>();
                 var data = extractor.ArchiveFileData;
-                    for (var i = 0; i < data.Count; i++)
-                        if (!data[i].IsDirectory)
+                for (var i = 0; i < data.Count; i++)
+                    if (!data[i].IsDirectory)
                         using (var ms = new MemoryStream())
                         {
                             extractor.ExtractFile(data[i].FileName, ms);

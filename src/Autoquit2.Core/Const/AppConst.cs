@@ -1,12 +1,16 @@
-﻿namespace Autoquit2.Core.Const
+﻿using Microsoft.IO;
+
+namespace Autoquit2.Core.Const
 {
     internal class AppConst
     {
-        public const string MODULE_FOLDER = "plugins";
-        public const string MODULE_FILE_CONFIG = "config.include";
+        public const string ModuleFolder = "plugins";
+        public const string ModuleConfigFile = "config.include";
 
-        public const string APP_HOST = "requests";
-        public const string LOCALIZATION_PATH = "Localization";
-        public const string LOCALIZATION_EXT = "json";
+        public const string AppHostName = "requests";
+        public const string LocalizationFolder = "Localization";
+        public const string LocalizationExtension = "json";
+
+        public static readonly RecyclableMemoryStreamManager GlobalStreamPoolManager = new RecyclableMemoryStreamManager();
     }
 }

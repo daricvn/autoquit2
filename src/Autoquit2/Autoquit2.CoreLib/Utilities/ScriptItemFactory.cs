@@ -8,11 +8,12 @@ namespace Autoquit2.CoreLib.Utilities
     public class ScriptItemFactory : IDisposable
     {
         private const int MERGE_DELAY_THRESHOLD = 800;
-        private static ScriptItemFactory? _instance;
-        public static ScriptItemFactory Instance => _instance ??= new ScriptItemFactory();
+        private static Lazy<ScriptItemFactory> _instance = new Lazy<ScriptItemFactory>();
+        public static ScriptItemFactory Instance => _instance.Value;
         private ScriptItem? _lastItem;
 
         public ScriptItem? LastItem => _lastItem;
+
         public bool TryCreate(IEnumerable<IAutoquitModule> modules, InputEventArgs args, int delay, out ScriptItem? res)
         {
             res = null;
@@ -24,7 +25,7 @@ namespace Autoquit2.CoreLib.Utilities
                     continue;
                 }
                 string mouseEvent = function.Name;
-                if (_lastItem == null || delay >= MERGE_DELAY_THRESHOLD || !StandardModuleMap.Instance.MergeMouseAction(_lastItem.Name, function.Name, out mouseEvent))
+                if (_lastItem is null || delay >= MERGE_DELAY_THRESHOLD || !StandardModuleMap.Instance.MergeMouseAction(_lastItem.Name, function.Name, out mouseEvent))
                 {
                     _lastItem = res = new ScriptItem(function.AssemblyName, mouseEvent, parameters, delay);
                 }

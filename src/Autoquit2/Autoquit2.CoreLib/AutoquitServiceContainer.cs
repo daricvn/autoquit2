@@ -82,7 +82,8 @@ namespace Autoquit2.CoreLib
             if (parameters == null || parameters.Length == 0)
                 return null;
             object?[] results = new object?[parameters.Length];
-            for (var i =0; i < parameters.Length; i++) {
+            for (var i = 0; i < parameters.Length; i++)
+            {
                 var hasValue = parameters[i].GetCustomAttribute<HasValueAttribute>();
                 if (hasValue != null)
                 {

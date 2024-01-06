@@ -80,8 +80,8 @@ namespace Autoquit2.Core.Models.Struct
                     return ProcessInfo.Empty;
                 }
             })
-                .Where(x=> x != Empty)
-                .OrderByDescending(x=> x.Id);
+                .Where(x => x != Empty)
+                .OrderByDescending(x => x.Id);
         }
 
         public static IEnumerable<ProcessInfo> EnumAll(bool fetchChildren, bool minimal = false)
@@ -94,7 +94,8 @@ namespace Autoquit2.Core.Models.Struct
                     if (pc.HasExited || (!fetchChildren && pc.MainWindowHandle == IntPtr.Zero)
                         || pc.Id == Process.GetCurrentProcess().Id)
                         continue;
-                } catch (Exception)
+                }
+                catch (Exception)
                 {
                     continue;
                 }
@@ -111,13 +112,13 @@ namespace Autoquit2.Core.Models.Struct
             info.Id = pc.Id;
             info.Title = GetName(pc.MainWindowTitle, pc.ProcessName);
             info.Name = info.Title;
-            info.MainHandle = (int) pc.MainWindowHandle;
+            info.MainHandle = (int)pc.MainWindowHandle;
             info.IconSrc = Core.Resources.env.defaultAppIcon;
             try
             {
                 info.Name = GetName(pc.MainModule?.FileVersionInfo?.FileDescription, pc.ProcessName);
                 if (pc.MainModule?.FileName != null)
-                    info.IconSrc = Icon.ExtractAssociatedIcon(pc.MainModule.FileName).ToBitmap().GetByteArray(ImageFormat.Png).ToBase64();
+                    info.IconSrc = Icon.ExtractAssociatedIcon(pc.MainModule.FileName).ToBitmap().GetBase64Array(ImageFormat.Png);
             }
             catch (Exception)
             {
@@ -146,7 +147,7 @@ namespace Autoquit2.Core.Models.Struct
                         if (_ignoreProcesses.ContainsKey(info.Ext.ToLower()) || (!includeSystemProcess && _systemProcesses.ContainsKey(info.Ext.ToLower())))
                             return Empty;
                         if (!minimal)
-                            info.IconSrc = Icon.ExtractAssociatedIcon(pc.MainModule.FileName).ToBitmap().GetByteArray(ImageFormat.Png).ToBase64();
+                            info.IconSrc = Icon.ExtractAssociatedIcon(pc.MainModule.FileName).ToBitmap().GetBase64Array(ImageFormat.Png);
                     }
                 }
                 catch (Exception) { }

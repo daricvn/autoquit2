@@ -11,6 +11,15 @@ namespace Autoquit.DynamicModules.Generic.Implement
         {
         }
 
+        public DynamicModule(string moduleName, byte[] assemblyData) : base(moduleName, assemblyData)
+        {
+        }
+
+        protected DynamicModule(string moduleName, string modulePath) : base(moduleName, modulePath)
+        {
+
+        }
+
         public T CreateInstance(Type implementType)
             => CreateInstance(implementType, Type.EmptyTypes);
 

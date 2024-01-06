@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Autoquit.DynamicModules.Extensions;
+using CommunityToolkit.HighPerformance.Buffers;
+using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -6,6 +8,8 @@ namespace Autoquit.DynamicModules
 {
     public class ExpressionCompiler
     {
+        private const string ArgStr = "args";
+
         delegate T ObjectActivator<T>(params object[] args);
         private static ExpressionCompiler _singletonInstance;
         public static ExpressionCompiler Instance
@@ -24,34 +28,41 @@ namespace Autoquit.DynamicModules
 
             // Create a single param of type object[]
             ParameterExpression param =
-                Expression.Parameter(typeof(object[]), "args");
+                Expression.Parameter(typeof(object[]), ArgStr);
 
-            Expression[] argsExp =
-                new Expression[paramsInfo.Length];
-
-            // Look up parameters
-            for (int i = 0; i < paramsInfo.Length; i++)
+            MemoryOwner<Expression> buffer = MemoryOwner<Expression>.Allocate(paramsInfo.Length);
+            try
             {
-                Expression index = Expression.Constant(i);
-                Type paramType = paramsInfo[i].ParameterType;
+                var argsExp = buffer.Span;
 
-                Expression paramAccessorExp =
-                    Expression.ArrayIndex(param, index);
+                // Look up parameters
+                for (int i = 0; i < paramsInfo.Length; i++)
+                {
+                    Expression index = Expression.Constant(i);
+                    Type paramType = paramsInfo[i].ParameterType;
 
-                Expression paramCastExp =
-                    Expression.Convert(paramAccessorExp, paramType);
+                    Expression paramAccessorExp =
+                        Expression.ArrayIndex(param, index);
 
-                argsExp[i] = paramCastExp;
+                    Expression paramCastExp =
+                        Expression.Convert(paramAccessorExp, paramType);
+
+                    argsExp[i] = paramCastExp;
+                }
+
+                NewExpression newExp = Expression.New(ctor, new RefEnumerable<Expression>(buffer.Memory, paramsInfo.Length));
+
+                LambdaExpression lambda =
+                    Expression.Lambda(typeof(ObjectActivator<T>), newExp, param);
+
+                // Compile it
+                ObjectActivator<T> compiled = (ObjectActivator<T>)lambda.Compile();
+                return compiled;
             }
-
-            NewExpression newExp = Expression.New(ctor, argsExp);
-
-            LambdaExpression lambda =
-                Expression.Lambda(typeof(ObjectActivator<T>), newExp, param);
-
-            // Compile it
-            ObjectActivator<T> compiled = (ObjectActivator<T>)lambda.Compile();
-            return compiled;
+            finally
+            {
+                buffer.Dispose();
+            }
         }
 
         public T Create<T>(Type[] types, params object[] parameters)

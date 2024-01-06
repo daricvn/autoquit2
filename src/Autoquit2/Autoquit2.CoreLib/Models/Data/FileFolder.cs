@@ -7,6 +7,7 @@
         public bool IsReadOnly { get; set; }
         public string Description { get; private set; }
         public FileFolderType Type { get; private set; }
+
         public FileFolder(string path, string text, bool isReadOnly, FileFolderType type)
         {
             Path = path;
@@ -15,6 +16,7 @@
             IsReadOnly = isReadOnly;
             Description = string.Empty;
         }
+
         public FileFolder(string path, string text, string description, bool isReadOnly, FileFolderType type) : this(path, text, isReadOnly, type)
         {
             Description = description;

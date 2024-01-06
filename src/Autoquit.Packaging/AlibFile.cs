@@ -1,8 +1,10 @@
 ﻿using Autoquit.Packaging.LZMA;
 using Autoquit.Packaging.Objects;
 using Autoquit.Packaging.Zip;
+using Autoquit2.Security;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,7 +14,9 @@ namespace Autoquit.Packaging
 {
     public class AlibFile : IDisposable
     {
-        private const string FILE_EXTENSION = ".alib";
+        private const string MapFileName = "map.xml";
+        private const string FileExtension = ".alib";
+        private static readonly Lazy<XmlSerializer> _xmlSerializer = new Lazy<XmlSerializer>(() => new XmlSerializer(typeof(AlibMap)));
 
         private IDictionary<string, byte[]> _inlineContents;
 
@@ -21,15 +25,18 @@ namespace Autoquit.Packaging
         public string FilePath { get; private set; }
         public AlibFile(string filePath)
         {
-            if (!FILE_EXTENSION.Equals(Path.GetExtension(filePath), StringComparison.OrdinalIgnoreCase))
-                throw new NotSupportedException("File is not supported");
+            if (!FileExtension.Equals(Path.GetExtension(filePath), StringComparison.OrdinalIgnoreCase))
+                throw new NotSupportedException(ErrorCodes.UnsupportedFile);
             FilePath = filePath;
             if (!File.Exists(filePath))
             {
                 Id = Guid.NewGuid().ToString();
                 _inlineContents = new Dictionary<string, byte[]>();
             }
-            else Load();
+            else
+            {
+                Load();
+            }
         }
 
         public void Set(string filePath, byte[] content)
@@ -53,8 +60,7 @@ namespace Autoquit.Packaging
         {
             if (File.Exists(FilePath))
                 File.Delete(FilePath);
-            using (var hash = new sha256())
-                Id = CreateHash();
+            Id = CreateHash();
             using (var fs = new FileStream(FilePath, FileMode.Create, FileAccess.Write))
             {
                 var contents = _inlineContents.ToDictionary(x => x.Key, v => new MemoryStream(v.Value) as Stream);
@@ -62,14 +68,16 @@ namespace Autoquit.Packaging
                 var idSize = BitConverter.GetBytes(id.Length);
                 fs.Write(idSize, 0, 4);
                 fs.Write(id);
-                AlibCompressor.Instance.Compress(contents, fs, Id);
+                _ = AlibCompressor.Instance.Compress(contents, fs, Id);
             }
         }
 
         private void Load()
         {
             if (!File.Exists(FilePath))
-                throw new FileNotFoundException("File cannot be found: " + FilePath);
+            {
+                throw new FileNotFoundException(ErrorCodes.FileNotFound);
+            }
             var content = File.ReadAllBytes(FilePath).AsSpan();
             var size = BitConverter.ToInt32(content.Slice(0, 4));
             var id = Encoding.UTF8.GetString(Ziplib.Instance.UnZip(content.Slice(4, size).ToArray()));
@@ -82,42 +90,39 @@ namespace Autoquit.Packaging
                 var checksumHash = CreateHash();
                 if (id == checksumHash)
                     Id = id;
-                else throw new FormatException("Wrong file format");
+                else throw new FormatException(ErrorCodes.WrongFileFormat);
             }
             catch (Exception)
             {
                 _inlineContents = new Dictionary<string, byte[]>();
-                throw new FileLoadException("Wrong file format");
+                throw new FileLoadException(ErrorCodes.WrongFileFormat);
             }
         }
 
         private string CreateHash()
         {
-            using (var hash = new sha256())
+            var srcString = new StringBuilder();
+            foreach (var pair in _inlineContents.OrderBy(x => x.Key))
             {
-                var srcString = new StringBuilder();
-                foreach (var pair in _inlineContents.OrderBy(x => x.Key))
-                {
-                    srcString.Append(pair.Key).Append(':').Append(pair.Value.Length).Append(':');
-                }
-                return hash.Compute(srcString.ToString());
+                _ = srcString.Append(pair.Key).Append(':').Append(pair.Value.Length).Append(':');
             }
+            return Hashmath.Instance.sha256(srcString.ToString());
         }
 
-        public IReadOnlyDictionary<string, string> LoadMap()
+        public IImmutableDictionary<string, string> LoadMap()
         {
-            if (!_inlineContents.TryGetValue("map.xml", out var content) || content == null || content.Length == 0)
+            if (!_inlineContents.TryGetValue(MapFileName, out var content) || content == null || content.Length == 0)
+            {
                 return null;
+            }
             using (var ms = new MemoryStream(content))
             {
-                var serializer = new XmlSerializer(typeof(AlibMap));
-                var result = serializer.Deserialize(ms) as AlibMap;
+                var result = _xmlSerializer.Value.Deserialize(ms) as AlibMap;
                 if (result == null)
+                {
                     return null;
-                var res = new Dictionary<string, string>();
-                foreach (var item in result.Map)
-                    res.Add(item.Path, item.AssemblyName);
-                return res;
+                }
+                return result.Map.ToImmutableDictionary(x => x.AssemblyName, v => v.Path);
             }
         }
 

@@ -22,7 +22,7 @@ namespace Autoquit2.CoreLib.Models.Data
 
         public object? GetService()
         {
-            if (_serviceTransient == null)
+            if (_serviceTransient is null)
             {
                 return _service?.Value;
             }

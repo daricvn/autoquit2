@@ -48,7 +48,7 @@ namespace Autoquit2.Core.Controllers
                 return BadRequest(req);
             if (!dict.TryGetValue("target", out string target))
                 return BadRequest(req);
-            var path = Path.Combine(AppPath, AppConst.LOCALIZATION_PATH, Path.ChangeExtension(target, AppConst.LOCALIZATION_EXT));
+            var path = Path.Combine(AppPath, AppConst.LocalizationFolder, Path.ChangeExtension(target, AppConst.LocalizationExtension));
             if (!File.Exists(path))
                 return NotFound(req);
             var res = File.ReadAllText(path);

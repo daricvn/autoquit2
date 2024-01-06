@@ -1,9 +1,10 @@
 ﻿using Autoquit.DynamicModules.Generic;
 using Autoquit.DynamicModules.Generic.Implement;
 using Autoquit.Foundation.Interfaces;
+using Autoquit.Packaging;
 using Autoquit2.Core.Const;
 using Autoquit2.CoreLib.Interfaces;
-using Autoquit2.CoreLib.Security;
+using Autoquit2.Security;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace Autoquit2.Core.Modules.Implement
             get
             {
                 if (_instance == null)
-                    _instance = new ModuleManager(AppConst.MODULE_FOLDER, AppConst.MODULE_FILE_CONFIG);
+                    _instance = new ModuleManager(AppConst.ModuleFolder, AppConst.ModuleConfigFile);
                 return _instance;
             }
         }
@@ -78,7 +79,27 @@ namespace Autoquit2.Core.Modules.Implement
                 yield break;
             _moduleNames = new List<string>(File.ReadAllLines(_configPath));
             foreach (var item in _moduleNames)
-                yield return new DynamicModule<IAutoquitModule>(Path.ChangeExtension(Path.Combine(_folder, item), "dll"));
+            {
+                var fullPath = Path.Combine(_folder, item);
+                if (!File.Exists(fullPath))
+                {
+                    continue;
+                }
+                if (item.EndsWith(".dll"))
+                {
+                    yield return new DynamicModule<IAutoquitModule>(Path.ChangeExtension(fullPath, "dll"));
+                }
+                else if (item.EndsWith(".alib"))
+                {
+                    var alibFile = new AlibFile(fullPath);
+                    yield return AutoquitDynamicModule<IAutoquitModule>.LoadFrom(alibFile);
+                }
+            }
+        }
+
+        private System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            throw new NotImplementedException();
         }
 
         private string CombineUniqueNamespace(IAutoquitFunction function)

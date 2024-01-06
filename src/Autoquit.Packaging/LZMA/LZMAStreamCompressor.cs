@@ -1,6 +1,6 @@
-﻿using SevenZip;
+﻿using Microsoft.IO;
+using SevenZip;
 using System;
-using System.IO;
 
 namespace Autoquit.Packaging.LZMA
 {
@@ -13,6 +13,8 @@ namespace Autoquit.Packaging.LZMA
     }
     public class LZMAStreamCompressor : IDisposable
     {
+        private static readonly RecyclableMemoryStreamManager _streamManager = new RecyclableMemoryStreamManager();
+
         private SevenZipCompressor _compressor;
         private bool _disposed;
         public LZMAStreamCompressor(ArchiveFormat format)
@@ -26,8 +28,18 @@ namespace Autoquit.Packaging.LZMA
 
         public byte[] Compress(byte[] input, string password = "")
         {
-            using (var ms = new MemoryStream(input))
-            using (var output = new MemoryStream())
+            using (var ms = _streamManager.GetStream(input))
+            using (var output = _streamManager.GetStream())
+            {
+                _compressor.CompressStream(ms, output, password);
+                return output.ToArray();
+            }
+        }
+
+        public Span<byte> Compress(ReadOnlySpan<byte> input, string password = "")
+        {
+            using (var ms = _streamManager.GetStream(input))
+            using (var output = _streamManager.GetStream())
             {
                 _compressor.CompressStream(ms, output, password);
                 return output.ToArray();

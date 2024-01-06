@@ -10,8 +10,11 @@ namespace Autoquit.Packaging
     public class AlibFactory : IDisposable
     {
         private const string MAIN_PATH = "module";
+        private const string MAIN_PATH_LOOKUP = "module\\";
         private const string REF_PATH = "dependencies";
+        private const string REF_PATH_LOOKUP = "dependencies\\";
         private const string LOCA_PATH = "localization";
+        private const string LOCA_PATH_LOOKUP = "localization\\";
         private const string MAP_FILE = "map.xml";
 
         private static AlibFactory _instance;
@@ -61,15 +64,19 @@ namespace Autoquit.Packaging
             var list = new List<AlibMapItem>();
             list.Add(new AlibMapItem(mainModule).MapToNewPath(MAIN_PATH));
             foreach (var dp in dependencies)
+            {
                 if (File.Exists(dp))
                 {
                     list.Add(new AlibMapItem(dp).MapToNewPath(REF_PATH));
                 }
+            }
             foreach (var l in localization)
+            {
                 if (File.Exists(l))
                 {
                     list.Add(new AlibMapItem(l).MapToNewPath(LOCA_PATH));
                 }
+            }
             map.Map = list.ToArray();
             var alibFile = new AlibFile(filePath);
             foreach (var item in map.Map)
@@ -83,8 +90,8 @@ namespace Autoquit.Packaging
             return alibFile;
         }
 
-        public IEnumerable<string> GetMainFiles(AlibFile alib) => alib.Files.Where(x => x.StartsWith(MAIN_PATH));
-        public IEnumerable<string> GetReferencedFiles(AlibFile alib) => alib.Files.Where(x => x.StartsWith(REF_PATH));
+        public string GetMainFiles(AlibFile alib) => alib.Files.Where(x => x.StartsWith(MAIN_PATH_LOOKUP)).FirstOrDefault();
+        public IEnumerable<string> GetReferencedFiles(AlibFile alib) => alib.Files.Where(x => x.StartsWith(REF_PATH_LOOKUP));
 
         public void Dispose()
         {

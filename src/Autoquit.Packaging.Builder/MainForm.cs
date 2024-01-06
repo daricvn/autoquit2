@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -10,6 +11,7 @@ namespace Autoquit.Packaging.Builder
     public partial class MainForm : Form
     {
         private IList<string> referencePaths = new BindingList<string>();
+        private IDictionary<string, bool> _referencePathAssemblyName = new Dictionary<string, bool>();
         private IList<string> alibContents = new BindingList<string>();
         private IList<string> mapContents = new BindingList<string>();
         private AlibFile currentFile;
@@ -46,7 +48,7 @@ namespace Autoquit.Packaging.Builder
         {
             dllBrowser.Multiselect = false;
             dllBrowser.Tag = txtPath;
-            dllBrowser.ShowDialog();
+            _ = dllBrowser.ShowDialog();
         }
 
         private IEnumerable<int> GetSelectedIndices()
@@ -59,7 +61,7 @@ namespace Autoquit.Packaging.Builder
         {
             dllBrowser.Multiselect = true;
             dllBrowser.Tag = lstReferenceList;
-            dllBrowser.ShowDialog();
+            _ = dllBrowser.ShowDialog();
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
@@ -74,7 +76,7 @@ namespace Autoquit.Packaging.Builder
                 var path = lstReferenceList.Items[selectedIndexes[i]]?.ToString();
                 if (path == null)
                     continue;
-                referencePaths.Remove(path);
+                _ = referencePaths.Remove(path);
             }
         }
 
@@ -85,15 +87,23 @@ namespace Autoquit.Packaging.Builder
             else if (dllBrowser.Tag is ListBox lst)
             {
                 foreach (var path in dllBrowser.FileNames)
+                {
                     if (!referencePaths.Contains(path))
                     {
                         if (path.Equals(txtPath.Text, StringComparison.OrdinalIgnoreCase))
                         {
-                            MessageBox.Show("Cannot add main dll as referenced dll", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            _ = MessageBox.Show("Cannot add main dll as referenced dll", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        var assemblyName = AssemblyName.GetAssemblyName(path);
+                        if (!_referencePathAssemblyName.TryAdd(assemblyName.FullName, true))
+                        {
+                            _ = MessageBox.Show("Assembly of the same signature is already added", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
                         referencePaths.Add(path);
                     }
+                }
                 lst.Update();
             }
             UpdateButton();
@@ -113,14 +123,19 @@ namespace Autoquit.Packaging.Builder
                 {
                     alibContents.Add(path);
                     if (map != null && map.TryGetValue(path, out string name))
+                    {
                         mapContents.Add(name);
-                    else mapContents.Add(string.Empty);
+                    }
+                    else
+                    {
+                        mapContents.Add(string.Empty);
+                    }
                 }
                 UpdateButton();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -131,7 +146,7 @@ namespace Autoquit.Packaging.Builder
 
         private void btnAlibBrowse_Click(object sender, EventArgs e)
         {
-            alibBrowser.ShowDialog();
+            _ = alibBrowser.ShowDialog();
         }
 
         private void btnPackage_Click(object sender, EventArgs e)
@@ -143,7 +158,7 @@ namespace Autoquit.Packaging.Builder
                 saveFileDialog.FileOk += (_, _) =>
                 {
                     var name = saveFileDialog.FileName;
-                    Task.Delay(100).ContinueWith(_ =>
+                    _ = Task.Delay(100).ContinueWith(_ =>
                     {
                         if (System.IO.File.Exists(name))
                             System.IO.File.Delete(name);
@@ -152,7 +167,7 @@ namespace Autoquit.Packaging.Builder
                         MessageBox.Show("Package has been built.");
                     });
                 };
-                saveFileDialog.ShowDialog();
+                _ = saveFileDialog.ShowDialog();
             }
         }
 
@@ -164,7 +179,7 @@ namespace Autoquit.Packaging.Builder
             if (result != DialogResult.OK)
                 return;
             var root = folderBrowser.SelectedPath;
-            Task.Delay(100).ContinueWith((_) =>
+            _ = Task.Delay(100).ContinueWith((_) =>
             {
                 foreach (var path in currentFile.Files)
                 {

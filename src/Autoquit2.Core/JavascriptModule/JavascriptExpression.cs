@@ -1,7 +1,6 @@
 ﻿using Autoquit2.CoreLib.Interfaces;
 using Autoquit2.CoreLib.Models;
 using Chromely.Core.Configuration;
-using System;
 using System.Text.Json;
 
 namespace Autoquit2.Core.JavascriptModule
@@ -9,7 +8,8 @@ namespace Autoquit2.Core.JavascriptModule
     internal class JavascriptExpression : IJavascriptExpression
     {
         private readonly IChromelyConfiguration _configuration;
-        public JavascriptExpression(IChromelyConfiguration config) { 
+        public JavascriptExpression(IChromelyConfiguration config)
+        {
             _configuration = config;
         }
 

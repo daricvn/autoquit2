@@ -1,4 +1,6 @@
-﻿namespace Autoquit2.CoreLib.Utilities
+﻿using Autoquit2.CoreLib.Const;
+
+namespace Autoquit2.CoreLib.Utilities
 {
     internal class StandardModuleMap
     {
@@ -8,10 +10,10 @@
         public bool MergeMouseAction(string firstAction, string secondAction, out string res)
         {
             res = secondAction;
-            if (firstAction == "left-up" && secondAction == "left-down")
-                res = "left-click";
-            if (firstAction == "right-up" && secondAction == "right-down")
-                res = "right-click";
+            if (firstAction == StandardModuleMouseKeys.MouseLeftUp && secondAction == StandardModuleMouseKeys.MouseLeftDown)
+                res = StandardModuleMouseKeys.MouseLeftClick;
+            if (firstAction == StandardModuleMouseKeys.MouseRightUp && secondAction == StandardModuleMouseKeys.MouseRightDown)
+                res = StandardModuleMouseKeys.MouseRightClick;
             return res != secondAction;
         }
     }
