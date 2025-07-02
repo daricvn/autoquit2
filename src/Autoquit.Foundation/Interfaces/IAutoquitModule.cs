@@ -1,4 +1,5 @@
-﻿using Autoquit.Foundation.Utilities;
+﻿using Autoquit.Foundation.Models;
+using Autoquit.Foundation.Utilities;
 using System.Collections.Generic;
 
 namespace Autoquit.Foundation.Interfaces
@@ -8,7 +9,7 @@ namespace Autoquit.Foundation.Interfaces
         string Name { get; }
         string Description { get; }
         string Icon { get; }
-        string Version { get; }
+        ModuleVersion Version { get; }
         string Author { get; }
         /// <summary>
         /// Set custom localization location. By default, All module will use the same localization file as Autoquit.

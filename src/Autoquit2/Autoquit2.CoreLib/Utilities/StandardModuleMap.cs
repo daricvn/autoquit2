@@ -4,10 +4,7 @@ namespace Autoquit2.CoreLib.Utilities
 {
     internal class StandardModuleMap
     {
-        private static StandardModuleMap? _instance;
-        public static StandardModuleMap Instance => _instance ??= new StandardModuleMap();
-
-        public bool MergeMouseAction(string firstAction, string secondAction, out string res)
+        public static bool MergeMouseAction(string firstAction, string secondAction, out string res)
         {
             res = secondAction;
             if (firstAction == StandardModuleMouseKeys.MouseLeftUp && secondAction == StandardModuleMouseKeys.MouseLeftDown)

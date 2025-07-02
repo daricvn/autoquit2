@@ -1,5 +1,6 @@
 ﻿using Autoquit.DynamicModules;
 using Autoquit.Foundation.Interfaces;
+using Autoquit.Foundation.Models;
 using Autoquit.Foundation.Utilities;
 using Autoquit.Standard.Actions;
 using Autoquit.Standard.Actions.Abstract;
@@ -20,11 +21,11 @@ namespace Autoquit.Standard
 
         public string Icon { get; }
 
-        public string Version => "1.0.0.0";
+        public ModuleVersion Version => (ModuleVersion)(1, 0, 0, 0);
 
         public string Author => "Autoquit";
 
-        private Type[] _typeToLoad = new Type[]
+        private readonly Type[] _typeToLoad = new Type[]
         {
             typeof(MouseLeftClick)
         };

@@ -36,8 +36,7 @@ namespace Autoquit2.CoreLib.Models
 
         ~ScriptItem()
         {
-            if (Values != null)
-                Values.Clear();
+            Values?.Clear();
             Values = null;
         }
     }
